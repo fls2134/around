@@ -145,7 +145,7 @@ public class WriteActivity extends AppCompatActivity {
 
         //int sYear, sMonth, sDay, sHour, sMin; 시작 날짜 & 시간
         //int eYear, eMonth, eDay, eHour, eMin; 시작 날짜 & 시간
-        Toast.makeText(this, "sibla" + sYear + sMonth + sDay + sHour + sMin + '\n' + eYear + eMonth + eDay + eHour + eMin , Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "sibla" + sYear + sMonth + sDay+ '\n' + eYear + eMonth + eDay  , Toast.LENGTH_SHORT).show();
 
         //서버에 다올리고 난뒤
         finish();
@@ -195,25 +195,6 @@ public class WriteActivity extends AppCompatActivity {
         final Calendar cal = Calendar.getInstance();
         String msg;
 
-        final TimePickerDialog time_dialog = new TimePickerDialog(WriteActivity.this, new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker timePicker, int hour, int min) {
-                ((Button)v).setText(((Button) v).getText() + String.format("%d:%d", hour, min));
-                if(v.equals(timeStartButton))
-                {
-                    sHour = hour;
-                    sMin = min;
-                }
-                else
-                {
-                    eHour = hour;
-                    eMin = min;
-                }
-                v.setBackgroundColor(255);
-            }
-        }, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true);  //마지막 boolean 값은 시간을 24시간으로 보일지 아닐지
-
-
         DatePickerDialog date_dialog = new DatePickerDialog(WriteActivity.this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int date) {
@@ -230,7 +211,6 @@ public class WriteActivity extends AppCompatActivity {
                     eMonth = month+1;
                     eDay = date;
                 }
-                time_dialog.show();
             }
         }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE));
 
