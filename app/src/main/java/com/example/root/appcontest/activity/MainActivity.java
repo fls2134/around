@@ -22,15 +22,10 @@ public class MainActivity extends AppCompatActivity {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(getResources().getColor(R.color.themeColor));
 
-        // 최초 화면 설정
-        FragmentTransaction fragmentTransaction
-                = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.action_container, new HomeFragment());
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
-
         // 하단 바 설정
-        BottomBar bottomBar = (BottomBar)findViewById(R.id.bottom_bar);
+        BottomBar bottomBar = (BottomBar) findViewById(R.id.bottom_bar);
+        bottomBar.setActiveTabColor(getResources().getColor(R.color.backgroundLongin));
+        bottomBar.setInActiveTabColor(getResources().getColor(R.color.inactivateTabColor));
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(int tabId) {
@@ -53,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        // 최초 화면 설정
+        bottomBar.selectTabAtPosition(1);
     }
 }
 
