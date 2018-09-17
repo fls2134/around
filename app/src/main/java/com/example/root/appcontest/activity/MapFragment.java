@@ -1,7 +1,8 @@
-package com.example.root.appcontest.view;
+package com.example.root.appcontest.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,45 +12,37 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.root.appcontest.model.SearchEditText;
 import com.example.root.appcontest.R;
+import com.example.root.appcontest.model.SearchEditText;
 
 
-public class HomeFragment extends Fragment implements View.OnClickListener{
+public class MapFragment extends Fragment implements View.OnClickListener{
 
-    TabLayout mTabs;
     SearchEditText mEditText;
     ImageButton mSearchButton;
-    ImageButton mFilterButton;
 
     private boolean searchMode = false;
-
-    public HomeFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.tab_activity_home, container, false);
+        return inflater.inflate(R.layout.tab_activity_map, container, false);
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstance) {
-        super.onViewCreated(view, savedInstance);
-        setTabs(view);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         setToolbar(view);
-
     }
 
     private void setToolbar(View view) {
         // imageButton add
-        mSearchButton = (ImageButton) view.findViewById(R.id.btn_search_home);
+        mSearchButton = (ImageButton) view.findViewById(R.id.btn_search_map);
         mSearchButton.setOnClickListener(this);
 
         // editText 설정
-        mEditText = (SearchEditText) view.findViewById(R.id.editText_home);
+        mEditText = (SearchEditText) view.findViewById(R.id.editText_map);
         mEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
@@ -65,38 +58,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
         mEditText.setUseableEditText(false);
 
-        // filterButton add
-        mFilterButton = (ImageButton) view.findViewById(R.id.btn_filter_home);
-        mFilterButton.setOnClickListener(this);
-    }
-
-    private void setTabs(View view) {
-        mTabs = (TabLayout) view.findViewById(R.id.tabs_home);
-        mTabs.addTab(mTabs.newTab().setText("거리순"));
-        mTabs.addTab(mTabs.newTab().setText("최신순"));
-
-        mTabs.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                // 탭 선택시
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-                // 탭 선택이 풀릴 시
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-                // 탭이 다시 선택 되었을 시
-            }
-        });
     }
 
     @Override
     public void onClick(View view) {
         switch(view.getId()) {
-            case R.id.btn_search_home:
+            case R.id.btn_search_map:
                 if(!searchMode) {
                     mSearchButton.setImageResource(R.drawable.ic_keyboard_arrow);
                     mEditText.setHint("Search...");
@@ -105,14 +72,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 }
                 else {
                     mSearchButton.setImageResource(R.drawable.ic_search);
-                    mEditText.setHint(" 메인");
+                    mEditText.setHint(" 지도");
                     mEditText.setUseableEditText(false);
                     searchMode = false;
                 }
-                break;
-
-            case R.id.btn_filter_home:
-                Toast.makeText(getActivity().getApplicationContext(), "filter", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

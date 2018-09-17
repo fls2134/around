@@ -1,4 +1,4 @@
-package com.example.root.appcontest.view;
+package com.example.root.appcontest.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
