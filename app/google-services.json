@@ -1,0 +1,203 @@
+{
+  "project_info": {
+    "project_number": "1085788956667",
+    "firebase_url": "https://objpush.firebaseio.com",
+    "project_id": "objpush",
+    "storage_bucket": "objpush.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1085788956667:android:dc25462f227ece30",
+        "android_client_info": {
+          "package_name": "com.example.root.appcontest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1085788956667-40getl7rpuq7lvumtodkrgebvgkv9kcf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.root.appcontest",
+            "certificate_hash": "ff3a542f6478605380e3cdc275cebfc7f25decf7"
+          }
+        },
+        {
+          "client_id": "1085788956667-892hs2g0q840nrdfekm1piqsqvh2ffvl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.root.appcontest",
+            "certificate_hash": "70be0fed20dfa801584e50c681e3aad7270fd4e6"
+          }
+        },
+        {
+          "client_id": "1085788956667-6doashcei1ude058me9anb9bktn7s03m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.root.appcontest",
+            "certificate_hash": "1e581110f5a497e86db85119843bc4fa37827b7c"
+          }
+        },
+        {
+          "client_id": "1085788956667-5h0ikovo4i4n84qtrlvahldtdj5c30jr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUirCVusV30zYGqRzc49bgztf21emb6vg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1085788956667-5h0ikovo4i4n84qtrlvahldtdj5c30jr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1085788956667:android:65b94fa52bf37985",
+        "android_client_info": {
+          "package_name": "com.example.sens.dbsearch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1085788956667-hs9po6ohi8q45db8g2ecgcjrj7pf26pg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sens.dbsearch",
+            "certificate_hash": "ff3a542f6478605380e3cdc275cebfc7f25decf7"
+          }
+        },
+        {
+          "client_id": "1085788956667-5h0ikovo4i4n84qtrlvahldtdj5c30jr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUirCVusV30zYGqRzc49bgztf21emb6vg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1085788956667-5h0ikovo4i4n84qtrlvahldtdj5c30jr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1085788956667:android:f3ce481faad7555f",
+        "android_client_info": {
+          "package_name": "com.example.sens.objpull"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1085788956667-edrh0b84hcp3l4knbocmgq7dn376mcb9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sens.objpull",
+            "certificate_hash": "ff3a542f6478605380e3cdc275cebfc7f25decf7"
+          }
+        },
+        {
+          "client_id": "1085788956667-5h0ikovo4i4n84qtrlvahldtdj5c30jr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUirCVusV30zYGqRzc49bgztf21emb6vg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1085788956667-5h0ikovo4i4n84qtrlvahldtdj5c30jr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1085788956667:android:3042c3b8ace93c7e",
+        "android_client_info": {
+          "package_name": "com.example.sens.objpush"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1085788956667-i09no3h5ibkm7b4a9apb9sg50t1jpomj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sens.objpush",
+            "certificate_hash": "ff3a542f6478605380e3cdc275cebfc7f25decf7"
+          }
+        },
+        {
+          "client_id": "1085788956667-5h0ikovo4i4n84qtrlvahldtdj5c30jr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUirCVusV30zYGqRzc49bgztf21emb6vg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1085788956667-5h0ikovo4i4n84qtrlvahldtdj5c30jr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
