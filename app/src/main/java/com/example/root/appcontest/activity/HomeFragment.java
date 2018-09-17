@@ -1,6 +1,8 @@
 package com.example.root.appcontest.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -38,9 +40,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onViewCreated(View view, Bundle savedInstance) {
         super.onViewCreated(view, savedInstance);
+
+        //for write activity
+        FloatingActionButton writeBtn = view.findViewById(R.id.floatingActionButton_home);
+        writeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent writeIntent = new Intent(getActivity(), WriteActivity.class);
+                startActivity(writeIntent);
+            }
+        });
+        //end here
+
         setTabs(view);
         setToolbar(view);
-
     }
 
     private void setToolbar(View view) {

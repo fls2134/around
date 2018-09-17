@@ -36,6 +36,10 @@
             android:theme="@style/AppTheme"
             android:label="@string/app_name">
         </activity>
+
+        <activity android:name=".activity.GetLocationActivity" />
+        <activity android:name=".activity.WriteActivity" />
+        <activity android:name=".activity.TagActivity" />
     </application>
 
 </manifest>

@@ -52,8 +52,8 @@ public class TagActivity extends AppCompatActivity implements View.OnClickListen
                 strings = null;
         }
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("태그 설정");
+        //ActionBar actionBar = getSupportActionBar();
+        //actionBar.setTitle("태그 설정");
 
         flexboxLayout_tags = findViewById(R.id.flexbox_layout_tags);
         flexboxLayout_res = findViewById(R.id.flexbox_layout_res);
