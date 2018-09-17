@@ -22,7 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".view.Intro"
+            android:name=".activity.Intro"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -32,7 +32,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.MainActivity"
+            android:name=".activity.MainActivity"
             android:theme="@style/AppTheme"
             android:label="@string/app_name">
         </activity>

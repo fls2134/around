@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#858585</color>
     <color name="themeColor">#070461</color>
     <color name="backgroundLongin">#263797</color>
     <color name="tabSelectColor">#1f5627</color>
