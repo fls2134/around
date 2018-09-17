@@ -7,7 +7,10 @@ import android.os.Handler;
 
 import com.example.root.appcontest.R;
 
-
+/**
+ * make by sks 2018. 09. 17
+ * Splash Activity
+ */
 public class Intro extends Activity {
     private Handler handler;
 

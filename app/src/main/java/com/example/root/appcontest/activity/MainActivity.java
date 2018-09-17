@@ -10,6 +10,10 @@ import com.example.root.appcontest.R;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
+/**
+ * made by sks 2018. 09. 17
+ * Activity that Show Main Content
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override

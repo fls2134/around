@@ -15,7 +15,10 @@ import android.widget.Toast;
 import com.example.root.appcontest.R;
 import com.example.root.appcontest.model.SearchEditText;
 
-
+/**
+ * made by sks 2018. 09. 17
+ * Fragment for Show map
+ */
 public class MapFragment extends Fragment implements View.OnClickListener{
 
     SearchEditText mEditText;
@@ -66,13 +69,14 @@ public class MapFragment extends Fragment implements View.OnClickListener{
             case R.id.btn_search_map:
                 if(!searchMode) {
                     mSearchButton.setImageResource(R.drawable.ic_keyboard_arrow);
-                    mEditText.setHint("Search...");
+                    mEditText.setHint(R.string.searching);
                     mEditText.setUseableEditText(true);
                     searchMode = true;
                 }
                 else {
                     mSearchButton.setImageResource(R.drawable.ic_search);
-                    mEditText.setHint(" 지도");
+                    mEditText.setText(null);
+                    mEditText.setHint(R.string.title_map);
                     mEditText.setUseableEditText(false);
                     searchMode = false;
                 }
