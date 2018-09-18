@@ -24,6 +24,7 @@ import com.example.root.appcontest.R;
 import com.example.root.appcontest.map.NMapFragment;
 import com.example.root.appcontest.map.NMapPOIflagType;
 import com.example.root.appcontest.map.ResProvider;
+import com.example.root.appcontest.model.LocalData;
 import com.example.root.appcontest.model.SearchEditText;
 import com.nhn.android.maps.NMapCompassManager;
 import com.nhn.android.maps.NMapController;
@@ -40,6 +41,8 @@ import com.nhn.android.mapviewer.overlay.NMapOverlayManager;
 import com.nhn.android.mapviewer.overlay.NMapPOIdataOverlay;
 import com.nhn.android.mapviewer.overlay.NMapPathDataOverlay;
 import com.nhn.android.mapviewer.overlay.NMapResourceProvider;
+
+import java.util.ArrayList;
 
 import static com.example.root.appcontest.BuildConfig.DEBUG;
 
@@ -172,20 +175,25 @@ public class MapFragment extends NMapFragment implements View.OnClickListener{
 
     private void testPOIdataOverlay() {
 
-        final int ITEM_SIZE = 12;
+        //final int ITEM_SIZE = 12;
         // Markers for POI item
         int markerId = NMapPOIflagType.PIN;
         float results[]= new float[1];
 
+        //로컬 데이터 담을 어레이리스트
+        ArrayList<LocalData> localDatas = new ArrayList<>();
+
+
+        //localDatas.add(로컬 데이터)로 서버에있는거 다 들고오기
         // set POI data
         NMapPOIdata poiData = new NMapPOIdata(2, nMapResourceProvider);
         poiData.beginPOIdata(2);
-        for (int i = 0; i < ITEM_SIZE; i++) {
-            double item_lat =  37.49470439862809;
-            double item_lng = 126.95976602854101+(0.0005*i);
+        for (int i = 0; i < localDatas.size(); i++) {
+            double item_lat = localDatas.get(i).latitude;
+            double item_lng = localDatas.get(i).longtitude;
             Location.distanceBetween(cur_lat,cur_lng,item_lat,item_lng,results);
             NMapPOIitem item;
-            if(results[0]<=100.0F)
+            if(results[0]<=100.0F)//지금설정으로는 현재위치에서 100m내 마커만 보일것.
                 item = poiData.addPOIitem(item_lng,item_lat, "바겐 세일~~~ "+i, markerId, 0);
                 //NMapPOIitem item = poiData.addPOIitem(item_lat,item_lng, "바겐 세일~~~ "+i, markerId, 0);
         }

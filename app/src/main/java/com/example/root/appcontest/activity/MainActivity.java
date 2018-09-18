@@ -13,8 +13,11 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.example.root.appcontest.R;
+import com.example.root.appcontest.model.LocalData;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
+
+import java.util.ArrayList;
 
 /**
  * made by sks 2018. 09. 17
@@ -23,6 +26,7 @@ import com.roughike.bottombar.OnTabSelectListener;
 public class MainActivity extends AppCompatActivity {
     public static final int MY_PERMISSIONS_REQUEST_CUR_PLACE = 3;
     FragmentTransaction fragmentTransaction;
+    ArrayList<LocalData> datas;//서버에서 불러올 데이터 모은 어레이리스트
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        datas = new ArrayList<>();
+        getServerDatas(datas);
         // 최초 화면 설정
     }
 
@@ -99,6 +105,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    void getServerDatas(ArrayList<LocalData> datas)
+    {
+        LocalData a;//생성자로 서버에서 받아온값 다 넣어주면 될듯?
+        //pull하고 datas.add(Localdata형식클래스) 하기
     }
 
 }
