@@ -35,6 +35,7 @@ dependencies {
     // 네이버 맵 API 라이브러리
     implementation 'com.naver.maps.open:naver-map-api:2.1.2@aar'
 
+    implementation 'com.google.firebase:firebase-auth:11.6.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
