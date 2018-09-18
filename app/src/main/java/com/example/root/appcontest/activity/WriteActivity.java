@@ -67,8 +67,6 @@ public class WriteActivity extends AppCompatActivity {
     RadioGroup rg;
     EditText editText_title;
     EditText editText_content;
-    EditText editText_link;
-    EditText editText_tag;
     ImageView imageView;
     Button locationButton;
     Button tagButton;
@@ -141,11 +139,12 @@ public class WriteActivity extends AppCompatActivity {
         //latitude => 이하 동문 double
         //tag =>설정하면 값 할당 되있음 String
         //img =>설정하면 값 할당 되있음 Bitmap
+        //imageView <- 얘가 이미지 들어가있는 이미지 뷰 glide로 push할꺼면 얘 쓰셈
+        //int sYear, sMonth, sDay  시작 날짜 & 시간
+        //int eYear, eMonth, eDay  시작 날짜 & 시간
         //그외 id 같은것들 추가 해야 할것들 있으면 하셈
 
-        //int sYear, sMonth, sDay, sHour, sMin; 시작 날짜 & 시간
-        //int eYear, eMonth, eDay, eHour, eMin; 시작 날짜 & 시간
-        Toast.makeText(this, "sibla" + sYear + sMonth + sDay+ '\n' + eYear + eMonth + eDay  , Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "sibla" + sYear + sMonth + sDay+ '\n' + eYear + eMonth + eDay  , Toast.LENGTH_SHORT).show();
 
         //서버에 다올리고 난뒤
         finish();
