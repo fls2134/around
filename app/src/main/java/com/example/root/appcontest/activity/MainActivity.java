@@ -109,7 +109,8 @@ public class MainActivity extends AppCompatActivity {
 
     void getServerDatas(ArrayList<LocalData> datas)
     {
-
+        LocalData a;//생성자로 서버에서 받아온값 다 넣어주면 될듯?
+        //pull하고 datas.add(Localdata형식클래스) 하기
     }
 
 }
