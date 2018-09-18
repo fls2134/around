@@ -52,7 +52,7 @@
                 android:layout_weight="1"
                 android:src="@drawable/baseline_add_circle_outline_black_18dp"
                 android:onClick="Add_Tag"
-                android:background="#FFFFFF"
+                android:background="@android:color/transparent"
                 android:text="Button" />
         </LinearLayout>
         <com.google.android.flexbox.FlexboxLayout

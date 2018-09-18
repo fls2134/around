@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottom_bar);
         bottomBar.setActiveTabColor(getResources().getColor(R.color.backgroundLongin));
         bottomBar.setInActiveTabColor(getResources().getColor(R.color.inactivateTabColor));
+        bottomBar.selectTabAtPosition(1);
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(int tabId) {
@@ -65,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // 최초 화면 설정
-        bottomBar.selectTabAtPosition(1);
     }
 
     private int requestPermission()

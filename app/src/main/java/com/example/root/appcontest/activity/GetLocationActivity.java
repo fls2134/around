@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.root.appcontest.R;
 import com.example.root.appcontest.map.NMapPOIflagType;
@@ -28,7 +30,7 @@ import com.nhn.android.mapviewer.overlay.NMapResourceProvider;
 import java.io.IOException;
 import java.util.List;
 
-public class GetLocationActivity extends NMapActivity {
+public class GetLocationActivity extends NMapActivity implements SearchView.OnQueryTextListener{
 
     private NMapView mMapView;
     private final String CLIENT_ID = "A2hMBsKeTvfrDPF5q_dM";
@@ -40,6 +42,8 @@ public class GetLocationActivity extends NMapActivity {
     NMapController nMapController;
     NMapResourceProvider nMapResourceProvider;
     NMapOverlayManager nMapOverlayManager;
+    SearchView searchView;
+    Geocoder geocoder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,18 +61,17 @@ public class GetLocationActivity extends NMapActivity {
 
         nMapController = mMapView.getMapController();
         nMapResourceProvider = new ResProvider(this);
-        nMapOverlayManager = new NMapOverlayManager(this,mMapView,nMapResourceProvider);
+        nMapOverlayManager = new NMapOverlayManager(this, mMapView, nMapResourceProvider);
 
-        ImageButton searchButton = findViewById(R.id.searchButton);
-        final EditText addr_edittext = findViewById(R.id.addr_text);
-        final Geocoder geocoder = new Geocoder(this);
+        geocoder = new Geocoder(this);
+        searchView = findViewById(R.id.search_view_get_location);
+        searchView.setOnQueryTextListener(this);
 
         super.setMapDataProviderListener(new OnDataProviderListener() {
             @Override
             public void onReverseGeocoderResponse(NMapPlacemark nMapPlacemark, NMapError nMapError) {
-                if (nMapError != null)
-                {
-                    addr="주소를 찾을수 없습니다";
+                if (nMapError != null) {
+                    addr = "주소를 찾을수 없습니다";
                     item.setTitle(addr);
                 }
                 addr = nMapPlacemark.toString();
@@ -76,84 +79,90 @@ public class GetLocationActivity extends NMapActivity {
             }
         });
 
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addr = addr_edittext.getText().toString();
-                List<Address> list = null;
+    }
 
-                try
-                {
-                    list = geocoder.getFromLocationName(addr, 1);
-                }catch (IOException e)
-                {
-                    e.printStackTrace();
-                    Log.e("test", "입출력 오류");
-                }
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return true;
+    }
 
-                if(list != null)
-                {
-                    if(list.size() == 0)
-                        addr_edittext.setHint("해당하는 주소가 없습니다.");
-                    else
-                    {
-                        latitude = list.get(0).getLatitude();
-                        longitude = list.get(0).getLongitude();
-                        nMapController.setMapCenter(longitude,latitude);
-                        int marker1 = NMapPOIflagType.PIN;
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        addr = searchView.getQuery().toString();
+        List<Address> list = null;
 
-                        // set POI data
-                        final NMapPOIdata poiData = new NMapPOIdata(1, nMapResourceProvider);
+        try {
+            list = geocoder.getFromLocationName(addr, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("test", "입출력 오류");
+        }
 
-                        poiData.beginPOIdata(1);
-
-                        item = poiData.addPOIitem(null, addr, marker1, 0);
-                        findPlacemarkAtLocation(longitude, latitude);
-
-                        // initialize location to the center of the map view.
-                        item.setPoint(nMapController.getMapCenter());
-
-                        // set floating mode
-                        item.setFloatingMode(NMapPOIitem.FLOATING_TOUCH | NMapPOIitem.FLOATING_DRAG);
-
-                        // show right button on callout
-                        item.setRightButton(true);
-
-                        poiData.endPOIdata();
-
-                        // create POI data overlay
-                        NMapPOIdataOverlay poiDataOverlay = nMapOverlayManager.createPOIdataOverlay(poiData, null);
-                        poiDataOverlay.setOnFloatingItemChangeListener(new NMapPOIdataOverlay.OnFloatingItemChangeListener() {
-                            @Override
-                            public void onPointChanged(NMapPOIdataOverlay nMapPOIdataOverlay, NMapPOIitem nMapPOIitem) {
-                                NGeoPoint point = nMapPOIitem.getPoint();
-                                findPlacemarkAtLocation(point.longitude, point.latitude);
-                            }
-                        });
-                        poiDataOverlay.setOnStateChangeListener(new NMapPOIdataOverlay.OnStateChangeListener() {
-                            @Override
-                            public void onFocusChanged(NMapPOIdataOverlay nMapPOIdataOverlay, NMapPOIitem nMapPOIitem) {
-
-                            }
-
-                            @Override
-                            public void onCalloutClick(NMapPOIdataOverlay nMapPOIdataOverlay, NMapPOIitem nMapPOIitem) {
-                                NGeoPoint point = nMapPOIitem.getPoint();
-                                longitude = point.longitude;
-                                latitude = point.latitude;
-                                Intent resultIntent = new Intent();
-                                resultIntent.putExtra("longitude", longitude);
-                                resultIntent.putExtra("latitude", latitude);
-                                resultIntent.putExtra("addr", addr);
-                                setResult(Activity.RESULT_OK, resultIntent);
-                                finish();
-
-                            }
-                        });
-                    }
-                }
-
+        if (list != null) {
+            if (list.size() == 0)
+            {
+                searchView.setQuery("", false);
+                searchView.setQueryHint("해당하는 주소가 없습니다.");
             }
-        });
+            else {
+                searchView.clearFocus();
+                latitude = list.get(0).getLatitude();
+                longitude = list.get(0).getLongitude();
+                nMapController.setMapCenter(longitude, latitude);
+                int marker1 = NMapPOIflagType.PIN;
+
+                // set POI data
+                final NMapPOIdata poiData = new NMapPOIdata(1, nMapResourceProvider);
+
+                poiData.beginPOIdata(1);
+
+                item = poiData.addPOIitem(null, addr, marker1, 0);
+                findPlacemarkAtLocation(longitude, latitude);
+
+                // initialize location to the center of the map view.
+                item.setPoint(nMapController.getMapCenter());
+
+                // set floating mode
+                item.setFloatingMode(NMapPOIitem.FLOATING_TOUCH | NMapPOIitem.FLOATING_DRAG);
+
+                // show right button on callout
+                item.setRightButton(true);
+
+                poiData.endPOIdata();
+
+                // create POI data overlay
+                NMapPOIdataOverlay poiDataOverlay = nMapOverlayManager.createPOIdataOverlay(poiData, null);
+                poiDataOverlay.setOnFloatingItemChangeListener(new NMapPOIdataOverlay.OnFloatingItemChangeListener() {
+                    @Override
+                    public void onPointChanged(NMapPOIdataOverlay nMapPOIdataOverlay, NMapPOIitem nMapPOIitem) {
+                        NGeoPoint point = nMapPOIitem.getPoint();
+                        findPlacemarkAtLocation(point.longitude, point.latitude);
+                    }
+                });
+                poiDataOverlay.setOnStateChangeListener(new NMapPOIdataOverlay.OnStateChangeListener() {
+                    @Override
+                    public void onFocusChanged(NMapPOIdataOverlay nMapPOIdataOverlay, NMapPOIitem nMapPOIitem) {
+
+                    }
+
+                    @Override
+                    public void onCalloutClick(NMapPOIdataOverlay nMapPOIdataOverlay, NMapPOIitem nMapPOIitem) {
+                        NGeoPoint point = nMapPOIitem.getPoint();
+                        longitude = point.longitude;
+                        latitude = point.latitude;
+                        Intent resultIntent = new Intent();
+                        resultIntent.putExtra("longitude", longitude);
+                        resultIntent.putExtra("latitude", latitude);
+                        resultIntent.putExtra("addr", addr);
+                        setResult(Activity.RESULT_OK, resultIntent);
+                        finish();
+
+                    }
+                });
+            }
+        }
+        return true;
+
     }
 }
+
