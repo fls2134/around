@@ -1,5 +1,6 @@
 package com.example.root.appcontest.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -113,6 +114,10 @@ public class MyPageFragment extends Fragment implements View.OnClickListener{
 
             case R.id.btn_setting_my:
                 Toast.makeText(getActivity().getApplicationContext(), "설정버튼", Toast.LENGTH_SHORT).show();
+                //테스트 한다고 잠깐 추가 다시 없애야함
+                Intent i = new Intent(getActivity(), InfoActivity.class);
+                startActivity(i);
+                //end here
                 break;
         }
     }

@@ -26,7 +26,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     public static final int MY_PERMISSIONS_REQUEST_CUR_PLACE = 3;
     FragmentTransaction fragmentTransaction;
-    ArrayList<LocalData> datas;//서버에서 불러올 데이터 모은 어레이리스트
+    public ArrayList<LocalData> datas;//서버에서 불러올 데이터 모은 어레이리스트
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
