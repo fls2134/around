@@ -1,9 +1,11 @@
 package com.example.root.appcontest.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
@@ -14,6 +16,11 @@ import android.widget.Toast;
 
 import com.example.root.appcontest.R;
 import com.example.root.appcontest.model.LocalData;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
@@ -26,12 +33,18 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     public static final int MY_PERMISSIONS_REQUEST_CUR_PLACE = 3;
     FragmentTransaction fragmentTransaction;
-    public ArrayList<LocalData> datas;//서버에서 불러올 데이터 모은 어레이리스트
+    public ArrayList<LocalData> data_array;//서버에서 불러올 데이터 모은 어레이리스트
+    FirebaseDatabase database;
+    DatabaseReference databaseReference;
+    LocalData LD_tmp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Firebase 레퍼런스
+        database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference("Local_info");
 
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -69,8 +82,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        datas = new ArrayList<>();
-        getServerDatas(datas);
+        data_array = new ArrayList<>();
+        getServerDatas();
         // 최초 화면 설정
     }
 
@@ -107,11 +120,33 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    void getServerDatas(ArrayList<LocalData> datas)
+    void getServerDatas()
     {
-        LocalData a;//생성자로 서버에서 받아온값 다 넣어주면 될듯?
+        //생성자로 서버에서 받아온값 다 넣어주면 될듯?
         //pull하고 datas.add(Localdata형식클래스) 하기
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot messageData : dataSnapshot.getChildren()) {
+                    //LD_tmp = new LocalData();
+                    LD_tmp = messageData.getValue(LocalData.class);
+                    data_array.add(LD_tmp);
+                    // child 내에 있는 데이터만큼 반복합니다.
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getApplicationContext(),"오류 발생",Toast.LENGTH_LONG);
+            }
+        });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        getServerDatas();
+    }
 }
 

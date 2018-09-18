@@ -64,13 +64,13 @@ public class WriteActivity extends AppCompatActivity {
     String img_link;
     String tag;
     Bitmap img;
-    int type;
+    int type = -1;
 
-    int sYear, sMonth, sDay, sHour, sMin;
-    int eYear, eMonth, eDay, eHour, eMin;
+    int sYear = -1, sMonth, sDay;
+    int eYear = -1, eMonth, eDay;
 
-    double longitude;
-    double latitude;
+    double longitude = -1;
+    double latitude = -1;
     //여기까지
     String addr;
 
@@ -154,6 +154,7 @@ public class WriteActivity extends AppCompatActivity {
     {
 
         title = editText_title.getText().toString();
+        content = editText_content.getText().toString();
         localData = new LocalData();
         StorageReference uploadRef = storageRef.child(title);
 
@@ -190,6 +191,9 @@ public class WriteActivity extends AppCompatActivity {
         localData.eMonth = eMonth;
         localData.eDay = eDay;
         localData.tag = tag;
+
+        if(handleException() < 0)
+            return;
         //type (final 변수들 참조) // int
         //longitude => 설정하면 값 할당 되있음 double
         //latitude => 이하 동문 double
@@ -203,8 +207,52 @@ public class WriteActivity extends AppCompatActivity {
         //서버에 다올리고 난뒤
         databseRef.child(title).setValue(localData);
         Toast.makeText(getApplicationContext(),"업로드가 완료되었습니다.",Toast.LENGTH_LONG);
-     //   finish();
+        setResult(RESULT_OK);
+        finish();
     }
+
+    private int handleException()
+    {
+        /*
+        if(img_link.isEmpty())
+        {
+            Toast.makeText(this, "이미지를 업로드 해 주세요.", Toast.LENGTH_SHORT).show();
+            return -1;
+        }
+        else */
+        if(title.isEmpty())
+        {
+            Toast.makeText(this, "제목을 입력 해 주세요.", Toast.LENGTH_SHORT).show();
+            return -1;
+        }
+        else if(content.isEmpty())
+        {
+            Toast.makeText(this, "내용을 입력 해 주세요.", Toast.LENGTH_SHORT).show();
+            return -1;
+        }
+        else if(type == -1)
+        {
+            Toast.makeText(this, "유형을 지정 해 주세요.", Toast.LENGTH_SHORT).show();
+            return -1;
+        }
+        else if(longitude == -1)
+        {
+            Toast.makeText(this, "좌표를 지정 해 주세요.", Toast.LENGTH_SHORT).show();
+            return -1;
+        }
+        else if(sYear == -1)
+        {
+            Toast.makeText(this, "시작하는 일자를 지정 해 주세요.", Toast.LENGTH_SHORT).show();
+            return -1;
+        }
+        else if(eYear == -1)
+        {
+            Toast.makeText(this, "종료하는 일자를 지정 해 주세요.", Toast.LENGTH_SHORT).show();
+            return -1;
+        }
+        return 0;
+    }
+
     public void onClickImage(View v)// 카메라나 여러개 이미지 업로드 여부도 생각해보자.
     {
         if(requestPermission() == PackageManager.PERMISSION_GRANTED)

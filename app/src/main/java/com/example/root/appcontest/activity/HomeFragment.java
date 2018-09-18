@@ -30,6 +30,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     private boolean searchMode = false;
 
+    static final int WRITE_REQUEST_CODE = 1883;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -107,7 +108,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onClick(View view) {
                 Intent writeIntent = new Intent(getActivity(), WriteActivity.class);
-                startActivity(writeIntent);
+                startActivityForResult(writeIntent, WRITE_REQUEST_CODE);
             }
         });
     }
