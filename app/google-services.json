@@ -39,6 +39,14 @@
           }
         },
         {
+          "client_id": "1085788956667-hjbh2aksv3kea3gnn15f6arbt2i8e4b8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.root.appcontest",
+            "certificate_hash": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+          }
+        },
+        {
           "client_id": "1085788956667-5h0ikovo4i4n84qtrlvahldtdj5c30jr.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -79,6 +87,50 @@
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.sens.dbsearch",
+            "certificate_hash": "ff3a542f6478605380e3cdc275cebfc7f25decf7"
+          }
+        },
+        {
+          "client_id": "1085788956667-5h0ikovo4i4n84qtrlvahldtdj5c30jr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUirCVusV30zYGqRzc49bgztf21emb6vg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1085788956667-5h0ikovo4i4n84qtrlvahldtdj5c30jr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1085788956667:android:a5e00afbf6400f3f",
+        "android_client_info": {
+          "package_name": "com.example.sens.facebooklogin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1085788956667-edtv1o3qenuguts9o3l7g57gk5vqbkfm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sens.facebooklogin",
             "certificate_hash": "ff3a542f6478605380e3cdc275cebfc7f25decf7"
           }
         },
