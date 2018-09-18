@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,7 +27,18 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.root.appcontest.R;
+import com.example.root.appcontest.model.LocalData;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
 
@@ -49,7 +61,7 @@ public class WriteActivity extends AppCompatActivity {
     //서버에 올릴 정보들
     String title;
     String content;
-    String link;
+    String img_link;
     String tag;
     Bitmap img;
     int type;
@@ -62,7 +74,12 @@ public class WriteActivity extends AppCompatActivity {
     //여기까지
     String addr;
 
-
+    //DB 관련 변수
+    FirebaseDatabase database;
+    DatabaseReference databseRef;
+    FirebaseStorage storage;
+    StorageReference storageRef;
+    LocalData localData;
 
     RadioGroup rg;
     EditText editText_title;
@@ -87,7 +104,10 @@ public class WriteActivity extends AppCompatActivity {
         timeStartButton = findViewById(R.id.time_start);
         timeEndButton = findViewById(R.id.time_end);
 
-
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference();
+        database = FirebaseDatabase.getInstance();
+        databseRef = database.getReference("Local_info");
 
     }
     public void OneRadioButtonClicked(View v)
@@ -132,8 +152,44 @@ public class WriteActivity extends AppCompatActivity {
     }
     public void onClickComplete(View v)
     {
-        title = editText_title.getText().toString(); //String
-        content = editText_content.getText().toString(); // String
+
+        title = editText_title.getText().toString();
+        localData = new LocalData();
+        StorageReference uploadRef = storageRef.child(title);
+
+        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = uploadRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                img_link = taskSnapshot.getDownloadUrl().toString();
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                // ...
+            }
+        });
+
+        localData.img_url = img_link;
+        localData.title = editText_title.getText().toString(); //String
+        localData.content = editText_content.getText().toString(); // String
+        localData.data_type = type;
+        localData.longtitude = longitude;
+        localData.latitude = latitude;
+        localData.sYear = sYear;
+        localData.sMonth = sMonth;
+        localData.sDay = sDay;
+        localData.eYear = eYear;
+        localData.eMonth = eMonth;
+        localData.eDay = eDay;
+        localData.tag = tag;
         //type (final 변수들 참조) // int
         //longitude => 설정하면 값 할당 되있음 double
         //latitude => 이하 동문 double
@@ -141,13 +197,13 @@ public class WriteActivity extends AppCompatActivity {
         //img =>설정하면 값 할당 되있음 Bitmap
         //imageView <- 얘가 이미지 들어가있는 이미지 뷰 glide로 push할꺼면 얘 쓰셈
         //int sYear, sMonth, sDay  시작 날짜 & 시간
-        //int eYear, eMonth, eDay  시작 날짜 & 시간
+        //int eYear, eMonth, eDay  종료 날짜 & 시간
         //그외 id 같은것들 추가 해야 할것들 있으면 하셈
-
         //Toast.makeText(this, "sibla" + sYear + sMonth + sDay+ '\n' + eYear + eMonth + eDay  , Toast.LENGTH_SHORT).show();
-
         //서버에 다올리고 난뒤
-        finish();
+        databseRef.child(title).setValue(localData);
+        Toast.makeText(getApplicationContext(),"업로드가 완료되었습니다.",Toast.LENGTH_LONG);
+     //   finish();
     }
     public void onClickImage(View v)// 카메라나 여러개 이미지 업로드 여부도 생각해보자.
     {
