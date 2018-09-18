@@ -16,22 +16,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/addr_text"
+            <android.support.v7.widget.SearchView
+                android:id="@+id/search_view_get_location"
+                app:queryHint="지역명을 입력해 주세요(동/건물 등...)"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:hint="주소 (동이름/도로명 등...)"
-                 />
+                android:layout_height="wrap_content"/>
 
-            <ImageButton
-                android:id="@+id/searchButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@android:drawable/ic_menu_search" />
 
         </LinearLayout>
 

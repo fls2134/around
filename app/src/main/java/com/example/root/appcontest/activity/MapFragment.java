@@ -3,11 +3,13 @@ package com.example.root.appcontest.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -63,6 +65,8 @@ public class MapFragment extends NMapFragment implements View.OnClickListener{
     NMapLocationManager locationManager;
     MapContainerView mMapContainerView;
 
+    double cur_lat;
+    double cur_lng;
 
     private boolean searchMode = false;
 
@@ -96,7 +100,10 @@ public class MapFragment extends NMapFragment implements View.OnClickListener{
         nMapOverlayManager = new NMapOverlayManager(getContext(),mMapView,nMapResourceProvider);
         myLocationOverlay = nMapOverlayManager.createMyLocationOverlay(locationManager, compassManager);
 
-        testPOIdataOverlay();
+        //mMapContainerView = new MapContainerView(getContext());
+        //mMapContainerView.addView(mMapView);
+
+        //testPOIdataOverlay();
         //startMyLocation(); 현재위치 방향까지 같이 표시
 
     }
@@ -110,8 +117,6 @@ public class MapFragment extends NMapFragment implements View.OnClickListener{
         mMapView.setClientId(CLIENT_ID);
         mMapView.setClickable(true);
         //mMapView = new NMapView(getContext());
-        //mMapContainerView = new MapContainerView(getContext());
-        //mMapContainerView.addView(mMapView);
         //LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //View view = vi.inflate(R.layout.test,null);
         //mMapView.addView(vi);
@@ -167,13 +172,22 @@ public class MapFragment extends NMapFragment implements View.OnClickListener{
 
     private void testPOIdataOverlay() {
 
+        final int ITEM_SIZE = 12;
         // Markers for POI item
         int markerId = NMapPOIflagType.PIN;
+        float results[];
 
         // set POI data
         NMapPOIdata poiData = new NMapPOIdata(2, nMapResourceProvider);
         poiData.beginPOIdata(2);
-        NMapPOIitem item = poiData.addPOIitem(126.95976602854101, 37.49470439862809, "Pizza 777-111", markerId, 0);
+        for (int i = 0; i < ITEM_SIZE; i++) {
+            double item_lat = 126.95976602854101+(0.0005*i);
+            double item_lng =  37.49470439862809;
+          //  Location.distanceBetween(cur_lat,cur_lng,item_lat,item_lng,results);
+          //  if(results[0]>500)
+          //      NMapPOIitem item = poiData.addPOIitem(item_lat,item_lng, "바겐 세일~~~ "+i, markerId, 0);
+        }
+        //Location.distanceBetween(cur_lat,cur_lng,,,results);
         poiData.addPOIitem(127.061, 37.51, "Pizza 123-456", markerId, 0);
 
 
@@ -216,24 +230,6 @@ public class MapFragment extends NMapFragment implements View.OnClickListener{
         }
     };
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode)
-        {
-            case MY_PERMISSON_REQUEST_FINE_LOCATION:
-            {
-                if( grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                {
-                    ;
-                }
-                else
-                {
-                    ;
-                }
-                return;
-            }
-        }
-    };
 
     private void startMyLocation() {
 
@@ -293,6 +289,9 @@ public class MapFragment extends NMapFragment implements View.OnClickListener{
         public boolean onLocationChanged(NMapLocationManager nMapLocationManager, NGeoPoint nGeoPoint) {
             if(nMapController != null)
             {
+                cur_lat = nGeoPoint.latitude;
+                cur_lng = nGeoPoint.longitude;
+                testPOIdataOverlay();
                 nMapController.animateTo(nGeoPoint);
                 //nMapController.setZoomLevel(13);
                 NMapPathDataOverlay pathDataOverlay = nMapOverlayManager.createPathDataOverlay();
@@ -314,6 +313,7 @@ public class MapFragment extends NMapFragment implements View.OnClickListener{
                 circleStyle.setFillColor(0x0000FF,0x20);
                 circleData.setCircleStyle(circleStyle);
                 pathDataOverlay.showAllPathData(0);
+
             }
             return true;
         }
