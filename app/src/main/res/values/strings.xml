@@ -1,6 +1,70 @@
 <resources>
-    <string name="app_name">STreveler</string>
+    <string name="app_name">어라운드</string>
+    <string name="title_main"> 메인</string>
+    <string name="title_map"> 지도</string>
+    <string name="title_my"> 마이 페이지</string>
+    <string name="searching"> Search...</string>
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">YOUR_APP_ID</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fbYOUR_APP_ID</string>
+
+    <string-array name="rest_tags">
+        <item>일식</item>
+        <item>중식</item>
+        <item>한식</item>
+        <item>중식</item>
+        <item>양식</item>
+        <item>맛집</item>
+        <item>이벤트</item>
+        <item>분위기 좋은</item>
+        <item>저렴한</item>
+        <item>가족과 함께</item>
+        <item>애인과 함께</item>
+        <item>맥주</item>
+        <item>와인</item>
+        <item>24시간</item>
+        <item>치킨</item>
+        <item>포장가능</item>
+        <item>카페</item>
+        <item>빵집</item>
+        <item>인기맛집</item>
+    </string-array>
+
+    <string-array name="con_tags">
+        <item>재즈</item>
+        <item>락</item>
+        <item>내한공연</item>
+        <item>클래식</item>
+        <item>코메디</item>
+        <item>힙스터</item>
+        <item>단독공연</item>
+        <item>신나는</item>
+        <item>조용한</item>
+        <item>독특한</item>
+        <item>놀기좋은</item>
+        <item>파티</item>
+        <item>힙합</item>
+        <item>축제</item>
+        <item>인터네셔널</item>
+        <item>데이트</item>
+        <item>뮤지컬</item>
+        <item>영화</item>
+        <item>한강</item>
+    </string-array>
+
+    <string-array name="event_tags">
+        <item>대박할인</item>
+        <item>화장품</item>
+        <item>수입과자</item>
+        <item>1+1</item>
+        <item>증정품</item>
+        <item>사은품</item>
+        <item>선물용</item>
+        <item>행사</item>
+        <item>시즌오프</item>
+        <item>특가</item>
+        <item>여름상품</item>
+        <item>캐릭터</item>
+    </string-array>
+
 </resources>

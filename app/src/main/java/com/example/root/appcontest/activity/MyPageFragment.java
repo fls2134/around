@@ -14,6 +14,11 @@ import android.widget.Toast;
 import com.example.root.appcontest.model.SearchEditText;
 import com.example.root.appcontest.R;
 
+
+/**
+ * made by sks 2018. 09. 17
+ * Fragment for Show User's info
+ */
 public class MyPageFragment extends Fragment implements View.OnClickListener{
 
     TabLayout mTabs;
@@ -93,13 +98,14 @@ public class MyPageFragment extends Fragment implements View.OnClickListener{
             case R.id.btn_search_my:
                 if(!searchMode) {
                     mSearchButton.setImageResource(R.drawable.ic_keyboard_arrow);
-                    mEditText.setHint("Search...");
+                    mEditText.setHint(R.string.searching);
                     mEditText.setUseableEditText(true);
                     searchMode = true;
                 }
                 else {
                     mSearchButton.setImageResource(R.drawable.ic_search);
-                    mEditText.setHint(" 마이 페이지");
+                    mEditText.setText(null);
+                    mEditText.setHint(R.string.title_my);
                     mEditText.setUseableEditText(false);
                     searchMode = false;
                 }

@@ -1,6 +1,8 @@
 package com.example.root.appcontest.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -14,13 +16,17 @@ import android.widget.Toast;
 import com.example.root.appcontest.model.SearchEditText;
 import com.example.root.appcontest.R;
 
-
+/**
+ * made by sks 2018. 09. 17
+ * Fragment for Main page
+ */
 public class HomeFragment extends Fragment implements View.OnClickListener{
 
     TabLayout mTabs;
     SearchEditText mEditText;
     ImageButton mSearchButton;
     ImageButton mFilterButton;
+    FloatingActionButton writeBtn;
 
     private boolean searchMode = false;
 
@@ -38,9 +44,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onViewCreated(View view, Bundle savedInstance) {
         super.onViewCreated(view, savedInstance);
+
         setTabs(view);
         setToolbar(view);
 
+        setFloatingButton(view);
     }
 
     private void setToolbar(View view) {
@@ -65,7 +73,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
         mEditText.setUseableEditText(false);
 
-        // filterButton add
+        // add filter button
         mFilterButton = (ImageButton) view.findViewById(R.id.btn_filter_home);
         mFilterButton.setOnClickListener(this);
     }
@@ -93,19 +101,31 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         });
     }
 
+    private void setFloatingButton(View view) {
+        writeBtn = view.findViewById(R.id.floatingActionButton_home);
+        writeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent writeIntent = new Intent(getActivity(), WriteActivity.class);
+                startActivity(writeIntent);
+            }
+        });
+    }
+
     @Override
     public void onClick(View view) {
         switch(view.getId()) {
             case R.id.btn_search_home:
                 if(!searchMode) {
                     mSearchButton.setImageResource(R.drawable.ic_keyboard_arrow);
-                    mEditText.setHint("Search...");
+                    mEditText.setHint(R.string.searching);
                     mEditText.setUseableEditText(true);
                     searchMode = true;
                 }
                 else {
                     mSearchButton.setImageResource(R.drawable.ic_search);
-                    mEditText.setHint(" 메인");
+                    mEditText.setText(null);
+                    mEditText.setHint(R.string.title_main);
                     mEditText.setUseableEditText(false);
                     searchMode = false;
                 }
