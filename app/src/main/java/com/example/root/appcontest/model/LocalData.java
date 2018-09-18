@@ -2,13 +2,13 @@ package com.example.root.appcontest.model;
 
 public class LocalData {
 
-    String title;
-    double longtitude;
-    double latitude;
-    String uptime;
-    String img_url;
-    String tag;
-    String content;
-    short data_type;
+    public String title;
+    public double longtitude;
+    public double latitude;
+    public String uptime;
+    public String img_url;
+    public String tag;
+    public String content;
+    public short data_type;
 
 }
