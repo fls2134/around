@@ -175,20 +175,22 @@ public class MapFragment extends NMapFragment implements View.OnClickListener{
         final int ITEM_SIZE = 12;
         // Markers for POI item
         int markerId = NMapPOIflagType.PIN;
-        float results[];
+        float results[]= new float[1];
 
         // set POI data
         NMapPOIdata poiData = new NMapPOIdata(2, nMapResourceProvider);
         poiData.beginPOIdata(2);
         for (int i = 0; i < ITEM_SIZE; i++) {
-            double item_lat = 126.95976602854101+(0.0005*i);
-            double item_lng =  37.49470439862809;
-          //  Location.distanceBetween(cur_lat,cur_lng,item_lat,item_lng,results);
-          //  if(results[0]>500)
-          //      NMapPOIitem item = poiData.addPOIitem(item_lat,item_lng, "바겐 세일~~~ "+i, markerId, 0);
+            double item_lat =  37.49470439862809;
+            double item_lng = 126.95976602854101+(0.0005*i);
+            Location.distanceBetween(cur_lat,cur_lng,item_lat,item_lng,results);
+            NMapPOIitem item;
+            if(results[0]<=100.0F)
+                item = poiData.addPOIitem(item_lng,item_lat, "바겐 세일~~~ "+i, markerId, 0);
+                //NMapPOIitem item = poiData.addPOIitem(item_lat,item_lng, "바겐 세일~~~ "+i, markerId, 0);
         }
         //Location.distanceBetween(cur_lat,cur_lng,,,results);
-        poiData.addPOIitem(127.061, 37.51, "Pizza 123-456", markerId, 0);
+       // poiData.addPOIitem(127.061, 37.51, "Pizza 123-456", markerId, 0);
 
 
 
@@ -215,6 +217,7 @@ public class MapFragment extends NMapFragment implements View.OnClickListener{
             }
 
             // [[TEMP]] handle a click event of the callout
+            // 인텐트해서 인포 액티비티 만들자.
             Toast.makeText(getContext(), "onCalloutClick: " + item.getTitle(), Toast.LENGTH_LONG).show();
         }
 

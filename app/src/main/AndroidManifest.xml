@@ -42,6 +42,7 @@
         <activity android:name=".activity.GetLocationActivity" />
         <activity android:name=".activity.WriteActivity" />
         <activity android:name=".activity.TagActivity" />
+        <activity android:name=".activity.InfoActivity" />
     </application>
 
 </manifest>
