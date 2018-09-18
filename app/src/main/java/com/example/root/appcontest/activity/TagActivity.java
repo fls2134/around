@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -52,8 +52,9 @@ public class TagActivity extends AppCompatActivity implements View.OnClickListen
                 strings = null;
         }
 
-        //ActionBar actionBar = getSupportActionBar();
-        //actionBar.setTitle("태그 설정");
+        Toolbar toolbar = findViewById(R.id.toolbar_tag);
+        toolbar.setTitle("태그 설정");
+        setSupportActionBar(toolbar);
 
         flexboxLayout_tags = findViewById(R.id.flexbox_layout_tags);
         flexboxLayout_res = findViewById(R.id.flexbox_layout_res);

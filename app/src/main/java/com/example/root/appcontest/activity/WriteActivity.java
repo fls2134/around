@@ -12,6 +12,7 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -41,7 +42,6 @@ public class WriteActivity extends AppCompatActivity {
     final int TYPE_EVENT = 7;
 
     final int MY_PERMISSIONS_REQUEST_CUR_PLACE = 3;
-    final int MY_PERMISSIONS_REQUEST_GALLERY = 108;
     final int GALLERY_CODE = 1112;
     final int LOCATION_CDDE = 1113;
     final int TAG_CODE = 1114;
@@ -152,24 +152,15 @@ public class WriteActivity extends AppCompatActivity {
     }
     public void onClickImage(View v)// 카메라나 여러개 이미지 업로드 여부도 생각해보자.
     {
-        int permissionCheck = ContextCompat.checkSelfPermission(WriteActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
-        if(permissionCheck != PackageManager.PERMISSION_GRANTED)
+        if(requestPermission() == PackageManager.PERMISSION_GRANTED)
         {
-            ActivityCompat.requestPermissions(WriteActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_GALLERY);
-            //if(ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION))
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            intent.setType("image/");
+            startActivityForResult(intent,GALLERY_CODE);
         }
         else
-        {
-            if(permissionCheck == PackageManager.PERMISSION_GRANTED)
-            {
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                intent.setType("image/");
-                startActivityForResult(intent,GALLERY_CODE);
-            }
-            else
-                Toast.makeText(WriteActivity.this, "저장소 권한이 없어 이미지를 불러올 수 없습니다.", Toast.LENGTH_SHORT).show();
-        }
+            Toast.makeText(this, "저장소 권한이 없어 이미지를 업로드할 수 없습니다.", Toast.LENGTH_SHORT).show();
     }
 
     public void onClickLocation(View v)
@@ -317,5 +308,43 @@ public class WriteActivity extends AppCompatActivity {
         return cursor.getString(column_index);
     }
 
+    private int requestPermission()
+    {
+        int permissionCheck = ContextCompat.checkSelfPermission(WriteActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        if(permissionCheck != PackageManager.PERMISSION_GRANTED)
+        {
+            ActivityCompat.requestPermissions(WriteActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_CUR_PLACE);
+            return -1;
+        }
+        else
+        {
+            if(permissionCheck == PackageManager.PERMISSION_GRANTED)
+                return PackageManager.PERMISSION_GRANTED;
+            else
+                return PackageManager.PERMISSION_DENIED;
+        }
+    }
+
+
+        @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode)
+        {
+            case MY_PERMISSIONS_REQUEST_CUR_PLACE:
+            {
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                {
+                    Intent intent = new Intent(Intent.ACTION_PICK);
+                    intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    intent.setType("image/");
+                    startActivityForResult(intent,GALLERY_CODE);
+                }
+                else
+                    Toast.makeText(WriteActivity.this, "저장소 권한이 없으면 이미지를 불러올 수 없습니다.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+        }
+        }
 
 }

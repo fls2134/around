@@ -1,4 +1,4 @@
-package com.example.root.appcontest.activity;
+package com.example.root.appcontest.map;
 
 public class NMapPOIflagType {
     public static final int UNKNOWN = 0x0000;

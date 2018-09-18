@@ -1,4 +1,4 @@
-package com.example.root.appcontest.activity;
+package com.example.root.appcontest.map;
 
 import android.content.Context;
 import android.graphics.Bitmap;

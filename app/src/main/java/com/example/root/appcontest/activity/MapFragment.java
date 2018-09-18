@@ -19,6 +19,9 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.root.appcontest.R;
+import com.example.root.appcontest.map.NMapFragment;
+import com.example.root.appcontest.map.NMapPOIflagType;
+import com.example.root.appcontest.map.ResProvider;
 import com.example.root.appcontest.model.SearchEditText;
 import com.nhn.android.maps.NMapCompassManager;
 import com.nhn.android.maps.NMapController;
@@ -42,7 +45,7 @@ import static com.example.root.appcontest.BuildConfig.DEBUG;
  * made by sks 2018. 09. 17
  * Fragment for Show map
  */
-public class MapFragment extends Fragment implements View.OnClickListener{
+public class MapFragment extends NMapFragment implements View.OnClickListener{
 
     SearchEditText mEditText;
     ImageButton mSearchButton;

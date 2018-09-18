@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.example.root.appcontest.R;
+import com.example.root.appcontest.map.NMapPOIflagType;
+import com.example.root.appcontest.map.ResProvider;
 import com.nhn.android.maps.NMapActivity;
 import com.nhn.android.maps.NMapController;
 import com.nhn.android.maps.NMapView;

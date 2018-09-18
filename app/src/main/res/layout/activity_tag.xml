@@ -10,6 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_tag"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/themeColor"
+            app:titleTextColor="@color/primaryTextColor"
+            android:elevation="4dp"/>
 
         <com.google.android.flexbox.FlexboxLayout
             android:id="@+id/flexbox_layout_tags"
