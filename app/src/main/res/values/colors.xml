@@ -8,4 +8,8 @@
     <color name="backgroundLongin">#263797</color>
     <color name="tabSelectColor">#1f5627</color>
     <color name="inactivateTabColor">#B0B0B0</color>
+    <color name="lineColor">#898989</color>
+    <color name="writingSpace">#F0F0F0</color>
+    <color name="writingMenuColor">#ffffff</color>
+    <color name="writingMenuTextColor">#070461</color>
 </resources>

@@ -92,7 +92,7 @@ public class WriteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_write);
+        setContentView(R.layout.activity_writing);
 
         type = -1; // 선택 안된 상태
         rg = findViewById(R.id.type_group);
