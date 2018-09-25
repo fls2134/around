@@ -1,5 +1,7 @@
 package com.example.root.appcontest.activity;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,6 +12,8 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -27,6 +31,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     ImageButton mSearchButton;
     ImageButton mFilterButton;
     FloatingActionButton writeBtn;
+    Dialog filterDialog;
 
     private boolean searchMode = false;
 
@@ -113,6 +118,32 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         });
     }
 
+    private void createFilterDialog()
+    {
+        final View innerView = getLayoutInflater().inflate(R.layout.dialog_filter, null);
+
+        Button b = innerView.findViewById(R.id.button_comp_dialog);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                filterDialog.dismiss();
+            }
+        });
+        filterDialog = new Dialog(getActivity());
+        filterDialog.setContentView(innerView);
+
+        filterDialog.setCancelable(true);
+        filterDialog.setCanceledOnTouchOutside(true);
+
+        filterDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                Toast.makeText(getActivity(), "sibal", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        filterDialog.show();
+    }
     @Override
     public void onClick(View view) {
         switch(view.getId()) {
@@ -133,7 +164,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.btn_filter_home:
-                Toast.makeText(getActivity().getApplicationContext(), "filter", Toast.LENGTH_SHORT).show();
+                createFilterDialog();
                 break;
         }
     }

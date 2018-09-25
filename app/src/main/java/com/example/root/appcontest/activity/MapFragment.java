@@ -179,9 +179,17 @@ public class MapFragment extends NMapFragment implements View.OnClickListener{
         // Markers for POI item
         int markerId = NMapPOIflagType.PIN;
         float results[]= new float[1];
+        ArrayList<LocalData> data_array;
 
         //로컬 데이터 담을 어레이리스트
-        ArrayList<LocalData> data_array = ((MainActivity)getActivity()).data_array;
+        try
+        {
+            data_array = ((MainActivity)getActivity()).data_array;
+        }
+        catch(NullPointerException e)
+        {
+            return;
+        }
 
 
         //localDatas.add(로컬 데이터)로 서버에있는거 다 들고오기
