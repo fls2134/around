@@ -179,22 +179,30 @@ public class MapFragment extends NMapFragment implements View.OnClickListener{
         // Markers for POI item
         int markerId = NMapPOIflagType.PIN;
         float results[]= new float[1];
+        ArrayList<LocalData> data_array;
 
         //로컬 데이터 담을 어레이리스트
-        ArrayList<LocalData> localDatas = new ArrayList<>();
+        try
+        {
+            data_array = ((MainActivity)getActivity()).data_array;
+        }
+        catch(NullPointerException e)
+        {
+            return;
+        }
 
 
         //localDatas.add(로컬 데이터)로 서버에있는거 다 들고오기
         // set POI data
         NMapPOIdata poiData = new NMapPOIdata(2, nMapResourceProvider);
         poiData.beginPOIdata(2);
-        for (int i = 0; i < localDatas.size(); i++) {
-            double item_lat = localDatas.get(i).latitude;
-            double item_lng = localDatas.get(i).longtitude;
+        for (int i = 0; i < data_array.size(); i++) {
+            double item_lat = data_array.get(i).latitude;
+            double item_lng = data_array.get(i).longtitude;
             Location.distanceBetween(cur_lat,cur_lng,item_lat,item_lng,results);
             NMapPOIitem item;
             if(results[0]<=100.0F)//지금설정으로는 현재위치에서 100m내 마커만 보일것.
-                item = poiData.addPOIitem(item_lng,item_lat, "바겐 세일~~~ "+i, markerId, 0);
+                item = poiData.addPOIitem(item_lng,item_lat, data_array.get(i).title, markerId, 0);
                 //NMapPOIitem item = poiData.addPOIitem(item_lat,item_lng, "바겐 세일~~~ "+i, markerId, 0);
         }
         //Location.distanceBetween(cur_lat,cur_lng,,,results);

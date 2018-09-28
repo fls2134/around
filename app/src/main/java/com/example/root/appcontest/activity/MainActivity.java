@@ -1,9 +1,11 @@
 package com.example.root.appcontest.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
@@ -81,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         data_array = new ArrayList<>();
-        getServerDatas(data_array);
+        getServerDatas();
         // 최초 화면 설정
     }
 
@@ -118,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    void getServerDatas(ArrayList<LocalData> datas)
+    void getServerDatas()
     {
         //생성자로 서버에서 받아온값 다 넣어주면 될듯?
         //pull하고 datas.add(Localdata형식클래스) 하기
@@ -131,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
                     LD_tmp = messageData.getValue(LocalData.class);
                     data_array.add(LD_tmp);
                     // child 내에 있는 데이터만큼 반복합니다.
-                    Toast.makeText(getApplicationContext(),LD_tmp.title,Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -142,5 +143,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        getServerDatas();
+    }
 }
 
