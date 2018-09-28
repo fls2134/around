@@ -9,6 +9,10 @@ import android.widget.TextView;
 import com.example.root.appcontest.R;
 import com.google.android.flexbox.FlexboxLayout;
 
+
+/**
+ * Show information of Item
+ */
 public class InfoActivity extends AppCompatActivity {
 
     @Override
