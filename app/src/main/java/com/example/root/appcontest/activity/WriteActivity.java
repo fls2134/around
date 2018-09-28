@@ -203,7 +203,7 @@ public class WriteActivity extends AppCompatActivity {
         //서버에 다올리고 난뒤
         databseRef.child(title).setValue(localData);
         Toast.makeText(getApplicationContext(),"업로드가 완료되었습니다.",Toast.LENGTH_LONG);
-     //   finish();
+        finish();
     }
     public void onClickImage(View v)// 카메라나 여러개 이미지 업로드 여부도 생각해보자.
     {
