@@ -124,6 +124,8 @@ public class MainActivity extends AppCompatActivity {
     {
         //생성자로 서버에서 받아온값 다 넣어주면 될듯?
         //pull하고 datas.add(Localdata형식클래스) 하기
+        if(data_array.isEmpty() == false)
+            data_array.clear();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
