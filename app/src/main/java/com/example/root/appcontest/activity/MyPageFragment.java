@@ -115,7 +115,7 @@ public class MyPageFragment extends Fragment implements View.OnClickListener{
             case R.id.btn_setting_my:
                 Toast.makeText(getActivity().getApplicationContext(), "설정버튼", Toast.LENGTH_SHORT).show();
                 //테스트 한다고 잠깐 추가 다시 없애야함
-                Intent i = new Intent(getActivity(), InfoActivity.class);
+                Intent i = new Intent(getActivity(), SettingsActivity.class);
                 startActivity(i);
                 //end here
                 break;

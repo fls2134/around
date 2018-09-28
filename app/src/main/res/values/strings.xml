@@ -88,5 +88,109 @@
         <item>여름상품</item>
         <item>캐릭터</item>
     </string-array>
+    <string name="title_activity_settings">Settings</string>
 
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">일반</string>
+
+    <string name="pref_title_social_recommendations">Enable social recommendations</string>
+    <string name="pref_description_social_recommendations">Recommendations for people to contact
+        based on your message history
+    </string>
+
+    <string name="pref_title_display_name">닉네임 설정</string>
+    <string name="pref_default_display_name">닉네임</string>
+
+    <string name="pref_title_set_radius">반경 설정</string>
+    <string-array name="meters">
+        <item>500</item>
+        <item>1000</item>
+        <item>1500</item>
+        <item>2000</item>
+        <item>2500</item>
+        <item>3000</item>
+        <item>3500</item>
+        <item>4000</item>
+        <item>4500</item>
+        <item>5000</item>
+    </string-array>
+
+    <string-array name="meters_titles">
+        <item>500m</item>
+        <item>1km</item>
+        <item>1.5km</item>
+        <item>2km</item>
+        <item>2.5km</item>
+        <item>3km</item>
+        <item>3.5km</item>
+        <item>4km</item>
+        <item>4.5km</item>
+        <item>5km</item>
+    </string-array>
+
+
+    <string name="pref_title_set_categories">관심 항목 설정</string>
+    <string name="pref_summary_set_categories">알림을 받을 항목을 설정 합니다.</string>
+    <string-array name="pref_categories">
+        <item>공연</item>
+        <item>파티</item>
+        <item>연극</item>
+        <item>뮤지컬</item>
+        <item>전시회</item>
+        <item>맛집</item>
+        <item>술집</item>
+        <item>이벤트</item>
+    </string-array>
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Data &amp; sync</string>
+
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+
+    <string-array name="list_preference_entries">
+        <item>Entry 1</item>
+        <item>Entry 2</item>
+        <item>Entry 3</item>
+    </string-array>
+
+    <string-array name="list_preference_entry_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="multi_select_list_preference_default_value" />
+
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">알림</string>
+
+    <string name="pref_title_new_message_notifications">알림을 활성화 합니다.</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="pref_title_vibrate">팝업 창</string>
+
+    <string-array name="empty_array" translatable="false">
+        <item></item>
+    </string-array>
 </resources>
