@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -53,10 +54,13 @@ public class RCViewControl extends Fragment{
      */
     ArrayList<CardItem> mList = new ArrayList<>();
 
+    ProgressBar progressBar;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.recyclerview, container, false);
+
+        progressBar = view.findViewById(R.id.recyclerView_progressbar);
 
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Local_info");
@@ -149,6 +153,7 @@ public class RCViewControl extends Fragment{
          */
         //mAdapter = new RCViewAdapter(mList,getContext());
         //mRecyclerView.setAdapter(mAdapter);
+        progressBar.setVisibility(View.GONE);
         mAdapter.notifyDataSetChanged();
     }
 

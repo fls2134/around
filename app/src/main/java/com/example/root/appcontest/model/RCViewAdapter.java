@@ -11,9 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.example.root.appcontest.R;
 import com.example.root.appcontest.activity.InfoActivity;
 import com.example.root.appcontest.activity.MainActivity;
@@ -38,6 +42,7 @@ public class RCViewAdapter extends RecyclerView.Adapter<RCViewAdapter.MyViewHold
         CardView cardView;
         ImageView posterImage;
         TextView title;
+        ProgressBar progressBar;
 
         int id;
 
@@ -49,6 +54,7 @@ public class RCViewAdapter extends RecyclerView.Adapter<RCViewAdapter.MyViewHold
             posterImage = view.findViewById(R.id.poster_card);
             title = view.findViewById(R.id.title_card);
             cardView = view.findViewById(R.id.cardview);
+            progressBar = view.findViewById(R.id.progress);
         }
 
     }
@@ -72,7 +78,22 @@ public class RCViewAdapter extends RecyclerView.Adapter<RCViewAdapter.MyViewHold
         myViewHolder.id = mList.get(position).getId();
         myViewHolder.profileImage.setImageResource(mList.get(position).profileImage);
         myViewHolder.nickName.setText(mList.get(position).nickName);
-        Glide.with(context).load(mList.get(position).imgurl).into(myViewHolder.posterImage);
+        final ProgressBar viewHolderProgressBar = myViewHolder.progressBar;
+ //       final ImageView imageView = (ImageView) findViewById(R.id.img_glide);
+        Glide.with(context).load(mList.get(position).imgurl).
+                listener(new RequestListener<String, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        viewHolderProgressBar.setVisibility(View.GONE);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        viewHolderProgressBar.setVisibility(View.GONE);
+                        return false;
+                    }
+                }).into(myViewHolder.posterImage);
         //myViewHolder.posterImage.setImageResource(mList.get(position).posterImage);
         myViewHolder.title.setText(mList.get(position).tilte);
         myViewHolder.cardView.setOnClickListener(new View.OnClickListener() {

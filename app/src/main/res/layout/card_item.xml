@@ -52,12 +52,19 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <ProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:scaleType="fitXY"
+                android:id="@+id/progress"
+                android:visibility="visible"
+                />
             <ImageView
                 android:id="@+id/poster_card"
                 android:layout_width="match_parent"
                 android:layout_height="170dp"
                 android:scaleType="fitXY"
-                app:srcCompat="@drawable/around_logo2" />
+                />
 
             <View
                 android:layout_width="match_parent"
