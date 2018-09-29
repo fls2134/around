@@ -36,6 +36,25 @@ public class AlarmService extends Service {
     }
 
     private final IBinder mBinder = new AlarmServiceBinder();
+
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        // TODO: Return the communication channel to the service.
+        return mBinder;
+    }
+
+    public interface  ICallback{
+        public ArrayList<LocalData> recvData();
+    }
+
+    private ICallback mCallback;
+
+    public void registerCallback(ICallback cb){
+        mCallback = cb;
+    }
+
+
     public void addLocListener() {
         listener = new LocationListener(LocationManager.GPS_PROVIDER);
         listener.start();
@@ -44,6 +63,8 @@ public class AlarmService extends Service {
     private void removeLocListener() {
         locationManager.removeUpdates(listener);
     }
+
+
     private class LocationListener extends Thread implements android.location.LocationListener
     {
         Location mLastLocation;
@@ -99,23 +120,6 @@ public class AlarmService extends Service {
         {
             Log.e("asd", "onStatusChanged: " + provider);
         }
-    }
-
-
-    @Override
-    public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
-        return mBinder;
-    }
-
-    public interface  ICallback{
-        public ArrayList<LocalData> recvData();
-    }
-
-    private ICallback mCallback;
-
-    public void registerCallback(ICallback cb){
-        mCallback = cb;
     }
 
     public void myServiceFunc(){
