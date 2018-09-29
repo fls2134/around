@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -93,6 +94,9 @@ public class WriteActivity extends AppCompatActivity {
     Button tagButton;
     Button timeStartButton;
     Button timeEndButton;
+
+    ProgressBar progressBar;
+    Button compButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,6 +115,8 @@ public class WriteActivity extends AppCompatActivity {
         tagButton = findViewById(R.id.tag_add);
         timeStartButton = findViewById(R.id.time_start);
         timeEndButton = findViewById(R.id.time_end);
+        progressBar = findViewById(R.id.writing_progressbar);
+        compButton = findViewById(R.id.button_comp);
 
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
@@ -160,6 +166,8 @@ public class WriteActivity extends AppCompatActivity {
     }
     public void onClickComplete(View v)
     {
+        compButton.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
 
         title = editText_title.getText().toString();
         content = editText_content.getText().toString();

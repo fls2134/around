@@ -587,6 +587,12 @@
             android:onClick="onClickComplete"
             android:text="@string/writing_complete" />
 
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:visibility="gone"
+            android:id="@+id/writing_progressbar"
+            />
     </LinearLayout>
 
 </ScrollView>
