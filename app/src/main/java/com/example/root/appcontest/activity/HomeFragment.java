@@ -64,7 +64,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
         setTabs(view);
         setToolbar(view);
-
+        setRecyclerView();
         setFloatingButton(view);
     }
 
@@ -103,12 +103,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         mTabs.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                fragmentTransaction = getFragmentManager().beginTransaction();
                 // 탭 선택시
                 switch(tab.getPosition()) {
                     case 0: // 거리순
-                        fragmentTransaction.replace(R.id.recyclerView_container,
-                                new RCViewControl()).commit();
                         break;
                     case 1: // 최신순
                         break;
@@ -127,6 +124,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 // 탭이 다시 선택 되었을 시
             }
         });
+    }
+
+    private void setRecyclerView() {
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.recyclerView_container, new RCViewControl()).commit();
     }
 
     private void setFloatingButton(View view) {
