@@ -63,7 +63,7 @@
                 android:id="@+id/poster_card"
                 android:layout_width="match_parent"
                 android:layout_height="170dp"
-                android:scaleType="fitStart"
+                android:scaleType="fitXY"
                 />
 
             <View
