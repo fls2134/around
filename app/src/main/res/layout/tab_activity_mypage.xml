@@ -79,6 +79,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <include
-        layout="@layout/recyclerview" />
+        android:id="@+id/reccyclerview_container2"
+        layout="@layout/reccyclerview_container" />
 
 </android.support.design.widget.CoordinatorLayout>

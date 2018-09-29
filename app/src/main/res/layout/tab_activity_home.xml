@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
@@ -18,14 +19,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:background="@color/backgroundLongin"
-                app:layout_collapseMode="parallax"/>
+                app:layout_collapseMode="parallax" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar_home"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:elevation="4dp"
                 android:background="@color/themeColor"
+                android:elevation="4dp"
                 app:layout_collapseMode="pin">
 
                 <RelativeLayout
@@ -34,12 +35,12 @@
 
                     <ImageButton
                         android:id="@+id/btn_search_home"
-                        android:layout_alignParentLeft="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:background="@android:color/transparent"
-                        app:srcCompat="@drawable/ic_search"/>
+                        app:srcCompat="@drawable/ic_search" />
 
                     <com.example.root.appcontest.model.SearchEditText
                         android:id="@+id/editText_home"
@@ -48,53 +49,59 @@
                         android:layout_centerVertical="true"
                         android:layout_toRightOf="@+id/btn_search_home"
                         android:hint=" 메인"
-                        android:textColorHint="#FFFFFF"
-                        android:textColor="#FFFFFF"
                         android:singleLine="true"
-                        android:theme="@style/EditTextStyle"/>
+                        android:textColor="#FFFFFF"
+                        android:textColorHint="#FFFFFF"
+                        android:theme="@style/EditTextStyle" />
 
                     <ImageButton
                         android:id="@+id/btn_filter_home"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
                         android:background="@android:color/transparent"
-                        app:srcCompat="@drawable/ic_tune"/>
+                        app:srcCompat="@drawable/ic_tune" />
 
                 </RelativeLayout>
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.CollapsingToolbarLayout>
+
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs_home"
-            android:elevation="1dp"
-            android:background="#FFFFFF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabMode="fixed"
+            android:background="#FFFFFF"
+            android:elevation="1dp"
             app:tabGravity="fill"
-            app:tabTextColor="#999999"
+            app:tabIndicatorColor="@color/tabSelectColor"
+            app:tabMode="fixed"
             app:tabSelectedTextColor="@color/themeColor"
-            app:tabIndicatorColor="@color/tabSelectColor">
+            app:tabTextColor="#999999">
 
         </android.support.design.widget.TabLayout>
+
+
     </android.support.design.widget.AppBarLayout>
 
     <include
-        layout="@layout/recyclerview" />
+        android:id="@+id/recyclerView_container"
+        layout="@layout/reccyclerview_container" />
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButton_home"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginRight="20dp"
         android:layout_marginBottom="28dp"
-        android:elevation="4dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/themeColor"
         android:clickable="true"
-        app:srcCompat="@drawable/baseline_create_black_18dp"
-        android:tint="#FFFFFF"
-        />
+        android:elevation="4dp"
+        app:srcCompat="@drawable/ic_mode_edit" />
+
 
 </android.support.design.widget.CoordinatorLayout>
+
