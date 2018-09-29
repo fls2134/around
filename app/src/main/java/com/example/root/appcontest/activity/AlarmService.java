@@ -188,9 +188,8 @@ public class AlarmService extends Service {
                output[i] = results[0];
            }
            for (int i = 0; i < data_input.size(); i++) {
-               if (output[i] <= 300.0F)//지금설정으로는 현재위치에서 500m내 마커만 보일것.
+               if (output[i] <= 500.0F)//지금설정으로는 현재위치에서 500m내 마커만 보일것.
                {
-                   Log.d("현재 위치", Double.toString(cur_lat) + " . " + Double.toString(cur_lng));
                    Log.d("거리", Float.toString(output[i]));
                    if (data_input.get(i).alarmed == false) {
                        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)

@@ -37,8 +37,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -48,6 +51,7 @@ import java.io.IOException;
 import java.util.Calendar;
 
 public class WriteActivity extends AppCompatActivity {
+
 
     final int TYPE_CONCERT = 0;
     final int TYPE_PARTY = 1;
@@ -97,6 +101,10 @@ public class WriteActivity extends AppCompatActivity {
 
     ProgressBar progressBar;
     Button compButton;
+
+    int count = 0;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -197,7 +205,7 @@ public class WriteActivity extends AppCompatActivity {
         localData.eDay = eDay;
         localData.tag = tag;
 
-
+        /*
         int id;
         String str;
         str= "" + sYear + (int)latitude + eDay+ title.length() + content.length();
@@ -205,7 +213,8 @@ public class WriteActivity extends AppCompatActivity {
 
         id = Integer.parseInt(substr);
         Log.d("Main", "onClickComplete: " + id);
-        localData.id = id;
+        */
+
 
         if(handleException() < 0)
             return;
@@ -222,9 +231,22 @@ public class WriteActivity extends AppCompatActivity {
         //서버에 다올리고 난뒤
 //        localData.img_url = img_link;
 //       databseRef.child(title).setValue(localData);
-        Toast.makeText(getApplicationContext(),"업로드가 완료되었습니다.",Toast.LENGTH_LONG);
 //        Log.d("Writing","done");
         setResult(RESULT_OK);
+        databseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot messageData : dataSnapshot.getChildren()) {
+                    count++;
+                }
+                localData.id = count+1;
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getApplicationContext(),"오류 발생",Toast.LENGTH_LONG);
+            }
+        });
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
