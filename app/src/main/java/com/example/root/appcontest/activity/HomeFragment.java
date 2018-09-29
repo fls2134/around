@@ -7,16 +7,17 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.root.appcontest.model.RCViewControl;
 import com.example.root.appcontest.model.SearchEditText;
 import com.example.root.appcontest.R;
 
@@ -25,7 +26,9 @@ import com.example.root.appcontest.R;
  * Fragment for Main page
  */
 public class HomeFragment extends Fragment implements View.OnClickListener{
-
+    /**
+     * 뷰 관련 변수
+     */
     TabLayout mTabs;
     SearchEditText mEditText;
     ImageButton mSearchButton;
@@ -36,6 +39,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     private boolean searchMode = false;
 
     static final int WRITE_REQUEST_CODE = 1883;
+
+    /**
+     * 리사이클러뷰 프래그먼트 장착 변수
+     */
+    FragmentTransaction fragmentTransaction;
+
+
+    /**
+     * 리사이클러 뷰 컨트롤
+     */
+    RCViewControl rcViewControl;
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -53,7 +68,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
         setTabs(view);
         setToolbar(view);
-
+        setRecyclerView();
         setFloatingButton(view);
     }
 
@@ -93,6 +108,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 // 탭 선택시
+                switch(tab.getPosition()) {
+                    case 0: // 거리순
+                        rcViewControl.arrangeByDistance();
+                        break;
+                    case 1: // 최신순
+                        rcViewControl.arrangeByNew();
+                        break;
+                    default:
+                        break;
+                }
             }
 
             @Override
@@ -105,6 +130,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 // 탭이 다시 선택 되었을 시
             }
         });
+    }
+
+    private void setRecyclerView() {
+        rcViewControl = new RCViewControl();
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.recyclerView_container, rcViewControl).commit();
     }
 
     private void setFloatingButton(View view) {
