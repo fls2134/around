@@ -163,11 +163,7 @@ public class AlarmService extends Service {
 
         createNotificationChannel();
 
-        Intent nextIntent = new Intent(getApplicationContext(), InfoActivity.class);
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        stackBuilder.addNextIntentWithParentStack(nextIntent);
-        PendingIntent pendingIntent =
-                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
 
        /*
         for(int i=0; i<3; i++) {
@@ -186,15 +182,30 @@ public class AlarmService extends Service {
             notificationManager.notify(i, mBuilder.build());
         }
 */
+       for(int i=0; i<data_input.size(); i++)
+           Log.d("제목",data_input.get(i).title);
 
         while(true) {
-           Log.d("데이터 개수", Integer.toString(data_input.size()));
+
+            Intent nextIntent = new Intent(getApplicationContext(), InfoActivity.class);
+
+            TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+            stackBuilder.addNextIntentWithParentStack(nextIntent);
+
+            PendingIntent pendingIntent =
+                    stackBuilder.getPendingIntent(0, PendingIntent.FLAG_ONE_SHOT);
+
+            Log.d("데이터 개수", Integer.toString(data_input.size()));
            output = new float[data_input.size()];
            for (int i = 0; i < data_input.size(); i++) {
                item_lat = data_input.get(i).latitude;
                item_lng = data_input.get(i).longtitude;
                Location.distanceBetween(cur_lat, cur_lng, item_lat, item_lng, results);
                output[i] = results[0];
+               Bundle bundle = new Bundle();
+               bundle.putSerializable("data",data_input.get(i));
+               nextIntent.putExtras(bundle);
+
            }
            for (int i = 0; i < data_input.size(); i++) {
                if (output[i] <= 500.0F)//지금설정으로는 현재위치에서 500m내 마커만 보일것.
