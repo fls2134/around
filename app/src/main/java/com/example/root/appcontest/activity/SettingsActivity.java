@@ -3,6 +3,7 @@ package com.example.root.appcontest.activity;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -63,7 +64,20 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             }
             else if (preference instanceof MultiSelectListPreference)
             {
-
+                // For multi select list preferences we should show a list of the selected options
+                MultiSelectListPreference listPreference = (MultiSelectListPreference) preference;
+                CharSequence[] values = listPreference.getEntries();
+                StringBuilder options = new StringBuilder();
+                for(String stream : (HashSet<String>) value) {
+                    int index = listPreference.findIndexOfValue(stream);
+                    if (index >= 0) {
+                        if (options.length() != 0) {
+                            options.append(", ");
+                        }
+                        options.append(values[index]);
+                    }
+                }
+                preference.setSummary(options);
             }
 
             else if (preference instanceof RingtonePreference) {
@@ -121,10 +135,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
         // Trigger the listener immediately with the preference's
         // current value.
-        sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
-                PreferenceManager
-                        .getDefaultSharedPreferences(preference.getContext())
-                        .getString(preference.getKey(), ""));
+        SharedPreferences prefs = preference.getSharedPreferences();
+        Object value;
+        if (preference instanceof MultiSelectListPreference) {
+            value = prefs.getStringSet(preference.getKey(), new HashSet<String>());
+        } else {
+            value = prefs.getString(preference.getKey(), "");
+        }
+        sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, value);
     }
 
     @Override
@@ -169,7 +187,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         return PreferenceFragment.class.getName().equals(fragmentName)
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName)
                 || DataSyncPreferenceFragment.class.getName().equals(fragmentName)
-                || NotificationPreferenceFragment.class.getName().equals(fragmentName);
+                || NotificationPreferenceFragment.class.getName().equals(fragmentName)
+                || ThemePreferenceFragment.class.getName().equals(fragmentName);
     }
 
     /**
@@ -251,6 +270,31 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // updated to reflect the new value, per the Android Design
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("sync_frequency"));
+        }
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            int id = item.getItemId();
+            if (id == android.R.id.home) {
+                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                return true;
+            }
+            return super.onOptionsItemSelected(item);
+        }
+    }
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class ThemePreferenceFragment extends PreferenceFragment {
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.pref_theme);
+            setHasOptionsMenu(true);
+
+            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
+            // to their values. When their values change, their summaries are
+            // updated to reflect the new value, per the Android Design
+            // guidelines.
+            bindPreferenceSummaryToValue(findPreference("theme_color_pref"));
         }
 
         @Override
