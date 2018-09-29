@@ -36,8 +36,17 @@ public class InfoActivity extends AppCompatActivity {
     TextView content;
     FlexboxLayout flexboxLayout;
     Button button;
+    ImageView favoriteButton;
 
     LocalData data;
+
+    /**
+     * 좋아요 모드 확인을 위한 모드 변수
+     * 0 = editmode
+     * 1 = favorite unchecked
+     * 2 = favorite checked
+     */
+    private int modeFavorite = 0;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -51,6 +60,17 @@ public class InfoActivity extends AppCompatActivity {
         content = findViewById(R.id.text_content);
         flexboxLayout = findViewById(R.id.info_flexbox);
         button = findViewById(R.id.closebtn_info);
+        favoriteButton = findViewById(R.id.favorite_info);
+        setFavoriteMode();
+        if(modeFavorite == 0) {
+            favoriteButton.setImageResource(R.drawable.ic_edit_black);
+        }
+        else if(modeFavorite == 1) {
+            favoriteButton.setImageResource(R.drawable.ic_favorite_empty);
+        }
+        else if(modeFavorite == 2) {
+            favoriteButton.setImageResource(R.drawable.ic_favorite);
+        }
 
         getIntentData();
         //받아온 데이터들을 가지고 활용해서 페이지를 만든다.
@@ -61,6 +81,15 @@ public class InfoActivity extends AppCompatActivity {
     {
         data = (LocalData)getIntent().getSerializableExtra("data");
     }
+
+    private void setFavoriteMode() {
+        // 작성자일 경우 modeFavorite = 0
+
+        // 작성자는 아닌데 로컬에 매칭되는 항목이 없을 경우 modeFavorite = 1
+
+        // 작성자는 아닌데 로컬에 매칭되는 항목이 존재 modeFavorite = 2
+    }
+
     private void setPage()
     {
         title.setText(data.title);
@@ -109,6 +138,29 @@ public class InfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+
+        favoriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(modeFavorite == 0) {
+                    //편집모드 진입 -> 삭제만 하면됨
+                }
+                else if(modeFavorite == 1) {
+                    //좋아요 클릭
+                    modeFavorite = 2;
+                    favoriteButton.setImageResource(R.drawable.ic_favorite);
+
+                    //로컬에서 문자열 삭제 필요
+                }
+                else if(modeFavorite == 2) {
+                    //좋아요 취소
+                    modeFavorite = 1;
+                    favoriteButton.setImageResource(R.drawable.ic_favorite_empty);
+
+                    //로컬에서 문자열 추가 필요
+                }
             }
         });
     }
