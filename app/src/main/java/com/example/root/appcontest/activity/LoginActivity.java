@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity{
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     //   checkTaskException(task); ??머임??
-
+                                    /*
                                     if (!task.isSuccessful()) {
                                         Toast.makeText(LoginActivity.this, "로그인 실패~~", Toast.LENGTH_SHORT).show();
                                     } else {
@@ -61,6 +61,10 @@ public class LoginActivity extends AppCompatActivity{
                                         startActivity(intent);
                                         finish();
                                     }
+                                    */
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
                                 }
                             });
                 }
