@@ -12,4 +12,6 @@
     <color name="writingSpace">#F0F0F0</color>
     <color name="writingMenuColor">#ffffff</color>
     <color name="writingMenuTextColor">#070461</color>
+    <color name="white">#FFFFFF</color>
+    <color name="tagbox">#1779c4</color>
 </resources>
