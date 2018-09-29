@@ -164,9 +164,6 @@ public class AlarmService extends Service {
         //data_input의 정보들 중에서 취할 정보들을 처리, 알림할 것
 
         createNotificationChannel();
-
-
-
        /*
         for(int i=0; i<3; i++) {
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
@@ -225,11 +222,6 @@ public class AlarmService extends Service {
                    Log.d("거리", Float.toString(output[i]));
                    if (data_input.get(i).alarmed == false) {
 
-                       //TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-                       /*
-                       PendingIntent pendingIntent =
-                               stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-                               */
 
                        Log.d("ssibal", "myServiceFunc: " +i);
                        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)

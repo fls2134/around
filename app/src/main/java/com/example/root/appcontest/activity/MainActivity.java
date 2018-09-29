@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
             public void run(){
                 mService.myServiceFunc();
             }
-        },1000);
+        },3000);
     }
 
     private int requestPermission()
