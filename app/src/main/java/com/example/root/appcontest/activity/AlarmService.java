@@ -32,6 +32,8 @@ import java.util.ArrayList;
 import java.util.Timer;
 
 public class AlarmService extends Service {
+
+    PendingIntent pendingIntent;
     ArrayList<LocalData> data_input;
     LocationManager locationManager;
     LocationListener listener;
@@ -188,12 +190,18 @@ public class AlarmService extends Service {
         while(true) {
 
             Intent nextIntent = new Intent(getApplicationContext(), InfoActivity.class);
+            nextIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                    | Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
+            /*
             TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
             stackBuilder.addNextIntentWithParentStack(nextIntent);
 
             PendingIntent pendingIntent =
                     stackBuilder.getPendingIntent(0, PendingIntent.FLAG_ONE_SHOT);
+            */
+
 
             Log.d("데이터 개수", Integer.toString(data_input.size()));
            output = new float[data_input.size()];
@@ -202,6 +210,7 @@ public class AlarmService extends Service {
                item_lng = data_input.get(i).longtitude;
                Location.distanceBetween(cur_lat, cur_lng, item_lat, item_lng, results);
                output[i] = results[0];
+               pendingIntent = PendingIntent.getActivity(getApplicationContext(), i, nextIntent, PendingIntent.FLAG_ONE_SHOT);
                Bundle bundle = new Bundle();
                bundle.putSerializable("data",data_input.get(i));
                nextIntent.putExtras(bundle);
