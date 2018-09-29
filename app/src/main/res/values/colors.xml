@@ -14,4 +14,6 @@
     <color name="writingMenuTextColor">#070461</color>
     <color name="white">#FFFFFF</color>
     <color name="tagbox">#1779c4</color>
+    <string name="channel_name">channel_1</string>
+    <string name="channel_description">description_1</string>
 </resources>
