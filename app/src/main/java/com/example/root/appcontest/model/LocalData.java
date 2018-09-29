@@ -3,6 +3,7 @@ package com.example.root.appcontest.model;
 import java.io.Serializable;
 
 public class LocalData implements Serializable{
+    private static final long serialVersionUID = 4210431223148518967L;
 
     public int id;
     public String nickname;

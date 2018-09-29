@@ -8,9 +8,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.example.root.appcontest.R;
+import com.example.root.appcontest.model.LocalData;
 import com.google.android.flexbox.FlexboxLayout;
 
 import org.w3c.dom.Text;
@@ -30,6 +36,8 @@ public class InfoActivity extends AppCompatActivity {
     FlexboxLayout flexboxLayout;
     Button button;
 
+    LocalData data;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +51,43 @@ public class InfoActivity extends AppCompatActivity {
         flexboxLayout = findViewById(R.id.info_flexbox);
         button = findViewById(R.id.closebtn_info);
 
+        getIntentData();
         //받아온 데이터들을 가지고 활용해서 페이지를 만든다.
-        title.setText("바닷가 공연");
+        setPage();
+
+    }
+    private void getIntentData()
+    {
+        data = (LocalData)getIntent().getSerializableExtra("data");
+    }
+    private void setPage()
+    {
+        title.setText(data.title);
         image.setImageResource(R.drawable.background_image_main);
-        period.setText("2018/12/23 ~ 2016/08/24");
-        content.setText("세월 지나도\n난 변하지 않아.\nand then I cry for you.\n이 밤 지나면\n이젠 안녕\n영원히~~~~~~~~~~\nnaver.com\n010-2070-6774");
+        String p = data.sYear + "/" + data.sMonth + "/" +data.sDay + " ~ " + data.eYear + "/" + data.eMonth + "/" +data.eDay;
+        period.setText(p);
+        content.setText(data.content);
+
+        //이미지 세팅
+        final ProgressBar progressBar = findViewById(R.id.info_progressbar);
+ //       final ImageView imageView = (ImageView) findViewById(R.id.img_glide);
+        Glide.with(this).load(data.img_url).
+                listener(new RequestListener<String, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        progressBar.setVisibility(View.GONE);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        progressBar.setVisibility(View.GONE);
+                        return false;
+                    }
+                }).into(image);
 
         // 태그 세팅
-        String tags = "태그,잘되나?,테스트테스트,아아마이크,테스토스테론";
+        String tags = data.tag;
         String words[] = tags.split(",");
         // 태그 마진
         LinearLayout.LayoutParams l = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);

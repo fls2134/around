@@ -2,6 +2,7 @@ package com.example.root.appcontest.model;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -33,6 +34,7 @@ public class RCViewAdapter extends RecyclerView.Adapter<RCViewAdapter.MyViewHold
      */
     ArrayList<CardItem> mList;
     Context context;
+    ArrayList<LocalData> datas;
 
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
@@ -73,8 +75,9 @@ public class RCViewAdapter extends RecyclerView.Adapter<RCViewAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull RCViewAdapter.MyViewHolder holder, int position) {
-        MyViewHolder myViewHolder = (MyViewHolder) holder;
+        final MyViewHolder myViewHolder = (MyViewHolder) holder;
 
+        //datas =
         myViewHolder.id = mList.get(position).getId();
         myViewHolder.profileImage.setImageResource(mList.get(position).profileImage);
         myViewHolder.nickName.setText(mList.get(position).nickName);
@@ -99,7 +102,19 @@ public class RCViewAdapter extends RecyclerView.Adapter<RCViewAdapter.MyViewHold
         myViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                LocalData d;
+                for (int i = 0; i < datas.size(); i++) {
+                    d = datas.get(i);
+                    if(d.id == myViewHolder.id)
+                    {
+                        Log.d("sibal", "onClick: " + d.id);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("data",d);
+                        Intent intent = new Intent(context, InfoActivity.class);
+                        intent.putExtras(bundle);
+                        context.startActivity(intent);
+                    }
+                }
             }
         });
     }
@@ -109,5 +124,9 @@ public class RCViewAdapter extends RecyclerView.Adapter<RCViewAdapter.MyViewHold
         return mList.size();
     }
 
+    public void loadDatas(ArrayList<LocalData> datas)
+    {
+        this.datas = datas;
+    }
 
 }
