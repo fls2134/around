@@ -26,6 +26,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -97,6 +98,10 @@ public class WriteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_writing);
 
+        TextView nickname =findViewById(R.id.writing_nickname);
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+
+        nickname.setText(pref.getString("nickname_text","닉네임"));
         type = -1; // 선택 안된 상태
         rg = findViewById(R.id.type_group);
         editText_title = findViewById(R.id.title_add);
@@ -201,7 +206,7 @@ public class WriteActivity extends AppCompatActivity {
 
         int id;
         String str;
-        str= "" + sYear + (int)latitude + eDay+ title.hashCode();
+        str= "" + sYear + (int)latitude + eDay+ title.length() + content.length();
         id = Integer.parseInt(str);
         Log.d("Main", "onClickComplete: " + id);
         localData.id = id;

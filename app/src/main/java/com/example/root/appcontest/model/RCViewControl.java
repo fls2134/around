@@ -1,6 +1,7 @@
 package com.example.root.appcontest.model;
 
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -52,10 +53,12 @@ public class RCViewControl extends Fragment{
         mAdapter = new RCViewAdapter(mList);
         mRecyclerView.setAdapter(mAdapter);
 
+        /*
         mRecyclerView.addOnItemTouchListener(new RCViewListener(getContext(), mRecyclerView, new RCViewListener.OnItemClickListener() {
             @Override public void onItemClick(View view, int position) {
                 //Toast.makeText(getContext(),position+"",Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getActivity(), InfoActivity.class);
+                LocalData data = new LocalData();
                 startActivity(intent);
             }
 
@@ -63,6 +66,7 @@ public class RCViewControl extends Fragment{
                 // do whatever
             }
         }));
+        */
         return view;
     }
 
@@ -74,9 +78,9 @@ public class RCViewControl extends Fragment{
 
     private void addListItemFromDb() {
         // this is sample
-        mList.add(new CardItem(R.drawable.around_logo1, "aaa", R.drawable.around_logo1, "title1"));
-        mList.add(new CardItem(R.drawable.around_logo1, "bbb", R.drawable.around_logo1, "title2"));
-        mList.add(new CardItem(R.drawable.around_logo1, "ccc", R.drawable.around_logo1, "title3"));
+        mList.add(new CardItem(R.drawable.around_logo1, "aaa", R.drawable.around_logo1, "title1", 123));
+        mList.add(new CardItem(R.drawable.around_logo1, "bbb", R.drawable.around_logo1, "title2", 456));
+        mList.add(new CardItem(R.drawable.around_logo1, "ccc", R.drawable.around_logo1, "title3", 789));
 
         //양식은 다음과 같이
         /*
@@ -91,14 +95,14 @@ public class RCViewControl extends Fragment{
 
     public void arrangeByDistance() {
         // 거리순으로 정렬함
-        mList.add(new CardItem(R.drawable.around_logo2, "distance", R.drawable.around_logo2, "distance"));
+        //mList.add(new CardItem(R.drawable.around_logo2, "distance", R.drawable.around_logo2, "distance"));
 
         mAdapter.notifyDataSetChanged();
     }
 
     public void arrangeByNew() {
         // 최신순으로 정렬함
-        mList.add(new CardItem(R.drawable.around_logo2, "new", R.drawable.around_logo2, "new"));
+        //mList.add(new CardItem(R.drawable.around_logo2, "new", R.drawable.around_logo2, "new"));
 
         mAdapter.notifyDataSetChanged();
     }

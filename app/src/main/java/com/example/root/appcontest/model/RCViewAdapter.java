@@ -3,6 +3,7 @@ package com.example.root.appcontest.model;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -25,15 +26,18 @@ public class RCViewAdapter extends RecyclerView.Adapter<RCViewAdapter.MyViewHold
     /**
      * RecyclerView 에 담겨질 아이템 리스트
      */
-    ArrayList<CardItem> mList = new ArrayList<>();
+    ArrayList<CardItem> mList;
 
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         ImageView profileImage;
         TextView nickName;
 
+        CardView cardView;
         ImageView posterImage;
         TextView title;
+
+        int id;
 
         public MyViewHolder(View view) {
             super(view);
@@ -42,6 +46,7 @@ public class RCViewAdapter extends RecyclerView.Adapter<RCViewAdapter.MyViewHold
 
             posterImage = view.findViewById(R.id.poster_card);
             title = view.findViewById(R.id.title_card);
+            cardView = view.findViewById(R.id.cardview);
         }
 
     }
@@ -61,11 +66,17 @@ public class RCViewAdapter extends RecyclerView.Adapter<RCViewAdapter.MyViewHold
     public void onBindViewHolder(@NonNull RCViewAdapter.MyViewHolder holder, int position) {
         MyViewHolder myViewHolder = (MyViewHolder) holder;
 
+        myViewHolder.id = mList.get(position).getId();
         myViewHolder.profileImage.setImageResource(mList.get(position).profileImage);
         myViewHolder.nickName.setText(mList.get(position).nickName);
         myViewHolder.posterImage.setImageResource(mList.get(position).posterImage);
         myViewHolder.title.setText(mList.get(position).tilte);
+        myViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
     }
 
     @Override
