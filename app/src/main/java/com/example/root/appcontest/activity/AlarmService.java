@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.os.SystemClock;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -26,6 +27,7 @@ import com.example.root.appcontest.model.LocalData;
 import com.nhn.android.maps.overlay.NMapPOIitem;
 
 import java.util.ArrayList;
+import java.util.Timer;
 
 public class AlarmService extends Service {
     ArrayList<LocalData> data_input;
@@ -152,6 +154,7 @@ public class AlarmService extends Service {
         double cur_lng = curLocation.getLongitude();
         double item_lat;
         double item_lng;
+        float[] output;
         float[] results = new float[100];
         data_input = mCallback.recvData();
         //data_input의 정보들 중에서 취할 정보들을 처리, 알림할 것
@@ -174,16 +177,21 @@ public class AlarmService extends Service {
             notificationManager.notify(i, mBuilder.build());
         }
 */
-       while(true) {
+
+        while(true) {
+           Log.d("데이터 개수", Integer.toString(data_input.size()));
+           output = new float[data_input.size()];
            for (int i = 0; i < data_input.size(); i++) {
                item_lat = data_input.get(i).latitude;
                item_lng = data_input.get(i).longtitude;
                Location.distanceBetween(cur_lat, cur_lng, item_lat, item_lng, results);
-
+               output[i] = results[0];
            }
            for (int i = 0; i < data_input.size(); i++) {
-               if (results[i] <= 100.0F)//지금설정으로는 현재위치에서 500m내 마커만 보일것.
+               if (output[i] <= 300.0F)//지금설정으로는 현재위치에서 500m내 마커만 보일것.
                {
+                   Log.d("현재 위치", Double.toString(cur_lat) + " . " + Double.toString(cur_lng));
+                   Log.d("거리", Float.toString(output[i]));
                    if (data_input.get(i).alarmed == false) {
                        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
                                .setSmallIcon(R.drawable.around_logo2)
@@ -202,7 +210,8 @@ public class AlarmService extends Service {
                    }
                }
            }
-       }
+            SystemClock.sleep(60000);
+        }
     }
 
     private void settingGPS() {
