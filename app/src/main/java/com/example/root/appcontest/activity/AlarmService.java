@@ -164,6 +164,7 @@ public class AlarmService extends Service {
         createNotificationChannel();
 
 
+
        /*
         for(int i=0; i<3; i++) {
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
@@ -181,16 +182,31 @@ public class AlarmService extends Service {
             notificationManager.notify(i, mBuilder.build());
         }
 */
+       for(int i=0; i<data_input.size(); i++)
+           Log.d("제목",data_input.get(i).title);
 
         PendingIntent pendingIntents[] = new PendingIntent[data_input.size()];
         while(true) {
-           Log.d("데이터 개수", Integer.toString(data_input.size()));
+
+            Intent nextIntent = new Intent(getApplicationContext(), InfoActivity.class);
+
+            TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+            stackBuilder.addNextIntentWithParentStack(nextIntent);
+
+            PendingIntent pendingIntent =
+                    stackBuilder.getPendingIntent(0, PendingIntent.FLAG_ONE_SHOT);
+
+            Log.d("데이터 개수", Integer.toString(data_input.size()));
            output = new float[data_input.size()];
            for (int i = 0; i < data_input.size(); i++) {
                item_lat = data_input.get(i).latitude;
                item_lng = data_input.get(i).longtitude;
                Location.distanceBetween(cur_lat, cur_lng, item_lat, item_lng, results);
                output[i] = results[0];
+               Bundle bundle = new Bundle();
+               bundle.putSerializable("data",data_input.get(i));
+               nextIntent.putExtras(bundle);
+
            }
 
            for (int i = 0; i < data_input.size(); i++) {
@@ -200,7 +216,7 @@ public class AlarmService extends Service {
                    Log.d("거리", Float.toString(output[i]));
                    if (data_input.get(i).alarmed == false) {
 
-                       TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+                       //TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
                        /*
                        PendingIntent pendingIntent =
                                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -213,10 +229,10 @@ public class AlarmService extends Service {
                                .setContentText("근처에 관심을 가질 만한 장소가 있네요! " + data_input.get(i).title)
                                .setStyle(new NotificationCompat.BigTextStyle()
                                        .bigText("근처에 관심을 가질 만한 장소가 있네요! " + data_input.get(i).title))
-                               .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-                               //.setContentIntent(pendingIntents[i])
-                               //.addAction(R.drawable.around_logo2, getString(R.string.see_It),
-                               //        pendingIntent);
+                               .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                               .setContentIntent(pendingIntents[i])
+                               .addAction(R.drawable.around_logo2, getString(R.string.see_It),
+                                       pendingIntent);
 
                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
                        notificationManager.notify(i, mBuilder.build());

@@ -1,4 +1,4 @@
-package com.example.root.appcontest.activity;
+/*package com.example.root.appcontest.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -66,3 +66,4 @@ public class Sign_up_Activity extends AppCompatActivity{
 
     }
 }
+*/

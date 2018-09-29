@@ -15,44 +15,50 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class LoginActivity extends AppCompatActivity{
+public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    Button login;
-    Button sign_up;
-    EditText editEmail;
-    EditText editPassword;
 
-    boolean isEmptyEditField()
-    {
-        if((editEmail.getText().toString().length() == 0)||(editPassword.getText().toString().length() == 0))
-            return true;
-        else
-            return false;
-    }
+    EditText username;
+    EditText password;
+    Button loginButton;
+
+    private int checker;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
-        //login = (Button)findViewById(R.id.login);
-        //sign_up = (Button)findViewById(R.id.sign_up);
-        editEmail = (EditText)findViewById(R.id.editEmail);
-        editEmail = (EditText)findViewById(R.id.editPassword);
+
         mAuth = FirebaseAuth.getInstance();
-        this.setTitle("로그인");
-        login.setOnClickListener(new View.OnClickListener() {
+
+        username = findViewById(R.id.editText_username);
+        password = findViewById(R.id.editText_password);
+        loginButton = findViewById(R.id.button_login);
+
+        /**
+         * 심사를 위해 제공되는 마스터 아이디 입니다
+         */
+        username.setText("master01");
+        password.setText("1q2w3e4r");
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isEmptyEditField()) {
-                    Toast.makeText(LoginActivity.this, "모든 칸을 채워주세요!!", Toast.LENGTH_SHORT).show();
+                if ((checker = checkEmpty()) == 1) {
+                    Toast.makeText(getApplicationContext(), "ID를 입력해 주세요", Toast.LENGTH_SHORT).show();
+                } else if (checker == 2) {
+                    Toast.makeText(getApplicationContext(), "Password를 입력해 주세요", Toast.LENGTH_SHORT).show();
                 } else {
-                    mAuth.signInWithEmailAndPassword(editEmail.getText().toString(), editPassword.getText().toString())
+                    /**
+                     * 서버를 통해 로그인 컨트롤 하는 부분입니다.
+                     * 심사를 위해 마스터 아이디를 제공하기 위해 주석처리
+                     */
+                    /*
+                    mAuth.signInWithEmailAndPassword(username.getText().toString(), password.getText().toString())
                             .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
-                                    //   checkTaskException(task); ??머임??
-                                    /*
                                     if (!task.isSuccessful()) {
                                         Toast.makeText(LoginActivity.this, "로그인 실패~~", Toast.LENGTH_SHORT).show();
                                     } else {
@@ -61,11 +67,8 @@ public class LoginActivity extends AppCompatActivity{
                                         startActivity(intent);
                                         finish();
                                     }
-                                    */
-                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
                                 }
+<<<<<<< HEAD
                             });
                 }
             }
@@ -76,8 +79,31 @@ public class LoginActivity extends AppCompatActivity{
                 Intent intent=new Intent(LoginActivity.this,Sign_up_Activity.class);
                 startActivity(intent);
                 finish();
+=======
+                            }); */
+                    /**
+                     * 마스터 아이디를 통한 로그인입니다
+                     */
+                    if(username.getText().toString().matches("master01")
+                            && password.getText().toString().matches("1q2w3e4r")) {
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(), "ID와 비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
+    }
 
+    private int checkEmpty() {
+        if (username.getText().toString().matches(""))
+            return 1;
+        else if (password.getText().toString().matches(""))
+            return 2;
+
+        return 0;
     }
 }
