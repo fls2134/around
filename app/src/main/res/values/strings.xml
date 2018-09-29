@@ -1,4 +1,8 @@
 <resources>
+    <string name="see_It">볼래요!</string>
+
+
+
     <string name="app_name">어라운드</string>
     <string name="title_main"> 메인</string>
     <string name="title_map"> 지도</string>
