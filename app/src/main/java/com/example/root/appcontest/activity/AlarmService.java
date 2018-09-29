@@ -174,34 +174,35 @@ public class AlarmService extends Service {
             notificationManager.notify(i, mBuilder.build());
         }
 */
-        for (int i = 0; i < data_input.size(); i++) {
-            item_lat = data_input.get(i).latitude;
-            item_lng = data_input.get(i).longtitude;
-            Location.distanceBetween(cur_lat,cur_lng,item_lat,item_lng,results);
+       while(true) {
+           for (int i = 0; i < data_input.size(); i++) {
+               item_lat = data_input.get(i).latitude;
+               item_lng = data_input.get(i).longtitude;
+               Location.distanceBetween(cur_lat, cur_lng, item_lat, item_lng, results);
 
-        }
-        for(int i=0; i<data_input.size(); i++)
-        {
-            if(results[i]<=500.0F)//지금설정으로는 현재위치에서 500m내 마커만 보일것.
-            {
-                if(data_input.get(i).alarmed == false) {
-                    NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                            .setSmallIcon(R.drawable.ic_launcher_foreground)
-                            .setContentTitle("Around Seoul")
-                            .setContentText("근처에 관심을 가질 만한 장소가 있네요! " + data_input.get(i).title)
-                            .setStyle(new NotificationCompat.BigTextStyle()
-                                    .bigText("근처에 관심을 가질 만한 장소가 있네요! " + data_input.get(i).title))
-                            .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-                    //  .setContentIntent(pendingIntent)
-                    //  .addAction(R.drawable.ic_launcher_foreground, getString(R.string.snooze),
-                    //          pendingIntent);
+           }
+           for (int i = 0; i < data_input.size(); i++) {
+               if (results[i] <= 100.0F)//지금설정으로는 현재위치에서 500m내 마커만 보일것.
+               {
+                   if (data_input.get(i).alarmed == false) {
+                       NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                               .setSmallIcon(R.drawable.around_logo2)
+                               .setContentTitle("Around Seoul")
+                               .setContentText("근처에 관심을 가질 만한 장소가 있네요! " + data_input.get(i).title)
+                               .setStyle(new NotificationCompat.BigTextStyle()
+                                       .bigText("근처에 관심을 가질 만한 장소가 있네요! " + data_input.get(i).title))
+                               .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                       //  .setContentIntent(pendingIntent)
+                       //  .addAction(R.drawable.around_logo2, getString(R.string.see_It),
+                       //          pendingIntent);
 
-                    NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-                    notificationManager.notify(i, mBuilder.build());
-                    data_input.get(i).alarmed = true;
-                }
-            }
-        }
+                       NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+                       notificationManager.notify(i, mBuilder.build());
+                       data_input.get(i).alarmed = true;
+                   }
+               }
+           }
+       }
     }
 
     private void settingGPS() {
