@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.root.appcontest.R;
 import com.example.root.appcontest.model.LocalData;
+import com.example.root.appcontest.model.RCViewControl;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -159,19 +160,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    void getServerDatas()
+    public void getServerDatas()
     {
         //생성자로 서버에서 받아온값 다 넣어주면 될듯?
         //pull하고 datas.add(Localdata형식클래스) 하기
-        if(data_array.isEmpty() == false)
-            data_array.clear();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 for (DataSnapshot messageData : dataSnapshot.getChildren()) {
                     //LD_tmp = new LocalData();
                     LD_tmp = messageData.getValue(LocalData.class);
+                    if(data_array.contains(LD_tmp))
+                        continue;
                     data_array.add(LD_tmp);
                     // child 내에 있는 데이터만큼 반복합니다.
                 }
@@ -182,12 +182,13 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"오류 발생",Toast.LENGTH_LONG);
             }
         });
+        Log.d("sibal1", "getServerDatas: " + data_array.size());
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        getServerDatas();
+        //getServerDatas();
     }
 }
 

@@ -56,7 +56,7 @@
                 android:id="@+id/poster_card"
                 android:layout_width="match_parent"
                 android:layout_height="170dp"
-                android:layout_margin="15dp"
+                android:scaleType="fitXY"
                 app:srcCompat="@drawable/around_logo2" />
 
             <View

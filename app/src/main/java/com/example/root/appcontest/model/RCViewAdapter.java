@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.root.appcontest.R;
 import com.example.root.appcontest.activity.InfoActivity;
 import com.example.root.appcontest.activity.MainActivity;
@@ -27,6 +28,7 @@ public class RCViewAdapter extends RecyclerView.Adapter<RCViewAdapter.MyViewHold
      * RecyclerView 에 담겨질 아이템 리스트
      */
     ArrayList<CardItem> mList;
+    Context context;
 
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
@@ -51,8 +53,9 @@ public class RCViewAdapter extends RecyclerView.Adapter<RCViewAdapter.MyViewHold
 
     }
 
-    public RCViewAdapter(ArrayList<CardItem> mList) {
+    public RCViewAdapter(ArrayList<CardItem> mList, Context context) {
         this.mList = mList;
+        this.context = context;
     }
 
     @NonNull
@@ -69,7 +72,8 @@ public class RCViewAdapter extends RecyclerView.Adapter<RCViewAdapter.MyViewHold
         myViewHolder.id = mList.get(position).getId();
         myViewHolder.profileImage.setImageResource(mList.get(position).profileImage);
         myViewHolder.nickName.setText(mList.get(position).nickName);
-        myViewHolder.posterImage.setImageResource(mList.get(position).posterImage);
+        Glide.with(context).load(mList.get(position).imgurl).into(myViewHolder.posterImage);
+        //myViewHolder.posterImage.setImageResource(mList.get(position).posterImage);
         myViewHolder.title.setText(mList.get(position).tilte);
         myViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

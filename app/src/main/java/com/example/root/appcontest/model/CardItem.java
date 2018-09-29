@@ -13,16 +13,16 @@ public class CardItem {
     /**
      * item information variables
      */
-    public int posterImage;
+    public String imgurl;
     public String tilte;
 
     public int id;
 
 
-    public CardItem(int profileImage, String nickName, int posterImage, String tilte, int id) {
+    public CardItem(int profileImage, String nickName, String imgurl, String tilte, int id) {
         this.profileImage = profileImage;
         this.nickName = nickName;
-        this.posterImage = posterImage;
+        this.imgurl = imgurl;
         this.tilte = tilte;
         this.id = id;
     }
@@ -44,12 +44,12 @@ public class CardItem {
         this.nickName = nickName;
     }
 
-    public int getPosterImage() {
-        return posterImage;
+    public String getImgUrl() {
+        return imgurl;
     }
 
-    public void setPosterImage(int posterImage) {
-        this.posterImage = posterImage;
+    public void setImgurl(String imgurl) {
+        this.imgurl = imgurl;
     }
 
     public String getTilte() {

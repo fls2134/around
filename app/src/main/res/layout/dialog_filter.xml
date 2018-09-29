@@ -75,7 +75,7 @@
                     android:id="@+id/checkBox7"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/writing_type_pub" />
+                    android:text="@string/writing_type_woman" />
 
                 <CheckBox
                     android:id="@+id/checkBox6"
