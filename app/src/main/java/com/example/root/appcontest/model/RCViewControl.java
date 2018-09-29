@@ -20,7 +20,7 @@ import java.util.ArrayList;
  * Created by sks on 2018. 9. 28..
  */
 
-public class RCViewControl extends Fragment {
+public class RCViewControl extends Fragment{
     /**
      * 리사이클러 뷰 세팅을 위한 변수
      */
