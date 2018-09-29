@@ -1,7 +1,10 @@
 package com.example.root.appcontest.model;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +24,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.root.appcontest.R;
+import com.example.root.appcontest.activity.AlarmService;
 import com.example.root.appcontest.activity.InfoActivity;
 import com.example.root.appcontest.activity.MainActivity;
 import com.google.firebase.database.DataSnapshot;
@@ -30,6 +34,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+import static android.content.Context.LOCATION_SERVICE;
 
 /**
  * Created by sks on 2018. 9. 28..
@@ -138,9 +146,6 @@ public class RCViewControl extends Fragment{
             Log.d("sibal", "addListItemFromDb: ");
             return;
         }
-        for (int i = 0; i < data_array.size(); i++) {
-            mList.add(new CardItem(R.drawable.around_logo1, data_array.get(i).nickname, data_array.get(i).img_url, data_array.get(i).title, data_array.get(i).id));
-        }
 
         //양식은 다음과 같이
         /*
@@ -155,20 +160,33 @@ public class RCViewControl extends Fragment{
         //mRecyclerView.setAdapter(mAdapter);
         progressBar.setVisibility(View.GONE);
         mAdapter.loadDatas(data_array);
+        updateMList(data_array);
         mAdapter.notifyDataSetChanged();
+    }
+
+
+    private void updateMList(ArrayList<LocalData> array)
+    {
+        mList.clear();
+        for (int i = 0; i < array.size(); i++) {
+            mList.add(new CardItem(R.drawable.around_logo1, array.get(i).nickname, array.get(i).img_url, array.get(i).title, array.get(i).id));
+        }
     }
 
     public void arrangeByDistance() {
         // 거리순으로 정렬함
         //mList.add(new CardItem(R.drawable.around_logo2, "distance", R.drawable.around_logo2, "distance"));
-
+        ArrayList<LocalData> disance_array = (ArrayList<LocalData>)data_array.clone();
+        Collections.sort(disance_array, new ascendingDistance());
+        updateMList(disance_array);
         mAdapter.notifyDataSetChanged();
     }
 
     public void arrangeByNew() {
+
         // 최신순으로 정렬함
         //mList.add(new CardItem(R.drawable.around_logo2, "new", R.drawable.around_logo2, "new"));
-
+        addListItemFromDb();
         mAdapter.notifyDataSetChanged();
     }
 
@@ -209,4 +227,24 @@ public class RCViewControl extends Fragment{
         Log.d("sibal2", "getServerDatas: " + data_array.size());
     }
 
+    // 오름차순
+    class ascendingDistance implements Comparator<LocalData> {
+
+        @Override
+        public int compare(LocalData o1, LocalData o2) {
+
+            //AlarmService.str
+            AlarmService alm = ((MainActivity)getActivity()).getmService();
+            Location l = alm.getCurLocation();
+            float result[] = new float[100];
+
+            Float d1,d2;
+            Location.distanceBetween(l.getLatitude(),l.getLongitude(),o1.latitude,o1.longtitude,result);
+            d1 = result[0];
+            Location.distanceBetween(l.getLatitude(),l.getLongitude(),o2.latitude,o2.longtitude,result);
+            d2 = result[0];
+            return d1.compareTo(d2);
+        }
+
+    }
 }

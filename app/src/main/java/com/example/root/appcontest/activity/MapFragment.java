@@ -76,6 +76,7 @@ public class MapFragment extends NMapFragment implements View.OnClickListener{
     double cur_lng;
 
     float cur_meters;
+    ArrayList<LocalData> data_array;
 
     private boolean searchMode = false;
 
@@ -186,7 +187,6 @@ public class MapFragment extends NMapFragment implements View.OnClickListener{
         // Markers for POI item
         int markerId = NMapPOIflagType.PIN;
         float results[]= new float[1];
-        ArrayList<LocalData> data_array;
 
         //로컬 데이터 담을 어레이리스트
         try
@@ -209,7 +209,11 @@ public class MapFragment extends NMapFragment implements View.OnClickListener{
             Location.distanceBetween(cur_lat,cur_lng,item_lat,item_lng,results);
             NMapPOIitem item;
             if(results[0]<=cur_meters)//지금설정으로는 현재위치에서 100m내 마커만 보일것.
-                item = poiData.addPOIitem(item_lng,item_lat, data_array.get(i).title, markerId, 0);
+            {
+                item = poiData.addPOIitem(item_lng,item_lat, data_array.get(i).title, markerId, data_array.get(i).id);
+                item.setRightAccessory(true, NMapPOIflagType.CLICKABLE_ARROW);
+            }
+            //poiData.add
             //NMapPOIitem item = poiData.addPOIitem(item_lat,item_lng, "바겐 세일~~~ "+i, markerId, 0);
         }
         //Location.distanceBetween(cur_lat,cur_lng,,,results);
@@ -236,12 +240,28 @@ public class MapFragment extends NMapFragment implements View.OnClickListener{
         @Override
         public void onCalloutClick(NMapPOIdataOverlay poiDataOverlay, NMapPOIitem item) {
             if (DEBUG) {
-                Log.i("asd", "onCalloutClick: title=" + item.getTitle());
+                //Log.i("asd", "onCalloutClick: title=" + item.getTitle());
             }
 
             // [[TEMP]] handle a click event of the callout
+
             // 인텐트해서 인포 액티비티 만들자.
-            Toast.makeText(getContext(), "onCalloutClick: " + item.getTitle(), Toast.LENGTH_LONG).show();
+            //item.getId()
+            //Toast.makeText(getContext(), "" + item.getId(), Toast.LENGTH_SHORT).show();
+            LocalData d;
+            for (int i = 0; i < data_array.size(); i++) {
+                d = data_array.get(i);
+                if(d.id == item.getId())
+                {
+                    Log.d("sibal", "onClick: " + d.id);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("data",d);
+                    Intent intent = new Intent(getContext(), InfoActivity.class);
+                    intent.putExtras(bundle);
+                    getContext().startActivity(intent);
+                }
+            }
+            //Toast.makeText(getContext(), "onCalloutClick: " + item.getTitle(), Toast.LENGTH_LONG).show();
         }
 
         @Override

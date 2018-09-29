@@ -37,6 +37,7 @@ public class AlarmService extends Service {
     ArrayList<LocalData> data_input;
     LocationManager locationManager;
     LocationListener listener;
+    Location curLocation;
     private final String CHANNEL_ID = "default";
 
     private static final int LOCATION_INTERVAL = 1000;
@@ -79,7 +80,7 @@ public class AlarmService extends Service {
     }
 
 
-    private class LocationListener extends Thread implements android.location.LocationListener
+    public class LocationListener extends Thread implements android.location.LocationListener
     {
         Location mLastLocation;
         private String mProvider = null;
@@ -152,7 +153,6 @@ public class AlarmService extends Service {
     }
 
     public void myServiceFunc(){
-        Location curLocation;
         curLocation = getMyLocation();
         double cur_lat = curLocation.getLatitude();
         double cur_lng = curLocation.getLongitude();
@@ -187,6 +187,7 @@ public class AlarmService extends Service {
        for(int i=0; i<data_input.size(); i++)
            Log.d("제목",data_input.get(i).title);
 
+        PendingIntent pendingIntents[] = new PendingIntent[data_input.size()];
         while(true) {
 
             Intent nextIntent = new Intent(getApplicationContext(), InfoActivity.class);
@@ -216,11 +217,21 @@ public class AlarmService extends Service {
                nextIntent.putExtras(bundle);
 
            }
+
            for (int i = 0; i < data_input.size(); i++) {
                if (output[i] <= 500.0F)//지금설정으로는 현재위치에서 500m내 마커만 보일것.
                {
+
                    Log.d("거리", Float.toString(output[i]));
                    if (data_input.get(i).alarmed == false) {
+
+                       //TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+                       /*
+                       PendingIntent pendingIntent =
+                               stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+                               */
+
+                       Log.d("ssibal", "myServiceFunc: " +i);
                        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
                                .setSmallIcon(R.drawable.around_logo2)
                                .setContentTitle("Around Seoul")
@@ -228,9 +239,9 @@ public class AlarmService extends Service {
                                .setStyle(new NotificationCompat.BigTextStyle()
                                        .bigText("근처에 관심을 가질 만한 장소가 있네요! " + data_input.get(i).title))
                                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                               .setContentIntent(pendingIntent)
+                               .setContentIntent(pendingIntents[i])
                                .addAction(R.drawable.around_logo2, getString(R.string.see_It),
-                                 pendingIntent);
+                                       pendingIntent);
 
                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
                        notificationManager.notify(i, mBuilder.build());
@@ -300,5 +311,9 @@ public class AlarmService extends Service {
             }
         }
         return currentLocation;
+    }
+
+    public Location getCurLocation() {
+        return curLocation;
     }
 }

@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
             public void run(){
                 mService.myServiceFunc();
             }
-        },5000);
+        },1000);
     }
 
     private int requestPermission()
@@ -192,6 +192,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //getServerDatas();
+    }
+
+    public AlarmService getmService() {
+        return mService;
     }
 }
 

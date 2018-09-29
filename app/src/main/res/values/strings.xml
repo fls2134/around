@@ -137,12 +137,12 @@
     <string-array name="pref_categories">
         <item>공연</item>
         <item>파티</item>
-        <item>연극</item>
-        <item>뮤지컬</item>
-        <item>전시회</item>
+        <item>편의</item>
+        <item>관광</item>
+        <item>갤러리</item>
         <item>맛집</item>
-        <item>술집</item>
-        <item>이벤트</item>
+        <item>여성</item>
+        <item>행사</item>
     </string-array>
     <!-- Example settings for Data & Sync -->
     <string name="pref_header_data_sync">Data &amp; sync</string>

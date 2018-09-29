@@ -397,7 +397,7 @@ public class ResProvider extends NMapResourceProvider implements NMapCalloutCust
 
                 switch (poiItem.getRightAccessoryId()) {
                     case NMapPOIflagType.CLICKABLE_ARROW:
-                        drawable[0] = mContext.getResources().getDrawable(R.drawable.bg_speech);
+                        drawable[0] = mContext.getResources().getDrawable(R.drawable.pin_ballon_arrow);
                         drawable[1] = mContext.getResources().getDrawable(R.drawable.pin_ballon_on_arrow);
                         drawable[2] = mContext.getResources().getDrawable(R.drawable.pin_ballon_on_arrow);
                         break;

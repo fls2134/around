@@ -68,6 +68,18 @@ public class LoginActivity extends AppCompatActivity {
                                         finish();
                                     }
                                 }
+<<<<<<< HEAD
+                            });
+                }
+            }
+        });
+        sign_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(LoginActivity.this,Sign_up_Activity.class);
+                startActivity(intent);
+                finish();
+=======
                             }); */
                     /**
                      * 마스터 아이디를 통한 로그인입니다
