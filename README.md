@@ -1,5 +1,4 @@
 Last updated : 2018-09-30
-copyright : Gyeng Seog SEOL
 -----------------------------
 
 contents
