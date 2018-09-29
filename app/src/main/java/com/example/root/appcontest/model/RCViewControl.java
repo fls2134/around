@@ -3,6 +3,7 @@ package com.example.root.appcontest.model;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -36,8 +37,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
 
 import static android.content.Context.LOCATION_SERVICE;
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by sks on 2018. 9. 28..
@@ -193,6 +197,16 @@ public class RCViewControl extends Fragment{
     public void arrangeBySelected() {
         // 담은글 정렬
 
+        ArrayList<LocalData> clone_array = (ArrayList<LocalData>)data_array.clone();
+        SharedPreferences pref = getContext().getSharedPreferences("favorites", MODE_PRIVATE);
+        Set<String> stringSet = new HashSet<String>(pref.getStringSet("favorite", new HashSet<String>()));
+        ArrayList<LocalData> set_array = new ArrayList<>();
+        for (int i = 0; i < clone_array.size(); i++) {
+            if(stringSet.contains(clone_array.get(i).id + ""))
+                set_array.add(clone_array.get(i));
+        }
+
+        updateMList(set_array);
         mAdapter.notifyDataSetChanged();
     }
 
