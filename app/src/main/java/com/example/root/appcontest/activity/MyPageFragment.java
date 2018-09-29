@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.root.appcontest.model.RCViewControl;
 import com.example.root.appcontest.model.SearchEditText;
 import com.example.root.appcontest.R;
 
@@ -26,13 +28,26 @@ import org.w3c.dom.Text;
  * Fragment for Show User's info
  */
 public class MyPageFragment extends Fragment implements View.OnClickListener{
-
+    /**
+     * 뷰 관련 변수
+     */
     TabLayout mTabs;
     SearchEditText mEditText;
     ImageButton mSearchButton;
     ImageButton mSettingButton;
 
     private boolean searchMode = false;
+
+    /**
+     * 리사이클러뷰 프래그먼트 장착 변수
+     */
+    FragmentTransaction fragmentTransaction;
+
+    /**
+     * 리사이클러 뷰 컨트롤
+     */
+    RCViewControl rcViewControl;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,7 +61,7 @@ public class MyPageFragment extends Fragment implements View.OnClickListener{
         setToolbar(view);
         setTabs(view);
         setNickName(view);
-
+        setRecyclerView();
     }
 
     private void setToolbar(View view) {
@@ -85,6 +100,16 @@ public class MyPageFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 // 탭 선택시
+                switch (tab.getPosition()) {
+                    case 0: // 담은글
+                        rcViewControl.arrangeBySelected();
+                        break;
+                    case 1: // 작성글
+                        rcViewControl.arrangeByWrited();
+                        break;
+                    default:
+                        break;
+                }
             }
 
             @Override
@@ -104,6 +129,12 @@ public class MyPageFragment extends Fragment implements View.OnClickListener{
         TextView nickname = v.findViewById(R.id.nickname);
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         nickname.setText(pref.getString("nickname_text","닉네임"));
+    }
+
+    private void setRecyclerView() {
+        rcViewControl = new RCViewControl();
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.reccyclerview_container2, rcViewControl).commit();
     }
 
     @Override
@@ -126,7 +157,6 @@ public class MyPageFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.btn_setting_my:
-                Toast.makeText(getActivity().getApplicationContext(), "설정버튼", Toast.LENGTH_SHORT).show();
                 //테스트 한다고 잠깐 추가 다시 없애야함
                 Intent i = new Intent(getActivity(), SettingsActivity.class);
                 startActivity(i);
