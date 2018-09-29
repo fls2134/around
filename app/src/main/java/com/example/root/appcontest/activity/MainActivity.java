@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         // 최초 화면 설정
         Intent Service = new Intent(getApplicationContext(), AlarmService.class);
         bindService(Service, mConnection, Context.BIND_AUTO_CREATE);
-        mService.myServiceFunc();
+     //   mService.myServiceFunc();
     }
 
     private int requestPermission()
