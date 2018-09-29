@@ -2,10 +2,12 @@ package com.example.root.appcontest.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -31,6 +33,7 @@ import com.nhn.android.maps.NMapController;
 import com.nhn.android.maps.NMapLocationManager;
 import com.nhn.android.maps.NMapView;
 import com.nhn.android.maps.maplib.NGeoPoint;
+import com.nhn.android.maps.nmapmodel.NMapError;
 import com.nhn.android.maps.overlay.NMapCircleData;
 import com.nhn.android.maps.overlay.NMapCircleStyle;
 import com.nhn.android.maps.overlay.NMapPOIdata;
@@ -44,6 +47,7 @@ import com.nhn.android.mapviewer.overlay.NMapResourceProvider;
 
 import java.util.ArrayList;
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.example.root.appcontest.BuildConfig.DEBUG;
 
 /**
@@ -70,6 +74,8 @@ public class MapFragment extends NMapFragment implements View.OnClickListener{
 
     double cur_lat;
     double cur_lng;
+
+    float cur_meters;
 
     private boolean searchMode = false;
 
@@ -119,6 +125,7 @@ public class MapFragment extends NMapFragment implements View.OnClickListener{
         mMapView = v.findViewById(R.id.nmap_view);
         mMapView.setClientId(CLIENT_ID);
         mMapView.setClickable(true);
+
         //mMapView = new NMapView(getContext());
         //LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //View view = vi.inflate(R.layout.test,null);
@@ -201,12 +208,12 @@ public class MapFragment extends NMapFragment implements View.OnClickListener{
             double item_lng = data_array.get(i).longtitude;
             Location.distanceBetween(cur_lat,cur_lng,item_lat,item_lng,results);
             NMapPOIitem item;
-            if(results[0]<=100.0F)//지금설정으로는 현재위치에서 100m내 마커만 보일것.
+            if(results[0]<=cur_meters)//지금설정으로는 현재위치에서 100m내 마커만 보일것.
                 item = poiData.addPOIitem(item_lng,item_lat, data_array.get(i).title, markerId, 0);
-                //NMapPOIitem item = poiData.addPOIitem(item_lat,item_lng, "바겐 세일~~~ "+i, markerId, 0);
+            //NMapPOIitem item = poiData.addPOIitem(item_lat,item_lng, "바겐 세일~~~ "+i, markerId, 0);
         }
         //Location.distanceBetween(cur_lat,cur_lng,,,results);
-       // poiData.addPOIitem(127.061, 37.51, "Pizza 123-456", markerId, 0);
+        // poiData.addPOIitem(127.061, 37.51, "Pizza 123-456", markerId, 0);
 
 
 
@@ -310,9 +317,24 @@ public class MapFragment extends NMapFragment implements View.OnClickListener{
             {
                 cur_lat = nGeoPoint.latitude;
                 cur_lng = nGeoPoint.longitude;
+                SharedPreferences pref;
+                try{
+                    pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
+                String str = pref.getString("radius_list", "500");
+                cur_meters = Float.parseFloat(str);
+
                 testPOIdataOverlay();
+                int zoom_level = ((int)cur_meters) / 500;
+                Log.d("sibal", ""+zoom_level);
+ //               nMapController.setZoomEnabled(true);
+//                nMapController.setMapCenter(nGeoPoint, 10);
                 nMapController.animateTo(nGeoPoint);
-                //nMapController.setZoomLevel(13);
+//                nMapController.setZoomLevel(1);
                 NMapPathDataOverlay pathDataOverlay = nMapOverlayManager.createPathDataOverlay();
                 if(circleData == null)
                     circleData = new NMapCircleData(1);
@@ -323,7 +345,7 @@ public class MapFragment extends NMapFragment implements View.OnClickListener{
                 }
                 circleData.initCircleData();
 
-                circleData.addCirclePoint(nGeoPoint.getLongitude(),nGeoPoint.getLatitude(),100.0F);//50.0F가 사이즈
+                circleData.addCirclePoint(nGeoPoint.getLongitude(),nGeoPoint.getLatitude(),cur_meters);//50.0F가 사이즈
                 circleData.endCircleData();
                 pathDataOverlay.addCircleData(circleData);
                 NMapCircleStyle circleStyle = new NMapCircleStyle(mMapView.getContext());
@@ -336,6 +358,8 @@ public class MapFragment extends NMapFragment implements View.OnClickListener{
             }
             return true;
         }
+
+;
 
         @Override
         public void onLocationUpdateTimeout(NMapLocationManager nMapLocationManager) {

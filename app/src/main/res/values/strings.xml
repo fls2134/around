@@ -104,29 +104,26 @@
     <string name="pref_default_display_name">닉네임</string>
 
     <string name="pref_title_set_radius">반경 설정</string>
+    <string name="pref_summary_set_radius">맵에서 확인하고 알림을 받을 반경을 설정 합니다.</string>
     <string-array name="meters">
+        <item>100</item>
+        <item>200</item>
         <item>500</item>
         <item>1000</item>
         <item>1500</item>
         <item>2000</item>
-        <item>2500</item>
         <item>3000</item>
-        <item>3500</item>
-        <item>4000</item>
-        <item>4500</item>
         <item>5000</item>
     </string-array>
 
     <string-array name="meters_titles">
+        <item>100m</item>
+        <item>200m</item>
         <item>500m</item>
         <item>1km</item>
         <item>1.5km</item>
         <item>2km</item>
-        <item>2.5km</item>
         <item>3km</item>
-        <item>3.5km</item>
-        <item>4km</item>
-        <item>4.5km</item>
         <item>5km</item>
     </string-array>
 
@@ -185,12 +182,27 @@
 
     <string name="pref_title_new_message_notifications">알림을 활성화 합니다.</string>
 
-    <string name="pref_title_ringtone">Ringtone</string>
-    <string name="pref_ringtone_silent">Silent</string>
+    <string name="pref_title_ringtone">알림음 설정</string>
+    <string name="pref_ringtone_silent">무음</string>
 
-    <string name="pref_title_vibrate">팝업 창</string>
+    <string name="pref_title_vibrate">진동</string>
 
     <string-array name="empty_array" translatable="false">
         <item></item>
     </string-array>
+
+
+    <string name="pref_header_theme">테마</string>
+    <string name="pref_title_theme_color">색상 설정</string>
+    <string-array name="pref_theme_color_name">
+        <item>빨강</item>
+        <item>초록</item>
+        <item>파랑</item>
+    </string-array>
+    <string-array name="pref_theme_color_values">
+        <item>#FF0000</item>
+        <item>#00FF00</item>
+        <item>#0000FF</item>
+    </string-array>
+    <string name="pref_summary_set_color">어플의 색상을 결정 합니다.</string>
 </resources>

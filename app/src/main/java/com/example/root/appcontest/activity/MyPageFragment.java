@@ -1,7 +1,9 @@
 package com.example.root.appcontest.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -10,10 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.root.appcontest.model.SearchEditText;
 import com.example.root.appcontest.R;
+
+import org.w3c.dom.Text;
 
 
 /**
@@ -40,6 +45,7 @@ public class MyPageFragment extends Fragment implements View.OnClickListener{
         super.onViewCreated(view, savedInstance);
         setToolbar(view);
         setTabs(view);
+        setNickName(view);
 
     }
 
@@ -91,6 +97,13 @@ public class MyPageFragment extends Fragment implements View.OnClickListener{
                 // 탭이 다시 선택 되었을 시
             }
         });
+    }
+
+    private void setNickName(View v)
+    {
+        TextView nickname = v.findViewById(R.id.nickname);
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        nickname.setText(pref.getString("nickname_text","닉네임"));
     }
 
     @Override
