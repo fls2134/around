@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
         getServerDatas();
         // 최초 화면 설정
         Intent Service = new Intent(getApplicationContext(), AlarmService.class);
+        //ComponentName myService = startService(new Intent(getApplicationContext(), AlarmService.class));
         bindService(Service, mConnection, Context.BIND_AUTO_CREATE);
         // 최초 화면 설정
         Timer timer = new Timer(true);
@@ -122,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
             public void run(){
                 mService.myServiceFunc();
             }
-        },1000);
+        },3000);
     }
 
     private int requestPermission()
