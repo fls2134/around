@@ -1,6 +1,8 @@
 package com.example.root.appcontest.activity;
 
 import android.Manifest;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -9,13 +11,17 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
+import com.example.root.appcontest.R;
 import com.example.root.appcontest.model.LocalData;
 import com.nhn.android.maps.overlay.NMapPOIitem;
 
@@ -25,6 +31,7 @@ public class AlarmService extends Service {
     ArrayList<LocalData> data_input;
     LocationManager locationManager;
     LocationListener listener;
+    private final String CHANNEL_ID = "default";
 
     private static final int LOCATION_INTERVAL = 1000;
     private static final float LOCATION_DISTANCE = 10f;
@@ -122,13 +129,73 @@ public class AlarmService extends Service {
             Log.e("asd", "onStatusChanged: " + provider);
         }
     }
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
 
     public void myServiceFunc(){
         Location curLocation;
         curLocation = getMyLocation();
-
+        double cur_lat = curLocation.getLatitude();
+        double cur_lng = curLocation.getLongitude();
+        double item_lat;
+        double item_lng;
+        float[] results = new float[100];
         data_input = mCallback.recvData();
         //data_input의 정보들 중에서 취할 정보들을 처리, 알림할 것
+
+        createNotificationChannel();
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.around_logo2)
+                .setContentTitle("Around Seoul")
+                .setContentText("근처에 관심이 있을만한 장소가 있네요!")
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText("근처에 관심이 있을만한 장소가 있네요!"))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        //  .setContentIntent(pendingIntent)
+        //  .addAction(R.drawable.ic_launcher_foreground, getString(R.string.snooze),
+        //          pendingIntent);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(1, mBuilder.build());
+/*
+        for (int i = 0; i < data_input.size(); i++) {
+            item_lat = data_input.get(i).latitude;
+            item_lng = data_input.get(i).longtitude;
+            Location.distanceBetween(cur_lat,cur_lng,item_lat,item_lng,results);
+
+        }
+        for(int i=0; i<data_input.size(); i++)
+        {
+            if(results[i]<=100.0F)//지금설정으로는 현재위치에서 100m내 마커만 보일것.
+            {
+                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                        .setSmallIcon(R.drawable.ic_launcher_foreground)
+                        .setContentTitle("My notification")
+                        .setContentText("Much longer text that cannot fit one line...")
+                        .setStyle(new NotificationCompat.BigTextStyle()
+                                .bigText("Much longer text that cannot fit one line..."))
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                      //  .setContentIntent(pendingIntent)
+                      //  .addAction(R.drawable.ic_launcher_foreground, getString(R.string.snooze),
+                      //          pendingIntent);
+
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+                notificationManager.notify(1, mBuilder.build());
+            }
+        }*/
     }
 
     private void settingGPS() {
