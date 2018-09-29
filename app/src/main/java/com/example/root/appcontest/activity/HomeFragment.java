@@ -101,19 +101,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     private void setTabs(View view) {
         mTabs = (TabLayout) view.findViewById(R.id.tabs_home);
-        mTabs.addTab(mTabs.newTab().setText("거리순"));
         mTabs.addTab(mTabs.newTab().setText("최신순"));
+        mTabs.addTab(mTabs.newTab().setText("거리순"));
 
         mTabs.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 // 탭 선택시
                 switch(tab.getPosition()) {
-                    case 0: // 거리순
-                        rcViewControl.arrangeByDistance();
-                        break;
-                    case 1: // 최신순
+                    case 0: // 최신순
                         rcViewControl.arrangeByNew();
+                        break;
+                    case 1: // 거리순
+                        rcViewControl.arrangeByDistance();
                         break;
                     default:
                         break;
