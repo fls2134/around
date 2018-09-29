@@ -1,6 +1,7 @@
 package com.example.root.appcontest.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -110,5 +111,11 @@ public class InfoActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        data = (LocalData)intent.getSerializableExtra("data");
     }
 }

@@ -187,68 +187,75 @@ public class AlarmService extends Service {
        for(int i=0; i<data_input.size(); i++)
            Log.d("제목",data_input.get(i).title);
 
-        PendingIntent pendingIntents[] = new PendingIntent[data_input.size()];
+        //PendingIntent pendingIntents[] = new PendingIntent[data_input.size()];
         while(true) {
 
-            Intent nextIntent = new Intent(getApplicationContext(), InfoActivity.class);
-            nextIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                    | Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
-            /*
-            TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-            stackBuilder.addNextIntentWithParentStack(nextIntent);
-
-            PendingIntent pendingIntent =
-                    stackBuilder.getPendingIntent(0, PendingIntent.FLAG_ONE_SHOT);
-            */
 
 
             Log.d("데이터 개수", Integer.toString(data_input.size()));
-           output = new float[data_input.size()];
-           for (int i = 0; i < data_input.size(); i++) {
-               item_lat = data_input.get(i).latitude;
-               item_lng = data_input.get(i).longtitude;
-               Location.distanceBetween(cur_lat, cur_lng, item_lat, item_lng, results);
-               output[i] = results[0];
-               pendingIntent = PendingIntent.getActivity(getApplicationContext(), i, nextIntent, PendingIntent.FLAG_ONE_SHOT);
-               Bundle bundle = new Bundle();
-               bundle.putSerializable("data",data_input.get(i));
-               nextIntent.putExtras(bundle);
+            output = new float[data_input.size()];
+            for (int i = 0; i < data_input.size(); i++) {
+                item_lat = data_input.get(i).latitude;
+                item_lng = data_input.get(i).longtitude;
+                Location.distanceBetween(cur_lat, cur_lng, item_lat, item_lng, results);
+                output[i] = results[0];
+                //pendingIntent = PendingIntent.getActivity(getApplicationContext(), i, nextIntent, PendingIntent.FLAG_ONE_SHOT);
 
-           }
+            }
 
-           for (int i = 0; i < data_input.size(); i++) {
-               if (output[i] <= 500.0F)//지금설정으로는 현재위치에서 500m내 마커만 보일것.
-               {
+            for (int i = 0; i < data_input.size(); i++) {
+                if (output[i] <= 500.0F)//지금설정으로는 현재위치에서 500m내 마커만 보일것.
+                {
 
-                   Log.d("거리", Float.toString(output[i]));
-                   if (data_input.get(i).alarmed == false) {
+                    Log.d("거리", Float.toString(output[i]));
+                    if (data_input.get(i).alarmed == false) {
 
-                       //TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+                        Intent nextIntent = new Intent(getApplicationContext(), InfoActivity.class);
+                        //nextIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                        //        | Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        //        | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("data",data_input.get(i));
+                        nextIntent.putExtras(bundle);
+
+                        /*
+                        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+                        stackBuilder.addNextIntentWithParentStack(nextIntent);
+
+                        PendingIntent pendingIntent =
+                                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+                        */
+
+                        PendingIntent pintent = PendingIntent.getActivity(getApplicationContext(),i,nextIntent,0);
+
+
+
+
                        /*
+                       TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
                        PendingIntent pendingIntent =
                                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
                                */
 
-                       Log.d("ssibal", "myServiceFunc: " +i);
-                       NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                               .setSmallIcon(R.drawable.around_logo2)
-                               .setContentTitle("Around Seoul")
-                               .setContentText("근처에 관심을 가질 만한 장소가 있네요! " + data_input.get(i).title)
-                               .setStyle(new NotificationCompat.BigTextStyle()
-                                       .bigText("근처에 관심을 가질 만한 장소가 있네요! " + data_input.get(i).title))
-                               .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                               .setContentIntent(pendingIntents[i])
-                               .addAction(R.drawable.around_logo2, getString(R.string.see_It),
-                                       pendingIntent);
+                        Log.d("ssibal", "myServiceFunc: " +i);
+                        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                                .setSmallIcon(R.drawable.around_logo2)
+                                .setContentTitle("Around Seoul")
+                                .setContentText("근처에 관심을 가질 만한 장소가 있네요! " + data_input.get(i).title)
+                                .setStyle(new NotificationCompat.BigTextStyle()
+                                        .bigText("근처에 관심을 가질 만한 장소가 있네요! " + data_input.get(i).title))
+                                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                .setContentIntent(pintent)
+                                .addAction(R.drawable.around_logo2, getString(R.string.see_It),
+                                        pendingIntent);
 
-                       NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-                       notificationManager.notify(i, mBuilder.build());
-                       data_input.get(i).alarmed = true;
-                   }
-               }
-           }
+                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+                        notificationManager.notify(i, mBuilder.build());
+                        data_input.get(i).alarmed = true;
+                    }
+                }
+            }
             SystemClock.sleep(60000);
         }
     }
