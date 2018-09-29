@@ -40,6 +40,7 @@ public class AlarmService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
+        settingGPS();
         // TODO: Return the communication channel to the service.
         return mBinder;
     }
@@ -124,7 +125,6 @@ public class AlarmService extends Service {
 
     public void myServiceFunc(){
         Location curLocation;
-        settingGPS();
         curLocation = getMyLocation();
 
         data_input = mCallback.recvData();

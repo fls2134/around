@@ -16,13 +16,15 @@ public class CardItem {
     public int posterImage;
     public String tilte;
 
+    public int id;
 
 
-    public CardItem(int profileImage, String nickName, int posterImage, String tilte) {
+    public CardItem(int profileImage, String nickName, int posterImage, String tilte, int id) {
         this.profileImage = profileImage;
         this.nickName = nickName;
         this.posterImage = posterImage;
         this.tilte = tilte;
+        this.id = id;
     }
 
 
@@ -57,4 +59,6 @@ public class CardItem {
     public void setTilte(String tilte) {
         this.tilte = tilte;
     }
+
+    public int getId() { return id;};
 }
