@@ -1,8 +1,10 @@
 package com.example.root.appcontest.model;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.root.appcontest.R;
+import com.example.root.appcontest.activity.InfoActivity;
+import com.example.root.appcontest.activity.MainActivity;
 
 import java.util.ArrayList;
 
@@ -23,7 +27,8 @@ public class RCViewAdapter extends RecyclerView.Adapter<RCViewAdapter.MyViewHold
      */
     ArrayList<CardItem> mList = new ArrayList<>();
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder{
         ImageView profileImage;
         TextView nickName;
 
@@ -38,6 +43,7 @@ public class RCViewAdapter extends RecyclerView.Adapter<RCViewAdapter.MyViewHold
             posterImage = view.findViewById(R.id.poster_card);
             title = view.findViewById(R.id.title_card);
         }
+
     }
 
     public RCViewAdapter(ArrayList<CardItem> mList) {
@@ -59,10 +65,13 @@ public class RCViewAdapter extends RecyclerView.Adapter<RCViewAdapter.MyViewHold
         myViewHolder.nickName.setText(mList.get(position).nickName);
         myViewHolder.posterImage.setImageResource(mList.get(position).posterImage);
         myViewHolder.title.setText(mList.get(position).tilte);
+
     }
 
     @Override
     public int getItemCount() {
         return mList.size();
     }
+
+
 }
