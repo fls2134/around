@@ -160,24 +160,25 @@ public class RCViewControl extends Fragment{
         //mRecyclerView.setAdapter(mAdapter);
         progressBar.setVisibility(View.GONE);
         mAdapter.loadDatas(data_array);
-        updateMList();
+        updateMList(data_array);
         mAdapter.notifyDataSetChanged();
     }
 
 
-    private void updateMList()
+    private void updateMList(ArrayList<LocalData> array)
     {
         mList.clear();
-        for (int i = 0; i < data_array.size(); i++) {
-            mList.add(new CardItem(R.drawable.around_logo1, data_array.get(i).nickname, data_array.get(i).img_url, data_array.get(i).title, data_array.get(i).id));
+        for (int i = 0; i < array.size(); i++) {
+            mList.add(new CardItem(R.drawable.around_logo1, array.get(i).nickname, array.get(i).img_url, array.get(i).title, array.get(i).id));
         }
     }
 
     public void arrangeByDistance() {
         // 거리순으로 정렬함
         //mList.add(new CardItem(R.drawable.around_logo2, "distance", R.drawable.around_logo2, "distance"));
-        Collections.sort(data_array, new ascendingDistance());
-        updateMList();
+        ArrayList<LocalData> disance_array = (ArrayList<LocalData>)data_array.clone();
+        Collections.sort(disance_array, new ascendingDistance());
+        updateMList(disance_array);
         mAdapter.notifyDataSetChanged();
     }
 
@@ -185,7 +186,7 @@ public class RCViewControl extends Fragment{
 
         // 최신순으로 정렬함
         //mList.add(new CardItem(R.drawable.around_logo2, "new", R.drawable.around_logo2, "new"));
-
+        addListItemFromDb();
         mAdapter.notifyDataSetChanged();
     }
 
