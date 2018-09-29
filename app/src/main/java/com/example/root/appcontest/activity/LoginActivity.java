@@ -63,9 +63,7 @@ public class LoginActivity extends AppCompatActivity{
                                     }
                                 }
                             });
-
                 }
-
             }
         });
         sign_up.setOnClickListener(new View.OnClickListener() {
