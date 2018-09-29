@@ -13,6 +13,7 @@ public class LocalData implements Serializable{
     public int data_type;
     public int sYear, sMonth, sDay;
     public int eYear, eMonth, eDay;
+    public boolean alarmed = false;
 
     public void LocalData(){
 
