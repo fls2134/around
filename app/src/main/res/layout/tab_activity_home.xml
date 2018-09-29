@@ -86,6 +86,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <include
+        android:id="@+id/recyclerView_container"
         layout="@layout/reccyclerview_container" />
 
 

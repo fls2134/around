@@ -13,7 +13,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -46,6 +45,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
      */
     FragmentTransaction fragmentTransaction;
 
+
+    /**
+     * 리사이클러 뷰 컨트롤
+     */
+    RCViewControl rcViewControl;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -106,8 +110,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 // 탭 선택시
                 switch(tab.getPosition()) {
                     case 0: // 거리순
+                        rcViewControl.arrangeByDistance();
                         break;
                     case 1: // 최신순
+                        rcViewControl.arrangeByNew();
                         break;
                     default:
                         break;
@@ -127,8 +133,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     }
 
     private void setRecyclerView() {
+        rcViewControl = new RCViewControl();
         fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.recyclerView_container, new RCViewControl()).commit();
+        fragmentTransaction.replace(R.id.recyclerView_container, rcViewControl).commit();
     }
 
     private void setFloatingButton(View view) {

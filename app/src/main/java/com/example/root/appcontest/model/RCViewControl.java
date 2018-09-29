@@ -37,40 +37,67 @@ public class RCViewControl extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.recyclerview, container, false);
+        final View view = inflater.inflate(R.layout.recyclerview, container, false);
+
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        mRecyclerView.setHasFixedSize(true);
+
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        // specify an adapter (see also next example)
+        mAdapter = new RCViewAdapter(mList);
+        mRecyclerView.setAdapter(mAdapter);
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // Toast.makeText(getContext(),"hello",Toast.LENGTH_LONG).show();
-        // recyclerView 뷰 생성 및 설정
-        mRecyclerView = view.findViewById(R.id.recyclerView);
-        mRecyclerView.setHasFixedSize(true);
-
-        // 레이아웃 매니저 세팅
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        // 리스트 작성
         addListItemFromDb();
-
-        //Toast.makeText(getContext(),mList.get(0).getNickName(),Toast.LENGTH_LONG).show();
-
-        mAdapter = new RCViewAdapter(mList);
-        mRecyclerView.setAdapter(mAdapter);
     }
 
     private void addListItemFromDb() {
+        // this is sample
         mList.add(new CardItem(R.drawable.around_logo1, "aaa", R.drawable.around_logo1, "title1"));
         mList.add(new CardItem(R.drawable.around_logo1, "bbb", R.drawable.around_logo1, "title2"));
         mList.add(new CardItem(R.drawable.around_logo1, "ccc", R.drawable.around_logo1, "title3"));
 
-
+        //양식은 다음과 같이
+        /*
+        try{
+            db에서 가져옴
+        }
+        catch(){
+            에러발생시 sample로 리스트 생성
+        }
+         */
     }
 
-    private void arange() {
-        //기준에 따라서 다른 정렬 모드
-        //아마도 addListItemFromDb 메서드에서 사용할듯
+    public void arrangeByDistance() {
+        // 거리순으로 정렬함
+        mList.add(new CardItem(R.drawable.around_logo2, "distance", R.drawable.around_logo2, "distance"));
+
+        mAdapter.notifyDataSetChanged();
+    }
+
+    public void arrangeByNew() {
+        // 최신순으로 정렬함
+        mList.add(new CardItem(R.drawable.around_logo2, "new", R.drawable.around_logo2, "new"));
+
+        mAdapter.notifyDataSetChanged();
+    }
+
+    public void arrangeBySelected() {
+        // 담은글 정렬
+
+        mAdapter.notifyDataSetChanged();
+    }
+
+    public void arrangeByWrited() {
+        // 작성글 정렬
+
+        mAdapter.notifyDataSetChanged();
     }
 }

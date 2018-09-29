@@ -1,7 +1,9 @@
 package com.example.root.appcontest.model;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +47,7 @@ public class RCViewAdapter extends RecyclerView.Adapter<RCViewAdapter.MyViewHold
     @NonNull
     @Override
     public RCViewAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_item, parent,false);
         return new MyViewHolder(v);
     }
 
@@ -56,7 +58,7 @@ public class RCViewAdapter extends RecyclerView.Adapter<RCViewAdapter.MyViewHold
         myViewHolder.profileImage.setImageResource(mList.get(position).profileImage);
         myViewHolder.nickName.setText(mList.get(position).nickName);
         myViewHolder.posterImage.setImageResource(mList.get(position).posterImage);
-        myViewHolder.title.setText(mList.get(position).posterImage);
+        myViewHolder.title.setText(mList.get(position).tilte);
     }
 
     @Override
