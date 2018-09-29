@@ -172,24 +172,10 @@ public class WriteActivity extends AppCompatActivity {
         byte[] data = baos.toByteArray();
 
         UploadTask uploadTask = uploadRef.putBytes(data);
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle unsuccessful uploads
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                img_link = taskSnapshot.getDownloadUrl().toString();
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                // ...
-            }
-        });
-
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
 
+//        Log.d("URL주소",img_link);
         localData.nickname = pref.getString("nickname_text","닉네임");
-        localData.img_url = img_link;
         localData.title = editText_title.getText().toString(); //String
         localData.content = editText_content.getText().toString(); // String
         localData.data_type = type;
@@ -224,10 +210,32 @@ public class WriteActivity extends AppCompatActivity {
         //그외 id 같은것들 추가 해야 할것들 있으면 하셈
         //Toast.makeText(this, "sibla" + sYear + sMonth + sDay+ '\n' + eYear + eMonth + eDay  , Toast.LENGTH_SHORT).show();
         //서버에 다올리고 난뒤
-        databseRef.child(title).setValue(localData);
+//        localData.img_url = img_link;
+//       databseRef.child(title).setValue(localData);
         Toast.makeText(getApplicationContext(),"업로드가 완료되었습니다.",Toast.LENGTH_LONG);
+//        Log.d("Writing","done");
         setResult(RESULT_OK);
-        finish();
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                img_link = taskSnapshot.getDownloadUrl().toString();
+                localData.img_url = img_link;
+                databseRef.child(title).setValue(localData);
+                Log.d("URL", img_link);
+                WriteActivity.this.finish();
+
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                // ...
+            }
+        });
+
+
     }
 
     private int handleException()

@@ -16,7 +16,6 @@ public class LocalData implements Serializable{
     public int sYear, sMonth, sDay;
     public int eYear, eMonth, eDay;
     public boolean alarmed = false;
-
     public void LocalData(){
 
     }
