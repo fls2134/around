@@ -24,6 +24,7 @@ import java.util.ArrayList;
 public class AlarmService extends Service {
     ArrayList<LocalData> data_input;
     LocationManager locationManager;
+    LocationListener listener;
 
     private static final int LOCATION_INTERVAL = 1000;
     private static final float LOCATION_DISTANCE = 10f;
@@ -35,12 +36,13 @@ public class AlarmService extends Service {
     }
 
     private final IBinder mBinder = new AlarmServiceBinder();
+    public void addLocListener() {
+        listener = new LocationListener(LocationManager.GPS_PROVIDER);
+        listener.start();
+    }
 
     private void removeLocListener() {
-
-        locationManager.removeUpdates(mLocationListeners[1]);
-        locationManager.removeUpdates(mLocationListeners[0]);
-
+        locationManager.removeUpdates(listener);
     }
     private class LocationListener extends Thread implements android.location.LocationListener
     {
@@ -99,10 +101,6 @@ public class AlarmService extends Service {
         }
     }
 
-    LocationListener[] mLocationListeners = new LocationListener[] {
-            new LocationListener(LocationManager.GPS_PROVIDER),
-            new LocationListener(LocationManager.NETWORK_PROVIDER)
-    };
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -133,6 +131,7 @@ public class AlarmService extends Service {
         // Acquire a reference to the system Location Manager
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
+        addLocListener();
         /*
         locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
@@ -159,26 +158,23 @@ public class AlarmService extends Service {
         }
         else {
             try {
-                mLocationListeners[0].start();
                 locationManager.requestLocationUpdates(
                         LocationManager.NETWORK_PROVIDER, LOCATION_INTERVAL, LOCATION_DISTANCE,
-                        mLocationListeners[0]);
+                        listener);
             } catch (java.lang.SecurityException ex) {
                 Log.i("asd", "fail to request location update, ignore", ex);
             } catch (IllegalArgumentException ex) {
                 Log.d("asd", "network provider does not exist, " + ex.getMessage());
             }
             try {
-                mLocationListeners[0].start();
                 locationManager.requestLocationUpdates(
                         LocationManager.GPS_PROVIDER, LOCATION_INTERVAL, LOCATION_DISTANCE,
-                        mLocationListeners[0]);
+                        listener);
             } catch (java.lang.SecurityException ex) {
                 Log.i("asd", "fail to request location update, ignore", ex);
             } catch (IllegalArgumentException ex) {
                 Log.d("asd", "gps provider does not exist " + ex.getMessage());
             }
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListeners[0]);
             // 수동으로 위치 구하기
             String locationProvider = LocationManager.GPS_PROVIDER;
             currentLocation = locationManager.getLastKnownLocation(locationProvider);
