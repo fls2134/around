@@ -3,6 +3,7 @@ package com.example.root.appcontest.activity;
 import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +21,7 @@ import android.os.SystemClock;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
 import com.example.root.appcontest.R;
@@ -160,6 +162,13 @@ public class AlarmService extends Service {
         //data_input의 정보들 중에서 취할 정보들을 처리, 알림할 것
 
         createNotificationChannel();
+
+        Intent nextIntent = new Intent(getApplicationContext(), InfoActivity.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addNextIntentWithParentStack(nextIntent);
+        PendingIntent pendingIntent =
+                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
        /*
         for(int i=0; i<3; i++) {
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
@@ -198,10 +207,10 @@ public class AlarmService extends Service {
                                .setContentText("근처에 관심을 가질 만한 장소가 있네요! " + data_input.get(i).title)
                                .setStyle(new NotificationCompat.BigTextStyle()
                                        .bigText("근처에 관심을 가질 만한 장소가 있네요! " + data_input.get(i).title))
-                               .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-                       //  .setContentIntent(pendingIntent)
-                       //  .addAction(R.drawable.around_logo2, getString(R.string.see_It),
-                       //          pendingIntent);
+                               .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                               .setContentIntent(pendingIntent)
+                               .addAction(R.drawable.around_logo2, getString(R.string.see_It),
+                                 pendingIntent);
 
                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
                        notificationManager.notify(i, mBuilder.build());
