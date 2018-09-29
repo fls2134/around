@@ -193,7 +193,9 @@ public class WriteActivity extends AppCompatActivity {
         int id;
         String str;
         str= "" + sYear + (int)latitude + eDay+ title.length() + content.length();
-        id = Integer.parseInt(str);
+        String substr = str.substring(0,7);
+
+        id = Integer.parseInt(substr);
         Log.d("Main", "onClickComplete: " + id);
         localData.id = id;
 
@@ -456,7 +458,7 @@ public class WriteActivity extends AppCompatActivity {
     }
 
 
-        @Override
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode)
         {
@@ -475,6 +477,6 @@ public class WriteActivity extends AppCompatActivity {
             }
 
         }
-        }
+    }
 
 }

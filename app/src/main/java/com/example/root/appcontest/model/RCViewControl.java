@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.root.appcontest.R;
 import com.example.root.appcontest.activity.InfoActivity;
+import com.example.root.appcontest.activity.MainActivity;
 
 import java.util.ArrayList;
 
@@ -78,9 +79,22 @@ public class RCViewControl extends Fragment{
 
     private void addListItemFromDb() {
         // this is sample
+        /*
         mList.add(new CardItem(R.drawable.around_logo1, "aaa", R.drawable.around_logo1, "title1", 123));
         mList.add(new CardItem(R.drawable.around_logo1, "bbb", R.drawable.around_logo1, "title2", 456));
         mList.add(new CardItem(R.drawable.around_logo1, "ccc", R.drawable.around_logo1, "title3", 789));
+        */
+        ArrayList<LocalData> data_array;
+
+        //로컬 데이터 담을 어레이리스트
+        try
+        {
+            data_array = ((MainActivity)getActivity()).data_array;
+        }
+        catch(NullPointerException e)
+        {
+            return;
+        }
 
         //양식은 다음과 같이
         /*
