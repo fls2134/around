@@ -1,15 +1,20 @@
 package com.example.root.appcontest.activity;
 
 import android.Manifest;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -37,6 +42,32 @@ public class MainActivity extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference databaseReference;
     LocalData LD_tmp;
+    private AlarmService mService;
+
+    private ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            AlarmService.AlarmServiceBinder binder = (AlarmService.AlarmServiceBinder)iBinder;
+            mService = binder.getService();
+            mService.registerCallback(mCallback);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            mService = null;
+        }
+    };
+    private  AlarmService.ICallback mCallback = new AlarmService.ICallback(){
+        public ArrayList<LocalData> recvData(){
+            return data_array;
+        }
+    };
+
+    public void startServiceMethod(View v){
+        Intent Service = new Intent(getApplicationContext(), AlarmService.class);
+        bindService(Service, mConnection, Context.BIND_AUTO_CREATE);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +116,9 @@ public class MainActivity extends AppCompatActivity {
         data_array = new ArrayList<>();
         getServerDatas();
         // 최초 화면 설정
+        Intent Service = new Intent(getApplicationContext(), AlarmService.class);
+        bindService(Service, mConnection, Context.BIND_AUTO_CREATE);
+        mService.myServiceFunc();
     }
 
     private int requestPermission()
