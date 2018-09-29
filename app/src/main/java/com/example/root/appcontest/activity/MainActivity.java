@@ -114,13 +114,13 @@ public class MainActivity extends AppCompatActivity {
         data_array = new ArrayList<>();
         getServerDatas();
         // 최초 화면 설정
-      //  Intent Service = new Intent(getApplicationContext(), AlarmService.class);
-     //   bindService(Service, mConnection, Context.BIND_AUTO_CREATE);
+        Intent Service = new Intent(getApplicationContext(), AlarmService.class);
+        bindService(Service, mConnection, Context.BIND_AUTO_CREATE);
         // 최초 화면 설정
         Timer timer = new Timer(true);
         timer.schedule(new TimerTask(){
             public void run(){
-     //           mService.myServiceFunc();
+                mService.myServiceFunc();
             }
         },3000);
     }

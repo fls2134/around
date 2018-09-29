@@ -1,5 +1,6 @@
 package com.example.root.appcontest.model;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.root.appcontest.R;
+import com.example.root.appcontest.activity.InfoActivity;
 
 import java.util.ArrayList;
 
@@ -49,6 +51,18 @@ public class RCViewControl extends Fragment{
         // specify an adapter (see also next example)
         mAdapter = new RCViewAdapter(mList);
         mRecyclerView.setAdapter(mAdapter);
+
+        mRecyclerView.addOnItemTouchListener(new RCViewListener(getContext(), mRecyclerView, new RCViewListener.OnItemClickListener() {
+            @Override public void onItemClick(View view, int position) {
+                //Toast.makeText(getContext(),position+"",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getActivity(), InfoActivity.class);
+                startActivity(intent);
+            }
+
+            @Override public void onLongItemClick(View view, int position) {
+                // do whatever
+            }
+        }));
         return view;
     }
 
