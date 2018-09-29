@@ -14,6 +14,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -30,6 +31,8 @@ import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * made by sks 2018. 09. 17
@@ -59,15 +62,10 @@ public class MainActivity extends AppCompatActivity {
     };
     private  AlarmService.ICallback mCallback = new AlarmService.ICallback(){
         public ArrayList<LocalData> recvData(){
+            Log.d("TAG","작동중");
             return data_array;
         }
     };
-
-    public void startServiceMethod(View v){
-        Intent Service = new Intent(getApplicationContext(), AlarmService.class);
-        bindService(Service, mConnection, Context.BIND_AUTO_CREATE);
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,10 +113,15 @@ public class MainActivity extends AppCompatActivity {
 
         data_array = new ArrayList<>();
         getServerDatas();
-        // 최초 화면 설정
         Intent Service = new Intent(getApplicationContext(), AlarmService.class);
         bindService(Service, mConnection, Context.BIND_AUTO_CREATE);
-     //   mService.myServiceFunc();
+        // 최초 화면 설정
+        Timer timer = new Timer(true);
+        timer.schedule(new TimerTask(){
+            public void run(){
+                mService.myServiceFunc();
+            }
+        },1000);
     }
 
     private int requestPermission()
