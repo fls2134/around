@@ -154,6 +154,7 @@ public class RCViewControl extends Fragment{
         //mAdapter = new RCViewAdapter(mList,getContext());
         //mRecyclerView.setAdapter(mAdapter);
         progressBar.setVisibility(View.GONE);
+        mAdapter.loadDatas(data_array);
         mAdapter.notifyDataSetChanged();
     }
 

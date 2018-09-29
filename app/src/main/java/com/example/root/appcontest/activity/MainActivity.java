@@ -184,6 +184,10 @@ public class MainActivity extends AppCompatActivity {
         Log.d("sibal1", "getServerDatas: " + data_array.size());
     }
 
+    public ArrayList<LocalData> getData_array() {
+        return data_array;
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

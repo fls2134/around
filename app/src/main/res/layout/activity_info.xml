@@ -40,12 +40,19 @@
             android:background="@color/lineColor"/>
 
 
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:visibility="visible"
+            android:id="@+id/info_progressbar"
+
+            />
         <ImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:scaleType="centerInside"
+            android:scaleType="fitXY"
             app:srcCompat="@drawable/around_logo2" />
 
         <View
@@ -87,6 +94,7 @@
             android:id="@+id/text_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="300dp"
             android:text="내용"
             android:textSize="18sp"
             android:autoLink="phone|web"
