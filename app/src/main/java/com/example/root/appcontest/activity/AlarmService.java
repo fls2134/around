@@ -157,20 +157,23 @@ public class AlarmService extends Service {
         //data_input의 정보들 중에서 취할 정보들을 처리, 알림할 것
 
         createNotificationChannel();
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.around_logo2)
-                .setContentTitle("Around Seoul")
-                .setContentText("근처에 관심이 있을만한 장소가 있네요!")
-                .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText("근처에 관심이 있을만한 장소가 있네요!"))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-        //  .setContentIntent(pendingIntent)
-        //  .addAction(R.drawable.ic_launcher_foreground, getString(R.string.snooze),
-        //          pendingIntent);
+       /*
+        for(int i=0; i<3; i++) {
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setSmallIcon(R.drawable.around_logo2)
+                    .setContentTitle("Around Seoul")
+                    .setContentText("근처에 관심이 있을만한 장소가 있네요!")
+                    .setStyle(new NotificationCompat.BigTextStyle()
+                            .bigText("근처에 관심이 있을만한 장소가 있네요!"))
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+            //  .setContentIntent(pendingIntent)
+            //  .addAction(R.drawable.ic_launcher_foreground, getString(R.string.snooze),
+            //          pendingIntent);
 
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(1, mBuilder.build());
-/*
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+            notificationManager.notify(i, mBuilder.build());
+        }
+*/
         for (int i = 0; i < data_input.size(); i++) {
             item_lat = data_input.get(i).latitude;
             item_lng = data_input.get(i).longtitude;
@@ -179,23 +182,26 @@ public class AlarmService extends Service {
         }
         for(int i=0; i<data_input.size(); i++)
         {
-            if(results[i]<=100.0F)//지금설정으로는 현재위치에서 100m내 마커만 보일것.
+            if(results[i]<=500.0F)//지금설정으로는 현재위치에서 500m내 마커만 보일것.
             {
-                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                        .setSmallIcon(R.drawable.ic_launcher_foreground)
-                        .setContentTitle("My notification")
-                        .setContentText("Much longer text that cannot fit one line...")
-                        .setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText("Much longer text that cannot fit one line..."))
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-                      //  .setContentIntent(pendingIntent)
-                      //  .addAction(R.drawable.ic_launcher_foreground, getString(R.string.snooze),
-                      //          pendingIntent);
+                if(data_input.get(i).alarmed == false) {
+                    NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                            .setSmallIcon(R.drawable.ic_launcher_foreground)
+                            .setContentTitle("Around Seoul")
+                            .setContentText("근처에 관심을 가질 만한 장소가 있네요! " + data_input.get(i).title)
+                            .setStyle(new NotificationCompat.BigTextStyle()
+                                    .bigText("근처에 관심을 가질 만한 장소가 있네요! " + data_input.get(i).title))
+                            .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                    //  .setContentIntent(pendingIntent)
+                    //  .addAction(R.drawable.ic_launcher_foreground, getString(R.string.snooze),
+                    //          pendingIntent);
 
-                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-                notificationManager.notify(1, mBuilder.build());
+                    NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+                    notificationManager.notify(i, mBuilder.build());
+                    data_input.get(i).alarmed = true;
+                }
             }
-        }*/
+        }
     }
 
     private void settingGPS() {
