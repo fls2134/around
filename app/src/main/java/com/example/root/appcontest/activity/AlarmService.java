@@ -126,9 +126,26 @@ public class AlarmService extends Service {
         Location curLocation;
         settingGPS();
         curLocation = getMyLocation();
-
+        double cur_lat = curLocation.getLatitude();
+        double cur_lng = curLocation.getLongitude();
+        double item_lat;
+        double item_lng;
+        float[] results = new float[100];
         data_input = mCallback.recvData();
         //data_input의 정보들 중에서 취할 정보들을 처리, 알림할 것
+        for(int i=0; i<data_input.size();i++){
+            Log.d("정보",data_input.get(i).title);
+        }
+
+        /*
+        for (int i = 0; i < data_input.size(); i++) {
+            item_lat = data_input.get(i).latitude;
+            item_lng = data_input.get(i).longtitude;
+            Location.distanceBetween(cur_lat,cur_lng,item_lat,item_lng,results);
+            NMapPOIitem item;
+            if(results[0]<=100.0F)//지금설정으로는 현재위치에서 100m내 마커만 보일것.
+
+        }*/
     }
 
     private void settingGPS() {
