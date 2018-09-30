@@ -73,6 +73,7 @@ public class RCViewControl extends Fragment{
 
 
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -170,6 +171,7 @@ public class RCViewControl extends Fragment{
         //mAdapter = new RCViewAdapter(mList,getContext());
         //mRecyclerView.setAdapter(mAdapter);
         progressBar.setVisibility(View.GONE);
+        filtering_datas(data_array);
         updateMList(data_array);
         mAdapter.notifyDataSetChanged();
     }
@@ -189,6 +191,7 @@ public class RCViewControl extends Fragment{
         //mList.add(new CardItem(R.drawable.around_logo2, "distance", R.drawable.around_logo2, "distance"));
         ArrayList<LocalData> disance_array = (ArrayList<LocalData>)data_array.clone();
         Collections.sort(disance_array, new ascendingDistance());
+        filtering_datas(disance_array);
         updateMList(disance_array);
         mAdapter.notifyDataSetChanged();
     }
@@ -258,6 +261,36 @@ public class RCViewControl extends Fragment{
         });
         Log.d("sibal2", "getServerDatas: " + data_array.size());
     }
+
+
+    private void filtering_datas(ArrayList<LocalData> array)
+    {
+        Set<String> filterSet;
+        final SharedPreferences pref = getContext().getSharedPreferences("filters", MODE_PRIVATE);
+        filterSet = new HashSet<String>(pref.getStringSet("filter", new HashSet<String>()));
+
+        boolean[] categories = new boolean[8];
+        String[] filterArray = getResources().getStringArray(R.array.pref_categories);
+        for (int i = 0; i < 8; i++) {
+            if(filterSet.contains(filterArray[i]))
+            {
+                categories[i] = true;
+                Log.d("sibal", "updates : " + i);
+            }
+            else
+                categories[i] = false;
+        }
+
+        for (int i = 0; i < array.size(); i++) {
+            if(categories[array.get(i).data_type] == false)
+                array.remove(i);
+        }
+    }
+    public void notifyData()
+    {
+
+    }
+
 
     // 오름차순
     class ascendingDistance implements Comparator<LocalData> {

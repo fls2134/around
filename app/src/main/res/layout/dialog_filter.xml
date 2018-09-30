@@ -36,51 +36,59 @@
                 android:orientation="vertical">
 
                 <CheckBox
-                    android:id="@+id/checkBox2"
+                    android:id="@+id/checkbox_filter_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:text="@string/writing_type_concert" />
 
                 <CheckBox
-                    android:id="@+id/checkBox5"
+                    android:id="@+id/checkbox_filter_2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:text="@string/writing_type_party" />
 
                 <CheckBox
-                    android:id="@+id/checkBox4"
+                    android:id="@+id/checkbox_filter_3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:text="@string/writing_type_comfort" />
 
                 <CheckBox
-                    android:id="@+id/checkBox3"
+                    android:id="@+id/checkbox_filter_4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:text="@string/writing_type_sightseeing" />
 
                 <CheckBox
-                    android:id="@+id/checkBox9"
+                    android:id="@+id/checkbox_filter_5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:text="@string/writing_type_gallery" />
 
                 <CheckBox
-                    android:id="@+id/checkBox8"
+                    android:id="@+id/checkbox_filter_6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:text="@string/writing_type_food" />
 
                 <CheckBox
-                    android:id="@+id/checkBox7"
+                    android:id="@+id/checkbox_filter_7"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:text="@string/writing_type_shopping" />
 
                 <CheckBox
-                    android:id="@+id/checkBox6"
+                    android:id="@+id/checkbox_filter_8"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:text="@string/writing_type_event" />
             </LinearLayout>
         </LinearLayout>

@@ -3,6 +3,7 @@ package com.example.root.appcontest.activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -10,16 +11,24 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.root.appcontest.model.RCViewControl;
 import com.example.root.appcontest.model.SearchEditText;
 import com.example.root.appcontest.R;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * made by sks 2018. 09. 17
@@ -40,6 +49,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     static final int WRITE_REQUEST_CODE = 1883;
 
+    Set<String> filterSet;
     /**
      * 리사이클러뷰 프래그먼트 장착 변수
      */
@@ -50,6 +60,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
      * 리사이클러 뷰 컨트롤
      */
     RCViewControl rcViewControl;
+
+    int position = 0;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -108,6 +120,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 // 탭 선택시
+                position = tab.getPosition();
                 switch(tab.getPosition()) {
                     case 0: // 최신순
                         rcViewControl.arrangeByNew();
@@ -169,13 +182,74 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         filterDialog.setCancelable(true);
         filterDialog.setCanceledOnTouchOutside(true);
 
+
+        final SharedPreferences pref = getContext().getSharedPreferences("filters", MODE_PRIVATE);
+        filterSet = new HashSet<String>(pref.getStringSet("filter", new HashSet<String>()));
+        if(filterSet.isEmpty())
+        {
+            String[] array = {"공연","파티","편의","관광","전시","맛집","쇼핑","행사"};
+            //Toast.makeText(getContext(), "sibal", Toast.LENGTH_SHORT).show();
+            filterSet = new HashSet<String>(Arrays.asList(array));
+        }
+
+        final CheckBox[] filterCategories = new CheckBox[8];
+
+        filterCategories[0] = innerView.findViewById(R.id.checkbox_filter_1);
+        filterCategories[1] = innerView.findViewById(R.id.checkbox_filter_2);
+        filterCategories[2] = innerView.findViewById(R.id.checkbox_filter_3);
+        filterCategories[3] = innerView.findViewById(R.id.checkbox_filter_4);
+        filterCategories[4] = innerView.findViewById(R.id.checkbox_filter_5);
+        filterCategories[5] = innerView.findViewById(R.id.checkbox_filter_6);
+        filterCategories[6] = innerView.findViewById(R.id.checkbox_filter_7);
+        filterCategories[7] = innerView.findViewById(R.id.checkbox_filter_8);
+
+        for (int i = 0; i < 8; i++) {
+            if(filterSet.contains(filterCategories[i].getText().toString()))
+                filterCategories[i].setChecked(true);
+            else
+                filterCategories[i].setChecked(false);
+        }
+
         filterDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
-                Toast.makeText(getActivity(), "sibal", Toast.LENGTH_SHORT).show();
+                for (int i = 0; i < 8; i++) {
+                    String str = filterCategories[i].getText().toString();
+                    if(filterCategories[i].isChecked())
+                    {
+                        if(filterSet.contains(str))
+                            continue;
+                        else
+                            filterSet.add(str);
+                    }
+                    else
+                    {
+                        if(filterSet.contains(str))
+                            filterSet.remove(str);
+                    }
+                }
+
+
+                for (int i = 0; i < 8; i++) {
+                    if(filterSet.contains(filterCategories[i].getText()))
+                    {
+                        filterCategories[i].setChecked(true);
+                        Log.d("sibal", filterCategories[i].getText().toString());
+                    }
+                    else
+                        filterCategories[i].setChecked(false);
+                }
+
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putStringSet("filter", filterSet);
+                editor.apply();
+
+                if(position ==0)
+                    rcViewControl.arrangeByNew();
+                else
+                    rcViewControl.arrangeByDistance();
             }
         });
-
         filterDialog.show();
     }
     @Override

@@ -27,7 +27,7 @@
         />
 
     <MultiSelectListPreference
-        android:defaultValue="@array/empty_array"
+        android:defaultValue="@array/pref_categories"
         android:key="category_list"
         android:entries="@array/pref_categories"
         android:entryValues="@array/pref_categories"
