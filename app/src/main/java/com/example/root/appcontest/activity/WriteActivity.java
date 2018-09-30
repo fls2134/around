@@ -246,7 +246,6 @@ public class WriteActivity extends AppCompatActivity {
                 for (DataSnapshot messageData : dataSnapshot.getChildren()) {
                     count++;
                 }
-                localData.id = count+1;
             }
 
             @Override
