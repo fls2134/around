@@ -29,7 +29,8 @@
                 android:layout_marginTop="40dp"
                 android:layout_width="wrap_content"
                 android:layout_height="65dp"
-                android:layout_center="true"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
                 android:scaleType="centerInside"
                 android:src="@drawable/advertise"
                 android:adjustViewBounds="true"/>
@@ -87,7 +88,7 @@
             android:inputType="text"/>
 
         <Button
-            android:id="@+id/sign_up"
+            android:id="@+id/sign_up_register"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
