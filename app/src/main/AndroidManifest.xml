@@ -84,6 +84,7 @@
             android:label="@string/title_activity_settings" />
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.Login2Activity"></activity>
+        <activity android:name=".activity.Sign_up_Activity"></activity>
     </application>
 
 </manifest>

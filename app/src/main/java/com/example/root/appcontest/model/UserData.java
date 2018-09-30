@@ -7,4 +7,10 @@ public class UserData implements Serializable {
     String password;
     String nick;
     String favorite;
+    public UserData(){}
+    public UserData(String email, String password, String nick){
+        this.email = email;
+        this.password = password;
+        this.nick = nick;
+    }
 }

@@ -143,7 +143,7 @@ public class InfoActivity extends AppCompatActivity {
         databaseRef = database.getReference("Local_info");
 
         //이미지 세팅
-        final ProgressBar progressBar = findViewById(R.id.info_progressbar);
+        final ProgressBar progressBar = findViewById(R.id.info_detail_progressbar);
         //       final ImageView imageView = (ImageView) findViewById(R.id.img_glide);
         Glide.with(this).load(data.img_url).
                 listener(new RequestListener<String, GlideDrawable>() {
