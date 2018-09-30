@@ -206,21 +206,22 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
         String myPer = pref.getString("category_list", "닉네임");
         String[] get_pref_data = myPer.split(",");
-        my_pref_array[0] = false;
         for (int i = 0; i < get_pref_data.length; i++)
             if (get_pref_data[i] == "공연")
-                my_pref_array[1] = true;
+                my_pref_array[0] = true;
             else if (get_pref_data[i] == "파티")
-                my_pref_array[2] = true;
+                my_pref_array[1] = true;
             else if (get_pref_data[i] == "편의")
-                my_pref_array[3] = true;
+                my_pref_array[2] = true;
             else if (get_pref_data[i] == "관광")
+                my_pref_array[3] = true;
+            else if (get_pref_data[i] == "전시")
                 my_pref_array[4] = true;
-            else if (get_pref_data[i] == "갤러리")
-                my_pref_array[5] = true;
             else if (get_pref_data[i] == "맛집")
+                my_pref_array[5] = true;
+            else if (get_pref_data[i] == "쇼핑")
                 my_pref_array[6] = true;
-            else if (get_pref_data[i] == "여성")
+            else if (get_pref_data[7] == "행사")
                 my_pref_array[7] = true;
     }
 }
