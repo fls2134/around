@@ -27,6 +27,8 @@ import com.example.root.appcontest.R;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -79,8 +81,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         super.onViewCreated(view, savedInstance);
 
         setTabs(view);
-        setToolbar(view);
         setRecyclerView();
+        setToolbar(view);
         setFloatingButton(view);
     }
 
@@ -92,6 +94,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         // editText 설정
         mEditText = (SearchEditText) view.findViewById(R.id.editText_home);
         mEditText.addTextChangedListener(new TextWatcher() {
+            private Timer timer = new Timer();
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
             @Override
@@ -99,8 +102,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             }
 
             @Override
-            public void afterTextChanged(Editable editable) {
+            public void afterTextChanged(final Editable editable) {
                 // 재정렬
+
                 String str = editable.toString();
                 if(position == 0)
                 {
@@ -112,18 +116,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                     rcViewControl.arrangeByDistance(str);
                     Log.d("ssibal", "onDismiss: ");
                 }
+
+                // you will probably need to use runOnUiThread(Runnable action) for some specific actions
                 //Toast.makeText(getActivity().getApplicationContext(), "텍스트 입력됨", Toast.LENGTH_SHORT).show();
             }
         });
 
         mEditText.setUseableEditText(false);
 
-        Bundle arguments = getArguments();
-        if(arguments != null)
-        {
-            String tag = arguments.getString("tag");
-            mEditText.setText(tag);
-        }
 
         // add filter button
         mFilterButton = (ImageButton) view.findViewById(R.id.btn_filter_home);
@@ -140,6 +140,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             public void onTabSelected(TabLayout.Tab tab) {
                 // 탭 선택시
                 position = tab.getPosition();
+                mEditText.setText("");
+                mEditText.clearFocus();
                 switch(tab.getPosition()) {
                     case 0: // 최신순
                         rcViewControl.arrangeByNew("");
@@ -178,7 +180,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         writeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //mEditText.setText("정상수");
                 Intent writeIntent = new Intent(getActivity(), WriteActivity.class);
                 startActivityForResult(writeIntent, WRITE_REQUEST_CODE);
             }
@@ -204,13 +205,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
 
         final SharedPreferences pref = getContext().getSharedPreferences("filters", MODE_PRIVATE);
-        filterSet = new HashSet<String>(pref.getStringSet("filter", null));
-        if(filterSet == null)
-        {
-            String[] array = {"공연","파티","편의","관광","전시","맛집","쇼핑","행사"};
-            //Toast.makeText(getContext(), "sibal", Toast.LENGTH_SHORT).show();
-            filterSet = new HashSet<String>(Arrays.asList(array));
-        }
+        filterSet = new HashSet<String>(pref.getStringSet("filter", new HashSet<String>()));
+
 
         final CheckBox[] filterCategories = new CheckBox[8];
 
@@ -264,7 +260,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 editor.putStringSet("filter", filterSet);
                 editor.apply();
 
-                Toast.makeText(getContext(), "sibal" + position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "sibal" + position, Toast.LENGTH_SHORT).show();
 
                 if(position == 0)
                 {

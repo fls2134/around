@@ -138,6 +138,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         SharedPreferences prefs = preference.getSharedPreferences();
         Object value;
         if (preference instanceof MultiSelectListPreference) {
+            Log.d("testtest", "bindPreferenceSummaryToValue: " + preference.getKey());
             value = prefs.getStringSet(preference.getKey(), new HashSet<String>());
         } else {
             value = prefs.getString(preference.getKey(), "");

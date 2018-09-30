@@ -36,6 +36,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -240,6 +241,8 @@ public class RCViewControl extends Fragment{
         }
 
         updateMList(set_array);
+        if(set_array.isEmpty())
+            progressBar.setVisibility(View.GONE);
         mAdapter.notifyDataSetChanged();
     }
 
@@ -254,6 +257,8 @@ public class RCViewControl extends Fragment{
         }
 
         updateMList(myDatas);
+        if(myDatas.isEmpty())
+            progressBar.setVisibility(View.GONE);
         mAdapter.notifyDataSetChanged();
     }
     private void setDataListener()
@@ -291,7 +296,12 @@ public class RCViewControl extends Fragment{
         Set<String> filterSet;
         final SharedPreferences pref = mContext.getSharedPreferences("filters", MODE_PRIVATE);
         filterSet = new HashSet<String>(pref.getStringSet("filter", new HashSet<String>()));
-
+        if(filterSet.isEmpty())
+        {
+            String[] arrays = {"공연","파티","편의","관광","전시","맛집","쇼핑","행사"};
+            //Toast.makeText(getContext(), "sibal", Toast.LENGTH_SHORT).show();
+            filterSet = new HashSet<String>(Arrays.asList(arrays));
+        }
         boolean[] categories = new boolean[8];
         String[] filterArray = getResources().getStringArray(R.array.pref_categories);
         for (int i = 0; i < 8; i++) {

@@ -176,15 +176,6 @@ public class InfoActivity extends AppCompatActivity {
             textView.setTextSize(20);
             textView.setLayoutParams(l);
             textView.setPadding(5, 5, 5, 5);
-            textView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                    i.putExtra("tag",textView.getText().toString());
-                    startActivity(i);
-                    finish();
-                }
-            });
             flexboxLayout.addView(textView);
         }
 

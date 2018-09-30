@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -18,6 +19,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -168,10 +170,23 @@ public class AlarmService extends Service {
         //data_input의 정보들 중에서 취할 정보들을 처리, 알림할 것
 
         createNotificationChannel();
+        SharedPreferences pref;
+
         for(int i=0; i<data_input.size(); i++)
             Log.d("제목",data_input.get(i).title);
 
         while(true) {
+
+            Float cur_meters = 500.0F;
+            try{
+                pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                String str = pref.getString("radius_list", "500");
+                cur_meters = Float.parseFloat(str);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
 
 
 
@@ -185,36 +200,37 @@ public class AlarmService extends Service {
 
             }
 
+
             for (int i = 0; i < data_input.size(); i++) {
                 if(my_pref[data_input.get(i).data_type])
-                    if (output[i] <= 500.0F)//지금설정으로는 현재위치에서 500m내 마커만 보일것.
-                      {
+                    if (output[i] <= cur_meters)//지금설정으로는 현재위치에서 500m내 마커만 보일것.
+                    {
 
-                    Log.d("거리", Float.toString(output[i]));
-                    if (data_input.get(i).alarmed == false) {
+                        Log.d("거리", Float.toString(output[i]));
+                        if (data_input.get(i).alarmed == false) {
 
-                        Intent nextIntent = new Intent(getApplicationContext(), InfoActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("data",data_input.get(i));
-                        nextIntent.putExtras(bundle);
-                        PendingIntent pintent = PendingIntent.getActivity(getApplicationContext(),data_input.get(i).id,nextIntent,0);
-                        Log.d("ssibal", "myServiceFunc: " +i);
-                        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                                .setSmallIcon(R.drawable.around_logo2)
-                                .setContentTitle("Around Seoul")
-                                .setContentText("근처에 관심을 가질 만한 장소가 있네요! " + data_input.get(i).title)
-                                .setStyle(new NotificationCompat.BigTextStyle()
-                                        .bigText("근처에 관심을 가질 만한 장소가 있네요! " + data_input.get(i).title))
-                                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                                .setContentIntent(pintent)
-                                .addAction(R.drawable.around_logo2, getString(R.string.see_It),
-                                        pendingIntent);
+                            Intent nextIntent = new Intent(getApplicationContext(), InfoActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("data",data_input.get(i));
+                            nextIntent.putExtras(bundle);
+                            PendingIntent pintent = PendingIntent.getActivity(getApplicationContext(),data_input.get(i).id,nextIntent,0);
+                            Log.d("ssibal", "myServiceFunc: " +i);
+                            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                                    .setSmallIcon(R.drawable.around_logo2)
+                                    .setContentTitle("Around Seoul")
+                                    .setContentText("근처에 관심을 가질 만한 장소가 있네요! " + data_input.get(i).title)
+                                    .setStyle(new NotificationCompat.BigTextStyle()
+                                            .bigText("근처에 관심을 가질 만한 장소가 있네요! " + data_input.get(i).title))
+                                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                    .setContentIntent(pintent)
+                                    .addAction(R.drawable.around_logo2, getString(R.string.see_It),
+                                            pendingIntent);
 
-                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-                        notificationManager.notify(i, mBuilder.build());
-                        data_input.get(i).alarmed = true;
+                            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+                            notificationManager.notify(i, mBuilder.build());
+                            data_input.get(i).alarmed = true;
+                        }
                     }
-                }
             }
             SystemClock.sleep(60000);
         }

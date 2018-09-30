@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
     private AlarmService mService;
     boolean[] my_pref_array = new boolean[8];
 
-    String tag;
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
@@ -90,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(getResources().getColor(R.color.themeColor));
 
-        tag = getIntent().getStringExtra("tag");
         // 하단 바 설정
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottom_bar);
         bottomBar.setActiveTabColor(getResources().getColor(R.color.backgroundLongin));
@@ -104,18 +102,8 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (tabId) {
                     case R.id.tab_home:
-                        if(tag!=null)
-                        {
-                            HomeFragment homeFragment = new HomeFragment();
-                            Bundle arguments = new Bundle();
-                            arguments.putString("tag", tag);
-                            homeFragment.setArguments(arguments);
-                            fragmentTransaction.replace(R.id.action_container,
-                                    homeFragment).commit();
-                        }
-                        else
                         fragmentTransaction.replace(R.id.action_container,
-                                new HomeFragment()).commit();
+                                new HomeFragment(),"HomeFragment").commit();
                         break;
                     case R.id.tab_location:
                         if(requestPermission() == PackageManager.PERMISSION_GRANTED)
@@ -138,15 +126,23 @@ public class MainActivity extends AppCompatActivity {
         getServerDatas();
         setPrefArray(my_pref_array);
         // 최초 화면 설정
-        Intent Service = new Intent(getApplicationContext(), AlarmService.class);
-        bindService(Service, mConnection, Context.BIND_AUTO_CREATE);
-        // 최초 화면 설정
-        Timer timer = new Timer(true);
-        timer.schedule(new TimerTask(){
-            public void run(){
-                mService.myServiceFunc();
-            }
-        },3000);
+        if(requestPermission() >= 0)
+        {
+            Intent Service = new Intent(getApplicationContext(), AlarmService.class);
+            bindService(Service, mConnection, Context.BIND_AUTO_CREATE);
+            // 최초 화면 설정
+
+            Timer timer = new Timer(true);
+            timer.schedule(new TimerTask(){
+                public void run(){
+                    mService.myServiceFunc();
+                }
+            },5000);
+        }
+        else
+            Toast.makeText(this, "위치 권한을 받지 않으면 알림을 받을 수 없습니다.", Toast.LENGTH_SHORT).show();
+
+
     }
 
     private int requestPermission()
@@ -172,8 +168,7 @@ public class MainActivity extends AppCompatActivity {
             case MY_PERMISSIONS_REQUEST_CUR_PLACE:
             {
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                    fragmentTransaction.replace(R.id.action_container,
-                            new MapFragment()).commit();
+                    Toast.makeText(MainActivity.this, "위치 권한 받기 성공.", Toast.LENGTH_SHORT).show();
                 else
                     Toast.makeText(MainActivity.this, "위치 권한이 없으면 지도를 표시할 수 없습니다.", Toast.LENGTH_SHORT).show();
                 return;
@@ -227,23 +222,30 @@ public class MainActivity extends AppCompatActivity {
         if(myPer == null)
             return;
         //String[] get_pref_data = myPer.split(",");
-        for (int i = 0; i < myPer.size(); i++)
-            if (myPer.contains("공연"))
-                my_pref_array[0] = true;
-            else if (myPer.contains("파티"))
-                my_pref_array[1] = true;
-            else if (myPer.contains("편의"))
-                my_pref_array[2] = true;
-            else if (myPer.contains("관광"))
-                my_pref_array[3] = true;
-            else if (myPer.contains("전시"))
-                my_pref_array[4] = true;
-            else if (myPer.contains("맛집"))
-                my_pref_array[5] = true;
-            else if (myPer.contains("쇼핑"))
-                my_pref_array[6] = true;
-            else if (myPer.contains("행사"))
-                my_pref_array[7] = true;
+        for (String s : myPer) {
+            Log.d("testtest", "setPrefArray: " + s);
+        }
+
+        if (myPer.contains("공연"))
+            my_pref_array[0] = true;
+        if (myPer.contains("파티"))
+            my_pref_array[1] = true;
+        if (myPer.contains("편의"))
+            my_pref_array[2] = true;
+        if (myPer.contains("관광"))
+            my_pref_array[3] = true;
+        if (myPer.contains("전시"))
+            my_pref_array[4] = true;
+        if (myPer.contains("맛집"))
+            my_pref_array[5] = true;
+        if (myPer.contains("쇼핑"))
+            my_pref_array[6] = true;
+        if (myPer.contains("행사"))
+            my_pref_array[7] = true;
+
+        for (int i = 0; i < 8; i++) {
+            Log.d("testtest", "setPrefArray : "+ i +  " = " + my_pref_array[i]);
+        }
     }
 }
 
