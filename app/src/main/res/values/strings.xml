@@ -12,14 +12,16 @@
     <string name="edit_titile">글쓰기</string>
     <string name="writing_titile">제목</string>
     <string name="writing_type">유형</string>
+
     <string name="writing_type_concert">공연</string>
     <string name="writing_type_party">파티</string>
     <string name="writing_type_comfort">편의</string>
     <string name="writing_type_sightseeing">관광</string>
-    <string name="writing_type_gallery">갤러리</string>
+    <string name="writing_type_gallery">전시</string>
     <string name="writing_type_food">맛집</string>
-    <string name="writing_type_safety">안전</string>
+    <string name="writing_type_shopping">쇼핑</string>
     <string name="writing_type_event">행사</string>
+
     <string name="writing_text">내용</string>
     <string name="writing_during">기간</string>
     <string name="writing_during_start">시작</string>
