@@ -175,7 +175,13 @@ public class RCViewControl extends Fragment{
         //mRecyclerView.setAdapter(mAdapter);
         progressBar.setVisibility(View.GONE);
         ArrayList<LocalData> filterArray = new ArrayList<>();
-        filtering_datas(filterArray, data_array);
+        try
+        {
+            filtering_datas(filterArray, data_array);
+        }catch (Exception e)
+        {
+            return;
+        }
         ArrayList<LocalData> searchArray = new ArrayList<>();
         if(str.isEmpty())
             updateMList(filterArray);
@@ -208,7 +214,14 @@ public class RCViewControl extends Fragment{
         ArrayList<LocalData> disance_array = (ArrayList<LocalData>)data_array.clone();
         Collections.sort(disance_array, new ascendingDistance());
         ArrayList<LocalData> filterArray = new ArrayList<>();
-        filtering_datas(filterArray, disance_array);
+        try
+        {
+            filtering_datas(filterArray, disance_array);
+        }
+        catch (Exception e)
+        {
+            return;
+        }
         ArrayList<LocalData> searchArray = new ArrayList<>();
         if(str.isEmpty())
             updateMList(filterArray);
@@ -290,7 +303,7 @@ public class RCViewControl extends Fragment{
     }
 
 
-    private void filtering_datas(ArrayList<LocalData> array, ArrayList<LocalData> originalArray)
+    private void filtering_datas(ArrayList<LocalData> array, ArrayList<LocalData> originalArray)throws Exception
     {
         Set<String> filterSet;
         final SharedPreferences pref = mContext.getSharedPreferences("filters", MODE_PRIVATE);
