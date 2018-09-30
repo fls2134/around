@@ -1,5 +1,5 @@
 package com.example.root.appcontest.activity;
-
+/*
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -96,3 +96,4 @@ public class Login2Activity extends AppCompatActivity {
         };
     }
 }
+*/

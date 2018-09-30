@@ -24,6 +24,11 @@ import com.bumptech.glide.request.target.Target;
 import com.example.root.appcontest.R;
 import com.example.root.appcontest.model.LocalData;
 import com.google.android.flexbox.FlexboxLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
@@ -47,8 +52,14 @@ public class InfoActivity extends AppCompatActivity {
     FlexboxLayout flexboxLayout;
     Button button;
     ImageView favoriteButton;
-
     LocalData data;
+
+    //DB 관련 변수
+    FirebaseDatabase database;
+    DatabaseReference databaseRef;
+
+
+
 
     /**
      * 좋아요 모드 확인을 위한 모드 변수
@@ -138,6 +149,10 @@ public class InfoActivity extends AppCompatActivity {
         period.setText(p);
         content.setText(data.content);
 
+        database = FirebaseDatabase.getInstance();
+        databaseRef = database.getReference("Local_info");
+
+
         //이미지 세팅
         final ProgressBar progressBar = findViewById(R.id.info_progressbar);
         //       final ImageView imageView = (ImageView) findViewById(R.id.img_glide);
@@ -198,6 +213,20 @@ public class InfoActivity extends AppCompatActivity {
                 if(modeFavorite == 0) {
                     //data.id => 얘를 찾아가서 DB에서 지워주세요
                     //편집모드 진입 -> 삭제만 하면됨
+                    databaseRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot messageData : dataSnapshot.getChildren()) {
+                                if(data.id == messageData.getValue(LocalData.class).id)
+                                    messageData.getRef().setValue(null);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Toast.makeText(getApplicationContext(),"오류 발생",Toast.LENGTH_LONG);
+                        }
+                    });
                 }
                 else if(modeFavorite == 1) {
                     //좋아요 클릭
