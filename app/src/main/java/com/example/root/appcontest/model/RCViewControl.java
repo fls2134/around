@@ -68,11 +68,17 @@ public class RCViewControl extends Fragment{
     ArrayList<CardItem> mList = new ArrayList<>();
 
     ProgressBar progressBar;
+
+    int fragmentIndex;
+
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.recyclerview, container, false);
 
+        fragmentIndex = this.getArguments().getInt("fragmentIndex");
         progressBar = view.findViewById(R.id.recyclerView_progressbar);
 
         database = FirebaseDatabase.getInstance();
@@ -239,7 +245,10 @@ public class RCViewControl extends Fragment{
                     data_array.add(LD_tmp);
                     // child 내에 있는 데이터만큼 반복합니다.
                 }
-                addListItemFromDb();
+                if(fragmentIndex == 1)
+                    arrangeBySelected();
+                else
+                    addListItemFromDb();
             }
 
             @Override

@@ -133,7 +133,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     }
 
     private void setRecyclerView() {
+        Bundle args = new Bundle();
+        args.putInt("fragmentIndex", 0);
         rcViewControl = new RCViewControl();
+        rcViewControl.setArguments(args);
         fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.recyclerView_container, rcViewControl).commit();
     }
