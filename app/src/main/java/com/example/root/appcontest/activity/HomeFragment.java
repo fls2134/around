@@ -95,12 +95,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
             public void afterTextChanged(Editable editable) {
                 // 재정렬
-                Toast.makeText(getActivity().getApplicationContext(), "텍스트 입력됨", Toast.LENGTH_SHORT).show();
+                String str = editable.toString();
+                rcViewControl.search(str);
+                //Toast.makeText(getActivity().getApplicationContext(), "텍스트 입력됨", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -259,6 +262,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             }
         });
         filterDialog.show();
+    }
+
+    public void search()
+    {
+
     }
     @Override
     public void onClick(View view) {

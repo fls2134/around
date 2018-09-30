@@ -57,6 +57,7 @@ public class RCViewControl extends Fragment{
 
     RCViewAdapter mAdapter;
 
+    private Context mContext;
 
 
     FirebaseDatabase database;
@@ -178,7 +179,12 @@ public class RCViewControl extends Fragment{
         mAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
 
+    }
     private void updateMList(ArrayList<LocalData> array)
     {
         mList.clear();
@@ -211,7 +217,7 @@ public class RCViewControl extends Fragment{
         // 담은글 정렬
 
         ArrayList<LocalData> clone_array = (ArrayList<LocalData>)data_array.clone();
-        SharedPreferences pref = getContext().getSharedPreferences("favorites", MODE_PRIVATE);
+        SharedPreferences pref = mContext.getSharedPreferences("favorites", MODE_PRIVATE);
         Set<String> stringSet = new HashSet<String>(pref.getStringSet("favorite", new HashSet<String>()));
         ArrayList<LocalData> set_array = new ArrayList<>();
         for (int i = 0; i < clone_array.size(); i++) {
@@ -269,7 +275,7 @@ public class RCViewControl extends Fragment{
     private void filtering_datas(ArrayList<LocalData> array, ArrayList<LocalData> originalArray)
     {
         Set<String> filterSet;
-        final SharedPreferences pref = getContext().getSharedPreferences("filters", MODE_PRIVATE);
+        final SharedPreferences pref = mContext.getSharedPreferences("filters", MODE_PRIVATE);
         filterSet = new HashSet<String>(pref.getStringSet("filter", new HashSet<String>()));
 
         boolean[] categories = new boolean[8];

@@ -3,6 +3,7 @@ package com.example.root.appcontest.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -169,8 +170,8 @@ public class InfoActivity extends AppCompatActivity {
         //태그 생성
         for (String word : words) {
             TextView textView = new TextView(getApplicationContext());
-            textView.setBackgroundColor(getResources().getColor(R.color.white));
-            textView.setTextColor(getResources().getColor(R.color.tagbox));
+            textView.setBackgroundColor(Color.argb(55,0,0,0));
+            textView.setTextColor(getResources().getColor(R.color.white));
             textView.setText('#' + word);
             textView.setTextSize(20);
             textView.setLayoutParams(l);
