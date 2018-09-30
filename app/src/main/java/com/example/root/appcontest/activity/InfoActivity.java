@@ -74,7 +74,7 @@ public class InfoActivity extends AppCompatActivity {
         getIntentData();
         setFavoriteMode();
         if(modeFavorite == 0) {
-            favoriteButton.setImageResource(R.drawable.ic_edit_black);
+            favoriteButton.setImageResource(R.drawable.ic_delete_black_24dp);
         }
         else if(modeFavorite == 1) {
             favoriteButton.setImageResource(R.drawable.ic_favorite_empty);
@@ -196,6 +196,7 @@ public class InfoActivity extends AppCompatActivity {
                 String id_str = data.id+"";
                 Log.d("sibal", "id name = " + data.id);
                 if(modeFavorite == 0) {
+                    //data.id => 얘를 찾아가서 DB에서 지워주세요
                     //편집모드 진입 -> 삭제만 하면됨
                 }
                 else if(modeFavorite == 1) {

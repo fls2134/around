@@ -132,7 +132,10 @@ public class MyPageFragment extends Fragment implements View.OnClickListener{
     }
 
     private void setRecyclerView() {
+        Bundle args = new Bundle();
+        args.putInt("fragmentIndex", 1);
         rcViewControl = new RCViewControl();
+        rcViewControl.setArguments(args);
         fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.reccyclerview_container2, rcViewControl).commit();
     }
