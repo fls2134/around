@@ -45,6 +45,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.Random;
 
 public class WriteActivity extends AppCompatActivity {
 
@@ -216,6 +217,11 @@ public class WriteActivity extends AppCompatActivity {
         Log.d("Main", "onClickComplete: " + id);
         */
 
+        localData.id+=eDay;
+        localData.id+=content.length();
+        localData.id += (int)(longitude*10000);
+        Random r = new Random(tag.hashCode());
+        localData.id += r.nextInt(10000000);
 
         if(handleException() < 0)
             return;
