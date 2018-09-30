@@ -247,8 +247,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 editor.putStringSet("filter", filterSet);
                 editor.apply();
 
-                Toast.makeText(getContext(), "sibal" + position, Toast.LENGTH_SHORT).show();
-
                 if(position == 0)
                 {
                     rcViewControl.arrangeByNew();

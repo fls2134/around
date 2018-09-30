@@ -198,7 +198,6 @@ public class InfoActivity extends AppCompatActivity {
                 }
 
                 String id_str = data.id + "";
-                Log.d("sibal", "id name = " + data.id);
                 if (modeFavorite == 0) {
                     //data.id => 얘를 찾아가서 DB에서 지워주세요
                     databaseRef.addValueEventListener(new ValueEventListener() {
@@ -233,7 +232,6 @@ public class InfoActivity extends AppCompatActivity {
                 editor.putStringSet("favorite", stringSet);
                 String[] strary = stringSet.toArray(new String[stringSet.size()]);
                 for (int i = 0; i < stringSet.size(); i++) {
-                    Log.d("sibal", strary[i]);
                 }
                 editor.apply();
             }

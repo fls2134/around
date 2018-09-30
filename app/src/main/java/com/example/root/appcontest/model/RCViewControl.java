@@ -268,7 +268,6 @@ public class RCViewControl extends Fragment{
                 Toast.makeText(getContext(),"오류 발생",Toast.LENGTH_LONG);
             }
         });
-        Log.d("sibal2", "getServerDatas: " + data_array.size());
     }
 
 
@@ -284,7 +283,6 @@ public class RCViewControl extends Fragment{
             if(filterSet.contains(filterArray[i]))
             {
                 categories[i] = true;
-                Log.d("sibal", "updates : " + i);
             }
             else
                 categories[i] = false;
