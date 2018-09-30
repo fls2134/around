@@ -170,7 +170,6 @@ public class RCViewControl extends Fragment{
         //mAdapter = new RCViewAdapter(mList,getContext());
         //mRecyclerView.setAdapter(mAdapter);
         progressBar.setVisibility(View.GONE);
-        mAdapter.loadDatas(data_array);
         updateMList(data_array);
         mAdapter.notifyDataSetChanged();
     }
@@ -179,6 +178,7 @@ public class RCViewControl extends Fragment{
     private void updateMList(ArrayList<LocalData> array)
     {
         mList.clear();
+        mAdapter.loadDatas(array);
         for (int i = 0; i < array.size(); i++) {
             mList.add(new CardItem(R.drawable.around_logo1, array.get(i).nickname, array.get(i).img_url, array.get(i).title, array.get(i).id));
         }

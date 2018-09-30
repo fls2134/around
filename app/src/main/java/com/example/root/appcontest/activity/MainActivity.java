@@ -34,6 +34,7 @@ import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -209,24 +210,26 @@ public class MainActivity extends AppCompatActivity {
     private void setPrefArray(boolean[] my_pref_array) {
 
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-        String myPer = pref.getString("category_list", "닉네임");
-        String[] get_pref_data = myPer.split(",");
-        for (int i = 0; i < get_pref_data.length; i++)
-            if (get_pref_data[i] == "공연")
+        Set<String> myPer = pref.getStringSet("category_list", null);
+        if(myPer == null)
+            return;
+        //String[] get_pref_data = myPer.split(",");
+        for (int i = 0; i < myPer.size(); i++)
+            if (myPer.contains("공연"))
                 my_pref_array[0] = true;
-            else if (get_pref_data[i] == "파티")
+            else if (myPer.contains("파티"))
                 my_pref_array[1] = true;
-            else if (get_pref_data[i] == "편의")
+            else if (myPer.contains("편의"))
                 my_pref_array[2] = true;
-            else if (get_pref_data[i] == "관광")
+            else if (myPer.contains("관광"))
                 my_pref_array[3] = true;
-            else if (get_pref_data[i] == "전시")
+            else if (myPer.contains("전시"))
                 my_pref_array[4] = true;
-            else if (get_pref_data[i] == "맛집")
+            else if (myPer.contains("맛집"))
                 my_pref_array[5] = true;
-            else if (get_pref_data[i] == "쇼핑")
+            else if (myPer.contains("쇼핑"))
                 my_pref_array[6] = true;
-            else if (get_pref_data[7] == "행사")
+            else if (myPer.contains("행사"))
                 my_pref_array[7] = true;
     }
 }
