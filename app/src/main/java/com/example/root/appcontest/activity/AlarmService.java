@@ -227,7 +227,7 @@ public class AlarmService extends Service {
                                 stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
                         */
 
-                        PendingIntent pintent = PendingIntent.getActivity(getApplicationContext(),i,nextIntent,0);
+                        PendingIntent pintent = PendingIntent.getActivity(getApplicationContext(),data_input.get(i).id,nextIntent,0);
 
 
 

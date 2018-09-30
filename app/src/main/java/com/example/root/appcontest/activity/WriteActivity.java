@@ -190,6 +190,8 @@ public class WriteActivity extends AppCompatActivity {
         UploadTask uploadTask = uploadRef.putBytes(data);
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
 
+
+
 //        Log.d("URL주소",img_link);
         localData.nickname = pref.getString("nickname_text","닉네임");
         localData.title = editText_title.getText().toString(); //String
