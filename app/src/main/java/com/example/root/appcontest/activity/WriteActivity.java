@@ -111,9 +111,11 @@ public class WriteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_writing);
 
         TextView nickname =findViewById(R.id.writing_nickname);
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
 
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
         nickname.setText(pref.getString("nickname_text","닉네임"));
+
+
         type = -1; // 선택 안된 상태
         rg = findViewById(R.id.type_group);
         editText_title = findViewById(R.id.title_add);
