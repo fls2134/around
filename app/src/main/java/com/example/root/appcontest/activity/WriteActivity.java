@@ -55,11 +55,11 @@ public class WriteActivity extends AppCompatActivity {
 
     final int TYPE_CONCERT = 0;
     final int TYPE_PARTY = 1;
-    final int TYPE_MUSICAL = 2;
-    final int TYPE_PLAY = 3;
+    final int TYPE_COMFORT = 2;
+    final int TYPE_SIGHTSEEING = 3;
     final int TYPE_GALLERY = 4;
     final int TYPE_FOOD = 5;
-    final int TYPE_BAR = 6;
+    final int TYPE_SHOPPING = 6;
     final int TYPE_EVENT = 7;
 
     final int MY_PERMISSIONS_REQUEST_CUR_PLACE = 3;
@@ -149,11 +149,11 @@ public class WriteActivity extends AppCompatActivity {
                 break;
 
             case R.id.radioButton_musical:
-                type = TYPE_MUSICAL;
+                type = TYPE_COMFORT;
                 break;
 
             case R.id.radioButton_play:
-                type = TYPE_PLAY;
+                type = TYPE_SIGHTSEEING;
                 break;
 
             case R.id.radioButton_gallery:
@@ -165,7 +165,7 @@ public class WriteActivity extends AppCompatActivity {
                 break;
 
             case R.id.radioButton_bar:
-                type = TYPE_BAR;
+                type = TYPE_SHOPPING;
                 break;
 
             case R.id.radioButton_event:

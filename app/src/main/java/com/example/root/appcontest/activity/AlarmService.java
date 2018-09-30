@@ -39,6 +39,7 @@ public class AlarmService extends Service {
     LocationListener listener;
     Location curLocation;
     private final String CHANNEL_ID = "default";
+    boolean[] my_pref;
 
     private static final int LOCATION_INTERVAL = 1000;
     private static final float LOCATION_DISTANCE = 10f;
@@ -61,6 +62,7 @@ public class AlarmService extends Service {
 
     public interface  ICallback{
         public ArrayList<LocalData> recvData();
+        public boolean[] recvPref();
     }
 
     private ICallback mCallback;
@@ -160,34 +162,15 @@ public class AlarmService extends Service {
         double item_lng;
         float[] output;
         float[] results = new float[100];
+
+        my_pref = mCallback.recvPref();
         data_input = mCallback.recvData();
         //data_input의 정보들 중에서 취할 정보들을 처리, 알림할 것
 
         createNotificationChannel();
+        for(int i=0; i<data_input.size(); i++)
+            Log.d("제목",data_input.get(i).title);
 
-
-
-       /*
-        for(int i=0; i<3; i++) {
-            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                    .setSmallIcon(R.drawable.around_logo2)
-                    .setContentTitle("Around Seoul")
-                    .setContentText("근처에 관심이 있을만한 장소가 있네요!")
-                    .setStyle(new NotificationCompat.BigTextStyle()
-                            .bigText("근처에 관심이 있을만한 장소가 있네요!"))
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-            //  .setContentIntent(pendingIntent)
-            //  .addAction(R.drawable.ic_launcher_foreground, getString(R.string.snooze),
-            //          pendingIntent);
-
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-            notificationManager.notify(i, mBuilder.build());
-        }
-*/
-       for(int i=0; i<data_input.size(); i++)
-           Log.d("제목",data_input.get(i).title);
-
-        //PendingIntent pendingIntents[] = new PendingIntent[data_input.size()];
         while(true) {
 
 
@@ -199,7 +182,6 @@ public class AlarmService extends Service {
                 item_lng = data_input.get(i).longtitude;
                 Location.distanceBetween(cur_lat, cur_lng, item_lat, item_lng, results);
                 output[i] = results[0];
-                //pendingIntent = PendingIntent.getActivity(getApplicationContext(), i, nextIntent, PendingIntent.FLAG_ONE_SHOT);
 
             }
 
@@ -211,33 +193,10 @@ public class AlarmService extends Service {
                     if (data_input.get(i).alarmed == false) {
 
                         Intent nextIntent = new Intent(getApplicationContext(), InfoActivity.class);
-                        //nextIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                        //        | Intent.FLAG_ACTIVITY_CLEAR_TOP
-                        //        | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("data",data_input.get(i));
                         nextIntent.putExtras(bundle);
-
-                        /*
-                        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-                        stackBuilder.addNextIntentWithParentStack(nextIntent);
-
-                        PendingIntent pendingIntent =
-                                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-                        */
-
                         PendingIntent pintent = PendingIntent.getActivity(getApplicationContext(),data_input.get(i).id,nextIntent,0);
-
-
-
-
-                       /*
-                       TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-                       PendingIntent pendingIntent =
-                               stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-                               */
-
                         Log.d("ssibal", "myServiceFunc: " +i);
                         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
                                 .setSmallIcon(R.drawable.around_logo2)

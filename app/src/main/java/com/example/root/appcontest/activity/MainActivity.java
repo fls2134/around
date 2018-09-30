@@ -69,6 +69,10 @@ public class MainActivity extends AppCompatActivity {
             Log.d("TAG","작동중");
             return data_array;
         }
+        public boolean[] recvPref()
+        {
+            return my_pref_array;
+        }
     };
 
     @Override
@@ -117,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
         data_array = new ArrayList<>();
         getServerDatas();
+        setPrefArray(my_pref_array);
         // 최초 화면 설정
         Intent Service = new Intent(getApplicationContext(), AlarmService.class);
         bindService(Service, mConnection, Context.BIND_AUTO_CREATE);
