@@ -84,7 +84,13 @@
             android:label="@string/title_activity_settings" />
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.Login2Activity"></activity>
-        <activity android:name=".activity.Sign_up_Activity"></activity>
+        <activity android:name=".activity.Sign_up_Activity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
