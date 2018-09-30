@@ -44,5 +44,11 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:text="닉네임" />
+
+        <Button
+            android:id="@+id/Sign_up"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="가입하기" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
