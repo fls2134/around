@@ -44,6 +44,7 @@ public class Sign_up_Activity extends AppCompatActivity{
         editNick = (EditText)findViewById(R.id.editNick);
         sign_up = (Button)findViewById(R.id.Sign_up);
         userDB_Ref = FirebaseDatabase.getInstance().getReference("User_info");
+        mAuth = FirebaseAuth.getInstance();
 
         sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,18 +54,17 @@ public class Sign_up_Activity extends AppCompatActivity{
                 } else if (editPassword.getText().toString().length() < 6) {
                     Toast.makeText(Sign_up_Activity.this, "비밀번호는 최소 6자리 이상이어야 합니다!", Toast.LENGTH_SHORT).show();
                 } else {
-
                     mAuth.createUserWithEmailAndPassword(editEmail.getText().toString(), editPassword.getText().toString())
                             .addOnCompleteListener(Sign_up_Activity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     //    checkTaskException(task);
                                     if (!task.isSuccessful()) {
-                                        userDB_Ref.child(editEmail.getText().toString()).setValue(new UserData(editEmail.getText().toString(), editPassword.getText().toString(), editNick.getText().toString()));
+                                        userDB_Ref.child(editEmail.getText().toString()).setValue(new UserData(editEmail.getText().toString().replaceAll("@","."), editPassword.getText().toString(), editNick.getText().toString()));
                                         Toast.makeText(Sign_up_Activity.this, "가입 실패~~", Toast.LENGTH_SHORT).show();
                                     } else {
                                         Toast.makeText(Sign_up_Activity.this, "가입 성공!!", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(Sign_up_Activity.this, LoginActivity.class);
+                                        Intent intent = new Intent(Sign_up_Activity.this, Login2Activity.class);
                                         startActivity(intent);
                                         finish();
                                     }
