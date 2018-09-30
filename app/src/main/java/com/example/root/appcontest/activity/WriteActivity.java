@@ -435,7 +435,6 @@ public class WriteActivity extends AppCompatActivity {
         }catch (IOException e)
         {
             e.printStackTrace();
-            Toast.makeText(this, "sibal", Toast.LENGTH_SHORT).show();
         }
         int exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
         int exifDegree = exifOrientationToDegrees(exifOrientation);

@@ -202,6 +202,7 @@ public class AlarmService extends Service {
 
 
             for (int i = 0; i < data_input.size(); i++) {
+                Log.d(data_input.get(i).title, Boolean.toString(data_input.get(i).alarmed));
                 if(my_pref[data_input.get(i).data_type])
                     if (output[i] <= cur_meters)//지금설정으로는 현재위치에서 500m내 마커만 보일것.
                     {
