@@ -171,8 +171,9 @@ public class RCViewControl extends Fragment{
         //mAdapter = new RCViewAdapter(mList,getContext());
         //mRecyclerView.setAdapter(mAdapter);
         progressBar.setVisibility(View.GONE);
-        filtering_datas(data_array);
-        updateMList(data_array);
+        ArrayList<LocalData> filterArray = new ArrayList<>();
+        filtering_datas(filterArray, data_array);
+        updateMList(filterArray);
         mAdapter.notifyDataSetChanged();
     }
 
@@ -191,8 +192,9 @@ public class RCViewControl extends Fragment{
         //mList.add(new CardItem(R.drawable.around_logo2, "distance", R.drawable.around_logo2, "distance"));
         ArrayList<LocalData> disance_array = (ArrayList<LocalData>)data_array.clone();
         Collections.sort(disance_array, new ascendingDistance());
-        filtering_datas(disance_array);
-        updateMList(disance_array);
+        ArrayList<LocalData> filterArray = new ArrayList<>();
+        filtering_datas(filterArray, disance_array);
+        updateMList(filterArray);
         mAdapter.notifyDataSetChanged();
     }
 
@@ -263,7 +265,7 @@ public class RCViewControl extends Fragment{
     }
 
 
-    private void filtering_datas(ArrayList<LocalData> array)
+    private void filtering_datas(ArrayList<LocalData> array, ArrayList<LocalData> originalArray)
     {
         Set<String> filterSet;
         final SharedPreferences pref = getContext().getSharedPreferences("filters", MODE_PRIVATE);
@@ -280,10 +282,10 @@ public class RCViewControl extends Fragment{
             else
                 categories[i] = false;
         }
+        for (int i =0 ; i < originalArray.size(); i++) {
 
-        for (int i = 0; i < array.size(); i++) {
-            if(categories[array.get(i).data_type] == false)
-                array.remove(i);
+            if(categories[originalArray.get(i).data_type] == true)
+                array.add(originalArray.get(i));
         }
     }
     public void notifyData()
