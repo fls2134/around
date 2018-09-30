@@ -2,7 +2,6 @@ package com.example.root.appcontest.activity;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -28,15 +27,12 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.root.appcontest.R;
 import com.example.root.appcontest.model.LocalData;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -55,11 +51,11 @@ public class WriteActivity extends AppCompatActivity {
 
     final int TYPE_CONCERT = 0;
     final int TYPE_PARTY = 1;
-    final int TYPE_MUSICAL = 2;
-    final int TYPE_PLAY = 3;
+    final int TYPE_COMFORT = 2;
+    final int TYPE_SIGHTSEEING = 3;
     final int TYPE_GALLERY = 4;
     final int TYPE_FOOD = 5;
-    final int TYPE_BAR = 6;
+    final int TYPE_SHOPPING = 6;
     final int TYPE_EVENT = 7;
 
     final int MY_PERMISSIONS_REQUEST_CUR_PLACE = 3;
@@ -148,12 +144,12 @@ public class WriteActivity extends AppCompatActivity {
                 type = TYPE_PARTY;
                 break;
 
-            case R.id.radioButton_musical:
-                type = TYPE_MUSICAL;
+            case R.id.radioButton_comfort:
+                type = TYPE_COMFORT;
                 break;
 
-            case R.id.radioButton_play:
-                type = TYPE_PLAY;
+            case R.id.radioButton_sightseeing:
+                type = TYPE_SIGHTSEEING;
                 break;
 
             case R.id.radioButton_gallery:
@@ -164,8 +160,8 @@ public class WriteActivity extends AppCompatActivity {
                 type = TYPE_FOOD;
                 break;
 
-            case R.id.radioButton_bar:
-                type = TYPE_BAR;
+            case R.id.radioButton_shopping:
+                type = TYPE_SHOPPING;
                 break;
 
             case R.id.radioButton_event:
@@ -382,14 +378,14 @@ public class WriteActivity extends AppCompatActivity {
         switch (type)
         {
             case TYPE_CONCERT:
-            case TYPE_MUSICAL:
-            case TYPE_PLAY:
+            case TYPE_COMFORT:
+            case TYPE_SIGHTSEEING:
             case TYPE_GALLERY:
             case TYPE_PARTY:
                 init_tags = 1;
                 break;
             case TYPE_FOOD:
-            case TYPE_BAR:
+            case TYPE_SHOPPING:
                 init_tags = 2;
                 break;
             case TYPE_EVENT:

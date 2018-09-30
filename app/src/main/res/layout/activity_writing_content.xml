@@ -183,20 +183,20 @@
                         android:text="@string/writing_type_party" />
 
                     <RadioButton
-                        android:id="@+id/radioButton_musical"
+                        android:id="@+id/radioButton_comfort"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:onClick="OneRadioButtonClicked"
-                        android:text="@string/writing_type_musical" />
+                        android:text="@string/writing_type_comfort" />
 
                     <RadioButton
-                        android:id="@+id/radioButton_play"
+                        android:id="@+id/radioButton_sightseeing"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:onClick="OneRadioButtonClicked"
-                        android:text="@string/writing_type_play" />
+                        android:text="@string/writing_type_sightseeing" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -219,15 +219,15 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:onClick="OneRadioButtonClicked"
-                        android:text="@string/writing_type_dining" />
+                        android:text="@string/writing_type_food" />
 
                     <RadioButton
-                        android:id="@+id/radioButton_bar"
+                        android:id="@+id/radioButton_shopping"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:onClick="OneRadioButtonClicked"
-                        android:text="@string/writing_type_woman" />
+                        android:text="@string/writing_type_shopping" />
 
                     <RadioButton
                         android:id="@+id/radioButton_event"
