@@ -14,11 +14,11 @@
     <string name="writing_type">유형</string>
     <string name="writing_type_concert">공연</string>
     <string name="writing_type_party">파티</string>
-    <string name="writing_type_musical">편의</string>
-    <string name="writing_type_play">관광</string>
+    <string name="writing_type_comfort">편의</string>
+    <string name="writing_type_sightseeing">관광</string>
     <string name="writing_type_gallery">갤러리</string>
-    <string name="writing_type_dining">맛집</string>
-    <string name="writing_type_woman">여성</string>
+    <string name="writing_type_food">맛집</string>
+    <string name="writing_type_safety">안전</string>
     <string name="writing_type_event">행사</string>
     <string name="writing_text">내용</string>
     <string name="writing_during">기간</string>

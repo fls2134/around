@@ -5,9 +5,11 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     LocalData LD_tmp;
     private AlarmService mService;
+    boolean[] my_pref_array = new boolean[8];
 
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
@@ -196,6 +199,29 @@ public class MainActivity extends AppCompatActivity {
 
     public AlarmService getmService() {
         return mService;
+    }
+
+    private void setPrefArray(boolean[] my_pref_array) {
+
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+        String myPer = pref.getString("category_list", "닉네임");
+        String[] get_pref_data = myPer.split(",");
+        my_pref_array[0] = false;
+        for (int i = 0; i < get_pref_data.length; i++)
+            if (get_pref_data[i] == "공연")
+                my_pref_array[1] = true;
+            else if (get_pref_data[i] == "파티")
+                my_pref_array[2] = true;
+            else if (get_pref_data[i] == "편의")
+                my_pref_array[3] = true;
+            else if (get_pref_data[i] == "관광")
+                my_pref_array[4] = true;
+            else if (get_pref_data[i] == "갤러리")
+                my_pref_array[5] = true;
+            else if (get_pref_data[i] == "맛집")
+                my_pref_array[6] = true;
+            else if (get_pref_data[i] == "여성")
+                my_pref_array[7] = true;
     }
 }
 
