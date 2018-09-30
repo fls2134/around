@@ -184,8 +184,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
 
         final SharedPreferences pref = getContext().getSharedPreferences("filters", MODE_PRIVATE);
-        filterSet = new HashSet<String>(pref.getStringSet("filter", new HashSet<String>()));
-        if(filterSet.isEmpty())
+        filterSet = new HashSet<String>(pref.getStringSet("filter", null));
+        if(filterSet == null)
         {
             String[] array = {"공연","파티","편의","관광","전시","맛집","쇼핑","행사"};
             //Toast.makeText(getContext(), "sibal", Toast.LENGTH_SHORT).show();
@@ -244,10 +244,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 editor.putStringSet("filter", filterSet);
                 editor.apply();
 
-                if(position ==0)
+                Toast.makeText(getContext(), "sibal" + position, Toast.LENGTH_SHORT).show();
+
+                if(position == 0)
+                {
                     rcViewControl.arrangeByNew();
+                    Log.d("ssibal", "onDismiss: ");
+                }
                 else
+                {
                     rcViewControl.arrangeByDistance();
+                    Log.d("ssibal", "onDismiss: ");
+                }
             }
         });
         filterDialog.show();
