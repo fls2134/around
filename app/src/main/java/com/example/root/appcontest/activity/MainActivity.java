@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private AlarmService mService;
     boolean[] my_pref_array = new boolean[8];
 
+    String tag;
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
@@ -89,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(getResources().getColor(R.color.themeColor));
 
+        tag = getIntent().getStringExtra("tag");
         // 하단 바 설정
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottom_bar);
         bottomBar.setActiveTabColor(getResources().getColor(R.color.backgroundLongin));
@@ -102,6 +104,16 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (tabId) {
                     case R.id.tab_home:
+                        if(tag!=null)
+                        {
+                            HomeFragment homeFragment = new HomeFragment();
+                            Bundle arguments = new Bundle();
+                            arguments.putString("tag", tag);
+                            homeFragment.setArguments(arguments);
+                            fragmentTransaction.replace(R.id.action_container,
+                                    homeFragment).commit();
+                        }
+                        else
                         fragmentTransaction.replace(R.id.action_container,
                                 new HomeFragment()).commit();
                         break;
@@ -119,6 +131,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+
 
         data_array = new ArrayList<>();
         getServerDatas();
@@ -190,7 +204,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"오류 발생",Toast.LENGTH_LONG);
             }
         });
-        Log.d("sibal1", "getServerDatas: " + data_array.size());
     }
 
     public ArrayList<LocalData> getData_array() {

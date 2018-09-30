@@ -102,12 +102,28 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             public void afterTextChanged(Editable editable) {
                 // 재정렬
                 String str = editable.toString();
-                rcViewControl.search(str);
+                if(position == 0)
+                {
+                    rcViewControl.arrangeByNew(str);
+                    Log.d("ssibal", "onDismiss: ");
+                }
+                else
+                {
+                    rcViewControl.arrangeByDistance(str);
+                    Log.d("ssibal", "onDismiss: ");
+                }
                 //Toast.makeText(getActivity().getApplicationContext(), "텍스트 입력됨", Toast.LENGTH_SHORT).show();
             }
         });
 
         mEditText.setUseableEditText(false);
+
+        Bundle arguments = getArguments();
+        if(arguments != null)
+        {
+            String tag = arguments.getString("tag");
+            mEditText.setText(tag);
+        }
 
         // add filter button
         mFilterButton = (ImageButton) view.findViewById(R.id.btn_filter_home);
@@ -126,10 +142,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 position = tab.getPosition();
                 switch(tab.getPosition()) {
                     case 0: // 최신순
-                        rcViewControl.arrangeByNew();
+                        rcViewControl.arrangeByNew("");
                         break;
                     case 1: // 거리순
-                        rcViewControl.arrangeByDistance();
+                        rcViewControl.arrangeByDistance("");
                         break;
                     default:
                         break;
@@ -162,6 +178,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         writeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //mEditText.setText("정상수");
                 Intent writeIntent = new Intent(getActivity(), WriteActivity.class);
                 startActivityForResult(writeIntent, WRITE_REQUEST_CODE);
             }
@@ -251,12 +268,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
                 if(position == 0)
                 {
-                    rcViewControl.arrangeByNew();
+                    rcViewControl.arrangeByNew("");
                     Log.d("ssibal", "onDismiss: ");
                 }
                 else
                 {
-                    rcViewControl.arrangeByDistance();
+                    rcViewControl.arrangeByDistance("");
                     Log.d("ssibal", "onDismiss: ");
                 }
             }
@@ -264,10 +281,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         filterDialog.show();
     }
 
-    public void search()
-    {
 
-    }
     @Override
     public void onClick(View view) {
         switch(view.getId()) {

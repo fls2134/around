@@ -169,13 +169,22 @@ public class InfoActivity extends AppCompatActivity {
         l.setMargins(5, 5, 5, 5);
         //태그 생성
         for (String word : words) {
-            TextView textView = new TextView(getApplicationContext());
+            final TextView textView = new TextView(getApplicationContext());
             textView.setBackgroundColor(Color.argb(55,0,0,0));
             textView.setTextColor(getResources().getColor(R.color.white));
             textView.setText('#' + word);
             textView.setTextSize(20);
             textView.setLayoutParams(l);
             textView.setPadding(5, 5, 5, 5);
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                    i.putExtra("tag",textView.getText().toString());
+                    startActivity(i);
+                    finish();
+                }
+            });
             flexboxLayout.addView(textView);
         }
 

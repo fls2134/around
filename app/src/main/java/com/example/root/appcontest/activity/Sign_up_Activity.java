@@ -42,7 +42,7 @@ public class Sign_up_Activity extends AppCompatActivity{
         editEmail = (EditText)findViewById(R.id.editEmail);
         editPassword = (EditText)findViewById(R.id.editPassword);
         editNick = (EditText)findViewById(R.id.editNick);
-        sign_up = (Button)findViewById(R.id.Sign_up);
+        sign_up = (Button)findViewById(R.id.sign_up_register);
         userDB_Ref = FirebaseDatabase.getInstance().getReference("User_info");
 
         sign_up.setOnClickListener(new View.OnClickListener() {

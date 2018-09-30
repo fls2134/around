@@ -139,7 +139,7 @@ public class RCViewControl extends Fragment{
         super.onViewCreated(view, savedInstanceState);
     }
 
-    public void addListItemFromDb() {
+    public void addListItemFromDb(String str) {
         // this is sample
         /*
         mList.add(new CardItem(R.drawable.around_logo1, "aaa", R.drawable.around_logo1, "title1", 123));
@@ -175,7 +175,14 @@ public class RCViewControl extends Fragment{
         progressBar.setVisibility(View.GONE);
         ArrayList<LocalData> filterArray = new ArrayList<>();
         filtering_datas(filterArray, data_array);
-        updateMList(filterArray);
+        ArrayList<LocalData> searchArray = new ArrayList<>();
+        if(str.isEmpty())
+            updateMList(filterArray);
+        else
+        {
+            search(searchArray,filterArray, str);
+            updateMList(searchArray);
+        }
         mAdapter.notifyDataSetChanged();
     }
 
@@ -194,22 +201,29 @@ public class RCViewControl extends Fragment{
         }
     }
 
-    public void arrangeByDistance() {
+    public void arrangeByDistance(String str) {
         // 거리순으로 정렬함
         //mList.add(new CardItem(R.drawable.around_logo2, "distance", R.drawable.around_logo2, "distance"));
         ArrayList<LocalData> disance_array = (ArrayList<LocalData>)data_array.clone();
         Collections.sort(disance_array, new ascendingDistance());
         ArrayList<LocalData> filterArray = new ArrayList<>();
         filtering_datas(filterArray, disance_array);
-        updateMList(filterArray);
+        ArrayList<LocalData> searchArray = new ArrayList<>();
+        if(str.isEmpty())
+            updateMList(filterArray);
+        else
+        {
+            search(searchArray,filterArray, str);
+            updateMList(searchArray);
+        }
         mAdapter.notifyDataSetChanged();
     }
 
-    public void arrangeByNew() {
+    public void arrangeByNew(String str) {
 
         // 최신순으로 정렬함
         //mList.add(new CardItem(R.drawable.around_logo2, "new", R.drawable.around_logo2, "new"));
-        addListItemFromDb();
+        addListItemFromDb(str);
         mAdapter.notifyDataSetChanged();
     }
 
@@ -260,7 +274,7 @@ public class RCViewControl extends Fragment{
                 if(fragmentIndex == 1)
                     arrangeBySelected();
                 else
-                    addListItemFromDb();
+                    addListItemFromDb("");
             }
 
             @Override
@@ -300,6 +314,17 @@ public class RCViewControl extends Fragment{
 
     }
 
+    private void search(ArrayList<LocalData> searchArray, ArrayList<LocalData> originalArray, String str)
+    {
+        for (int i = 0; i < originalArray.size(); i++) {
+            if(originalArray.get(i).title.contains(str))
+                searchArray.add(originalArray.get(i));
+            else if(originalArray.get(i).tag.contains(str))
+                searchArray.add(originalArray.get(i));
+            else if(originalArray.get(i).nickname.contains(str))
+                searchArray.add(originalArray.get(i));
+        }
+    }
 
     // 오름차순
     class ascendingDistance implements Comparator<LocalData> {
