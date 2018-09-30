@@ -1,5 +1,5 @@
 package com.example.root.appcontest.activity;
-/*
+
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.root.appcontest.R;
+import com.example.root.appcontest.activity.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -25,11 +26,9 @@ public class Login2Activity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
 
 
-    @BindView(R.id.login)
-    Button login;
+    @BindView(R.id.login) Button login;
     @BindView(R.id.sign_up) Button sign_up;
-    @BindView(R.id.editEmail)
-    EditText editEmail;
+    @BindView(R.id.editEmail) EditText editEmail;
     @BindView(R.id.editPassword) EditText editPassword;
 
     boolean isEmptyEditField()
@@ -67,7 +66,7 @@ public class Login2Activity extends AppCompatActivity {
 
     @OnClick(R.id.sign_up)
     void clickSignUp(){
-        Intent intent=new Intent(Login2Activity.this,Sign_up.class);
+        Intent intent=new Intent(Login2Activity.this,Sign_up_Activity.class);
         startActivity(intent);
         finish();
     }
@@ -96,4 +95,3 @@ public class Login2Activity extends AppCompatActivity {
         };
     }
 }
-*/
