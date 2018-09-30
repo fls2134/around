@@ -178,6 +178,7 @@ public class WriteActivity extends AppCompatActivity {
         title = editText_title.getText().toString();
         content = editText_content.getText().toString();
         localData = new LocalData();
+
         StorageReference uploadRef = storageRef.child(title);
 
         Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();

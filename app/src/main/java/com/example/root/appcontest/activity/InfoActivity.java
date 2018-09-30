@@ -29,6 +29,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.w3c.dom.Text;
 
@@ -53,11 +55,12 @@ public class InfoActivity extends AppCompatActivity {
     Button button;
     ImageView favoriteButton;
     LocalData data;
+    LocalData tmp;
 
     //DB 관련 변수
     FirebaseDatabase database;
     DatabaseReference databaseRef;
-
+    StorageReference testRef;
 
 
 
@@ -217,9 +220,12 @@ public class InfoActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             for (DataSnapshot messageData : dataSnapshot.getChildren()) {
-                                if(data.id == messageData.getValue(LocalData.class).id)
+                                if(data.id == messageData.getValue(LocalData.class).id) {
+                                    FirebaseStorage.getInstance().getReferenceFromUrl(messageData.getValue(LocalData.class).img_url).delete();
                                     messageData.getRef().setValue(null);
+                                }
                             }
+                            finish();
                         }
 
                         @Override
