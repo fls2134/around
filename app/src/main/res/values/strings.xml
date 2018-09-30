@@ -136,14 +136,15 @@
 
     <string name="pref_title_set_categories">관심 항목 설정</string>
     <string name="pref_summary_set_categories">알림을 받을 항목을 설정 합니다.</string>
+
     <string-array name="pref_categories">
         <item>공연</item>
         <item>파티</item>
         <item>편의</item>
         <item>관광</item>
-        <item>갤러리</item>
+        <item>전시</item>
         <item>맛집</item>
-        <item>여성</item>
+        <item>쇼핑</item>
         <item>행사</item>
     </string-array>
     <!-- Example settings for Data & Sync -->
