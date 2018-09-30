@@ -58,6 +58,7 @@ public class RCViewControl extends Fragment{
     RCViewAdapter mAdapter;
 
 
+
     FirebaseDatabase database;
     DatabaseReference databaseReference;
 

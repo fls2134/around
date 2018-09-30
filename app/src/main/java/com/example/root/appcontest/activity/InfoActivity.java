@@ -3,11 +3,9 @@ package com.example.root.appcontest.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.ArraySet;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -32,9 +30,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -52,7 +47,7 @@ public class InfoActivity extends AppCompatActivity {
     TextView period;
     TextView content;
     FlexboxLayout flexboxLayout;
-    Button button;
+    ImageView button;
     ImageView favoriteButton;
     LocalData data;
     LocalData tmp;
@@ -61,8 +56,6 @@ public class InfoActivity extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference databaseRef;
     StorageReference testRef;
-
-
 
     /**
      * 좋아요 모드 확인을 위한 모드 변수
@@ -76,49 +69,49 @@ public class InfoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_info);
+        setContentView(R.layout.info_detail);
 
-        title = findViewById(R.id.text_title);
-        image = findViewById(R.id.image);
-        period = findViewById(R.id.text_period);
-        content = findViewById(R.id.text_content);
-        flexboxLayout = findViewById(R.id.info_flexbox);
-        button = findViewById(R.id.closebtn_info);
-        favoriteButton = findViewById(R.id.favorite_info);
+        // 뷰 세팅
+        title = findViewById(R.id.info_detail_title);
+        image = findViewById(R.id.info_detail_poster);
+        period = findViewById(R.id.info_detail_date);
+        content = findViewById(R.id.info_detail_content);
+        flexboxLayout = findViewById(R.id.info_detail_flexbox);
+        button = findViewById(R.id.info_detail_back_btn);
+        favoriteButton = findViewById(R.id.info_detail_util_btn);
+
+        // 데이터 정보 처리
         getIntentData();
         setFavoriteMode();
-        if(modeFavorite == 0) {
-            favoriteButton.setImageResource(R.drawable.ic_delete_black_24dp);
-        }
-        else if(modeFavorite == 1) {
+        // 좋아요 정보 초기화
+        if (modeFavorite == 0) {
+            favoriteButton.setImageResource(R.drawable.ic_delete);
+        } else if (modeFavorite == 1) {
             favoriteButton.setImageResource(R.drawable.ic_favorite_empty);
-        }
-        else if(modeFavorite == 2) {
+        } else if (modeFavorite == 2) {
             favoriteButton.setImageResource(R.drawable.ic_favorite);
         }
 
-        //받아온 데이터들을 가지고 활용해서 페이지를 만든다.
+        //받아온 데이터를 사용해 페이지를 생성
         setPage();
 
     }
-    private void getIntentData()
-    {
-        data = (LocalData)getIntent().getSerializableExtra("data");
+
+    private void getIntentData() {
+        data = (LocalData) getIntent().getSerializableExtra("data");
     }
 
     private void setFavoriteMode() {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
 
         String nickname;
-        nickname = pref.getString("nickname_text","닉네임");
-
+        nickname = pref.getString("nickname_text", "닉네임");
 
 
         Set<String> stringSet;
         SharedPreferences prefFav = getSharedPreferences("favorites", MODE_PRIVATE);
-        stringSet = prefFav.getStringSet("favorite",  null);
-        if(stringSet == null)
-        {
+        stringSet = prefFav.getStringSet("favorite", null);
+        if (stringSet == null) {
             String[] array = {};
             stringSet = new HashSet<String>(Arrays.asList(array));
         }
@@ -126,35 +119,28 @@ public class InfoActivity extends AppCompatActivity {
         //String[] strings = stringSet.toArray();
 
 
-        if(nickname.compareTo(data.nickname) == 0)
-        {
+        if (nickname.compareTo(data.nickname) == 0) {
+            // 작성자일 경우 modeFavorite = 0
             modeFavorite = 0;
-        }
-        // 작성자일 경우 modeFavorite = 0
-
-        else if(stringSet.contains(data.id+""))
-        {
+        } else if (stringSet.contains(data.id + "")) {
+            // 작성자는 아닌데 로컬에 매칭되는 항목이 존재 modeFavorite = 2
             modeFavorite = 2;
-        }
-        // 작성자는 아닌데 로컬에 매칭되는 항목이 존재 modeFavorite = 2
-        else
-        {
+        } else {
+            // 작성자는 아닌데 로컬에 매칭되는 항목이 없을 경우 modeFavorite = 1
             modeFavorite = 1;
         }
-        // 작성자는 아닌데 로컬에 매칭되는 항목이 없을 경우 modeFavorite = 1
     }
 
-    private void setPage()
-    {
+    private void setPage() {
+        // 페이지 생성
         title.setText(data.title);
         image.setImageResource(R.drawable.background_image_main);
-        String p = data.sYear + "/" + data.sMonth + "/" +data.sDay + " ~ " + data.eYear + "/" + data.eMonth + "/" +data.eDay;
+        String p = data.sYear + "/" + data.sMonth + "/" + data.sDay + " ~ " + data.eYear + "/" + data.eMonth + "/" + data.eDay;
         period.setText(p);
         content.setText(data.content);
 
         database = FirebaseDatabase.getInstance();
         databaseRef = database.getReference("Local_info");
-
 
         //이미지 세팅
         final ProgressBar progressBar = findViewById(R.id.info_progressbar);
@@ -179,7 +165,7 @@ public class InfoActivity extends AppCompatActivity {
         String words[] = tags.split(",");
         // 태그 마진
         LinearLayout.LayoutParams l = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        l.setMargins(5,5,5,5);
+        l.setMargins(5, 5, 5, 5);
         //태그 생성
         for (String word : words) {
             TextView textView = new TextView(getApplicationContext());
@@ -205,22 +191,20 @@ public class InfoActivity extends AppCompatActivity {
                 Set<String> stringSet;
                 SharedPreferences pref = getSharedPreferences("favorites", MODE_PRIVATE);
                 stringSet = new HashSet<String>(pref.getStringSet("favorite", new HashSet<String>()));
-                if(stringSet == null)
-                {
+                if (stringSet == null) {
                     String[] array = {};
                     stringSet = new HashSet<String>(Arrays.asList(array));
                 }
 
-                String id_str = data.id+"";
+                String id_str = data.id + "";
                 Log.d("sibal", "id name = " + data.id);
-                if(modeFavorite == 0) {
+                if (modeFavorite == 0) {
                     //data.id => 얘를 찾아가서 DB에서 지워주세요
-                    //편집모드 진입 -> 삭제만 하면됨
                     databaseRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             for (DataSnapshot messageData : dataSnapshot.getChildren()) {
-                                if(data.id == messageData.getValue(LocalData.class).id) {
+                                if (data.id == messageData.getValue(LocalData.class).id) {
                                     FirebaseStorage.getInstance().getReferenceFromUrl(messageData.getValue(LocalData.class).img_url).delete();
                                     messageData.getRef().setValue(null);
                                 }
@@ -230,30 +214,25 @@ public class InfoActivity extends AppCompatActivity {
 
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
-                            Toast.makeText(getApplicationContext(),"오류 발생",Toast.LENGTH_LONG);
+                            Toast.makeText(getApplicationContext(), "오류 발생", Toast.LENGTH_LONG);
                         }
                     });
-                }
-                else if(modeFavorite == 1) {
+                } else if (modeFavorite == 1) {
                     //좋아요 클릭
                     modeFavorite = 2;
                     favoriteButton.setImageResource(R.drawable.ic_favorite);
                     stringSet.add(id_str);
-
-                    //로컬에서 문자열 삭제 필요
-                }
-                else if(modeFavorite == 2) {
+                } else if (modeFavorite == 2) {
                     //좋아요 취소
                     modeFavorite = 1;
                     favoriteButton.setImageResource(R.drawable.ic_favorite_empty);
                     stringSet.remove(id_str);
-                    //로컬에서 문자열 추가 필요
                 }
                 SharedPreferences.Editor editor = pref.edit();
                 editor.putStringSet("favorite", stringSet);
                 String[] strary = stringSet.toArray(new String[stringSet.size()]);
                 for (int i = 0; i < stringSet.size(); i++) {
-                    Log.d("sibal",strary[i]);
+                    Log.d("sibal", strary[i]);
                 }
                 editor.apply();
             }
@@ -263,6 +242,6 @@ public class InfoActivity extends AppCompatActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        data = (LocalData)intent.getSerializableExtra("data");
+        data = (LocalData) intent.getSerializableExtra("data");
     }
 }
