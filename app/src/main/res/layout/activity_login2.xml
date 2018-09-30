@@ -44,7 +44,7 @@
             android:background="@drawable/box"
             android:inputType="textEmailAddress"
             android:paddingLeft="20dp"
-            android:text="test001@test.com"
+            android:text="master01@master.com"
             android:textColor="#000000"
             android:textColorHint="#000000" />
 
@@ -56,7 +56,7 @@
             android:background="@drawable/box"
             android:inputType="textPassword"
             android:paddingLeft="20dp"
-            android:text="qwer1234"
+            android:text="1q2w3e4r"
             android:textColor="#000000"
             android:textColorHint="#000000" />
 

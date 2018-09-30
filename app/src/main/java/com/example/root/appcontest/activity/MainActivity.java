@@ -43,7 +43,8 @@ import java.util.TimerTask;
  * Activity that Show Main Content
  */
 public class MainActivity extends AppCompatActivity {
-    public static final int MY_PERMISSIONS_REQUEST_CUR_PLACE = 3;
+    public static final int MY_PERMISSIONS_REQUEST_CUR_PLACE = 12;
+    public static final int MY_PERMISSIONS_REQUEST_CUR_PLACE_SERVICE = 13;
     FragmentTransaction fragmentTransaction;
     public ArrayList<LocalData> data_array;//서버에서 불러올 데이터 모은 어레이리스트
     FirebaseDatabase database;
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                                 new HomeFragment(),"HomeFragment").commit();
                         break;
                     case R.id.tab_location:
-                        if(requestPermission() == PackageManager.PERMISSION_GRANTED)
+                        if(requestPermission(MY_PERMISSIONS_REQUEST_CUR_PLACE) == PackageManager.PERMISSION_GRANTED)
                             fragmentTransaction.replace(R.id.action_container,
                                     new MapFragment()).commit();
                         else
@@ -126,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         getServerDatas();
         setPrefArray(my_pref_array);
         // 최초 화면 설정
-        if(requestPermission() >= 0)
+        if(requestPermission(MY_PERMISSIONS_REQUEST_CUR_PLACE_SERVICE) >= 0)
         {
             Intent Service = new Intent(getApplicationContext(), AlarmService.class);
             bindService(Service, mConnection, Context.BIND_AUTO_CREATE);
@@ -145,12 +146,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private int requestPermission()
+    private int requestPermission(int requestCode)
     {
         int permissionCheck = ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION);
         if(permissionCheck != PackageManager.PERMISSION_GRANTED)
         {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_CUR_PLACE);
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestCode);
             return -1;
         }
         else
@@ -173,8 +174,24 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "위치 권한이 없으면 지도를 표시할 수 없습니다.", Toast.LENGTH_SHORT).show();
                 return;
             }
+            case MY_PERMISSIONS_REQUEST_CUR_PLACE_SERVICE:
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                {
+                    Toast.makeText(MainActivity.this, "위치 권한 받기 성공 알림 서비스를 시작합니다.", Toast.LENGTH_SHORT).show();
+                    Intent Service = new Intent(getApplicationContext(), AlarmService.class);
+                    bindService(Service, mConnection, Context.BIND_AUTO_CREATE);
+                    // 최초 화면 설정
 
+                    Timer timer = new Timer(true);
+                    timer.schedule(new TimerTask(){
+                        public void run(){
+                            mService.myServiceFunc();
+                        }
+                    },5000);
+
+                }
         }
+
     }
 
     public void getServerDatas()
