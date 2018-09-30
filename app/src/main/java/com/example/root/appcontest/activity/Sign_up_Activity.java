@@ -19,11 +19,12 @@ public class Sign_up_Activity extends AppCompatActivity{
 
     EditText editEmail;
     EditText editPassword;
+    EditText editNick;
     Button sign_up;
     FirebaseAuth mAuth;
     boolean isEmptyEditField()
     {
-        if((editEmail.getText().toString().length() == 0)||(editPassword.getText().toString().length() == 0))
+        if((editEmail.getText().toString().length() == 0)||(editPassword.getText().toString().length() == 0)||(editNick.getText().toString().length() == 0))
             return true;
         else
             return false;
@@ -35,6 +36,7 @@ public class Sign_up_Activity extends AppCompatActivity{
         setContentView(R.layout.sign_up_activity);
         editEmail = (EditText)findViewById(R.id.editEmail);
         editPassword = (EditText)findViewById(R.id.editPassword);
+        editNick = (EditText)findViewById(R.id.editNick);
         //sign_up = (Button)findViewById(R.id.sign_up);
         sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
